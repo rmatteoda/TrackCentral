@@ -1,0 +1,40 @@
+<%- model_class = User -%>
+<div class="page-header">
+  <h2>Usuarios</h2>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:id) %></th>
+      <th>Nombre</th>
+      <th><%= model_class.human_attribute_name(:email) %></th>
+      <th><%= model_class.human_attribute_name(:celular) %></th>
+      <th>Responsabilidad</th>
+      <th>Accion</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= link_to user.id, user_path(user) %></td>
+        <td><%= user.name %></td>
+        <td><%= user.email %></td>
+        <td><%= user.celular %></td>
+        <td><%= user.role %></td>
+        <td>
+          <%= link_to 'Editar',
+                      edit_user_path(user), :class => 'btn btn-mini' %>
+          <%= link_to 'Eliminar',
+                      user_path(user),
+                      :method => :delete,
+                      :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')),
+                      :class => 'btn btn-mini btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'Agregar Usuario',
+            new_user_path,
+            :class => 'btn btn-primary' %>

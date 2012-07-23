@@ -1,2 +1,34 @@
-<h1>Users#new</h1>
-<p>Find me in app/views/users/new.html.erb</p>
+<%= provide(:title, 'Crear Usuario') %>
+
+<div class="row">
+  <div class="span6 offset3">
+	<h2>Crear Usuario</h2>
+
+    <%= form_for(@user) do |f| %>
+     <%= render 'shared/error_messages', object: f.object %>
+  
+      <%= f.label :name, "Nombre" %>
+      <%= f.text_field :name %>
+
+      <%= f.label :email %>
+      <%= f.text_field :email %>
+
+      <%= f.label :celular %>
+      <%= f.text_field :celular %>
+
+      <%= f.label :role, "Responsabilidad" %>
+      <%= f.select :role, options_for_select([["Encargado", "encargado"],["Propietario", "propietario"],["Veterinario", "veterinario"],["Insemindor", "inseminador"]]) %>
+
+	  <%= f.label :password, "Clave" %>
+      <%= f.password_field :password %>
+
+      <%= f.label :password_confirmation, "Confirmar Clave" %>
+      <%= f.password_field :password_confirmation %>
+      <div class="actions">
+ 
+      <%= f.submit "Crear mi cuenta", :class => "actions btn-small btn-primary" %>
+      </div>
+    <% end %>
+    
+  </div>
+</div>

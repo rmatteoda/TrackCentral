@@ -9,10 +9,19 @@
       <a class="brand" href="#">TrackTambo</a>
 
 		<div class="btn-group pull-right">
+
+        <% if signed_in? %>
              <ul class="nav">
-              <li><%= link_to "Ingresar", signup_path %></li>  
+              <li><%= link_to "Usuarios", users_path %></li>  
+              <li><%= link_to "Salir", signout_path  ,method: "delete"%></li>
+              
             </ul>
-          </div>
+          <% else %>
+            <ul class="nav">
+              <li><%= link_to "Ingresar", signin_path %></li>  
+            </ul>
+          <% end %>  
+      </div>
 
       <div class="nav-collapse">
         <ul class="nav">

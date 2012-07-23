@@ -1,6 +1,4 @@
 TrackCentral::Application.routes.draw do
-  get "users/new"
-
   root to: 'static_pages#home'
 
   match '/',    to: 'static_pages#home'
@@ -8,8 +6,14 @@ TrackCentral::Application.routes.draw do
   match '/ayuda',   to: 'static_pages#help'
   match '/contacto', to:'static_pages#contact'
   
-  match '/signup',  to: 'users#new'
+  resources :sessions, only: [:new, :create, :destroy]
 
+  match '/signup',  to: 'users#new'
+  match '/signin',  to: 'sessions#new'
+  match '/signout', to: 'sessions#destroy', via: :delete
+ 
+  resources :users
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

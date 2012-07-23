@@ -1,0 +1,27 @@
+<% provide(:title, "Editar usuario") %> 
+<div class="row">
+  <div class="span6 offset3">
+  <h2>Actualizar Informacion</h2>
+
+  <%= form_for(@user) do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+ 
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+
+      <%= f.label :email %>
+      <%= f.text_field :email %>
+
+      <%= f.label :celular %>
+      <%= f.text_field :celular %>
+
+      <%= f.label :role, "Responsabilidad" %>
+      <%= f.select :role, options_for_select([["Encargado", "encargado"],["Propietario", "propietario"],["Veterinario", "veterinario"],["Insemindor", "inseminador"]]) %>
+
+      <div class="actions">
+ 
+      <%= f.submit "Guardar", :class => "actions btn-large btn-primary" %>
+     </div>
+    <% end %>
+  </div>
+</div>
