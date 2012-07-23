@@ -1,0 +1,20 @@
+<%- model_class = Nodo -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human %></h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt><strong><%= model_class.human_attribute_name(:vaca_id) %>:</strong></dt>
+  <dd><%= @nodo.vaca_id %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:nodo_id) %>:</strong></dt>
+  <dd><%= @nodo.nodo_id %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:bateria) %>:</strong></dt>
+  <dd><%= @nodo.bateria %> % cargada</dd>
+</dl>
+
+<div class="form-actions">
+  <%= link_to 'Volver',
+              nodos_path, :class => 'btn'  %>
+  <%= link_to 'Editar',
+              edit_nodo_path(@nodo), :class => 'btn' %>
+</div>

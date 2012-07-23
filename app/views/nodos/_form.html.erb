@@ -1,0 +1,22 @@
+<%= form_for @nodo, :html => { :class => 'form-horizontal' } do |f| %>
+  
+  <div class="control-group">
+    <%= f.label :nodo_id, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :nodo_id, :class => 'text_field' %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :vaca_id, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.number_field :vaca_id, :class => 'number_field' %>
+    </div>
+  </div>
+  
+  <div class="form-actions">
+    <%= f.submit nil, :class => 'btn btn-primary' %>
+    <%= link_to 'Cancelar',
+                nodos_path, :class => 'btn' %>
+  </div>
+<% end %>

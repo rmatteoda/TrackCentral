@@ -1,0 +1,38 @@
+<%- model_class = Nodo -%>
+<div class="page-header">
+  <h2><%=t '.title', :default => model_class.model_name.human.pluralize %></h2>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:id) %></th>
+      <th><%= model_class.human_attribute_name(:nodo_id) %></th>
+      <th><%= model_class.human_attribute_name(:vaca_id) %></th>
+      <th><%= model_class.human_attribute_name(:bateria) %></th>
+      <th>Accion</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @nodos.each do |nodo| %>
+      <tr>
+        <td><%= link_to nodo.id, nodo_path(nodo) %></td>
+        <td><%= nodo.nodo_id %></td>
+        <td><%= nodo.vaca_id %></td>
+        <td><span class="badge badge-success"><%= nodo.bateria %> % carga</span></td>
+        <td>
+          <%= link_to 'Editar',
+                      edit_nodo_path(nodo), :class => 'btn btn-mini' %>
+          <%= link_to 'Eliminar',
+                      nodo_path(nodo),
+                      :method => :delete,
+                      :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Esta seguro de eliminar el nodo?')),
+                      :class => 'btn btn-mini btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'Agregar Nodo',
+            new_nodo_path,
+            :class => 'btn btn-primary' %>

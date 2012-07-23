@@ -14,10 +14,9 @@
              <ul class="nav">
               <% if current_user.admin? %>
   
+              <li><%= link_to "Nodos", nodos_path %></li> 
               <li><%= link_to "Usuarios", users_path %></li> 
-               <% else %>
-                 <li><%= current_user.admin?.to_s%></li> 
-            
+
               <% end %>
               <li><%= link_to "Salir", signout_path  ,method: "delete"%></li>
               
@@ -32,6 +31,7 @@
       <div class="nav-collapse">
         <ul class="nav">
           <li><%= link_to "Inicio" , inicio_path %></li>
+          <li><%= link_to "Ayuda", ayuda_path %></li>
           <li><%= link_to "Contacto", contacto_path %></li>
         </ul>
       </div>

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  bateria: 1
+  vaca_id: 1
+  nodo_id: MyString
+
+two:
+  bateria: 1
+  vaca_id: 1
+  nodo_id: MyString
