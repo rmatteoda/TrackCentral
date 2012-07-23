@@ -1,4 +1,15 @@
 TrackCentral::Application.routes.draw do
+  get "users/new"
+
+  root to: 'static_pages#home'
+
+  match '/',    to: 'static_pages#home'
+  match '/inicio',    to: 'static_pages#home'
+  match '/ayuda',   to: 'static_pages#help'
+  match '/contacto', to:'static_pages#contact'
+  
+  match '/signup',  to: 'users#new'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

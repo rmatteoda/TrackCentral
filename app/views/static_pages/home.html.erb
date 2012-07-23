@@ -1,0 +1,23 @@
+<% provide(:title, 'Inicio') %>
+
+<div class="container-fluid">
+    <div class="row-fluid">
+ 	  <div class="span12">
+      <% flash.each do |key, value| %>
+        <div class="alert alert-<%= key %>"><%= value %></div>
+      <% end %>
+       <div class="hero-unit">
+            <h1>TrackTambo</h1>
+            <p></p>
+            
+            <p>Obtenga el conocimiento y control diario de la producción individual de cada vaca</p>
+            
+			<p>Detecte celo y encuentre cual es el momento optimo de inseminacion</p>
+            
+			<p>Utilizando TrackTambo podra aumentar la produccion diaria de su establecimiento y mejorar la reproduccion y el intervalo entre partos</p>
+            
+           </div>
+          
+   	 </div>
+   </div>
+</div>

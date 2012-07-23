@@ -1,0 +1,25 @@
+ <div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+      <a class="brand" href="#">TrackTambo</a>
+
+		<div class="btn-group pull-right">
+             <ul class="nav">
+              <li><%= link_to "Ingresar", signup_path %></li>  
+            </ul>
+          </div>
+
+      <div class="nav-collapse">
+        <ul class="nav">
+          <li><%= link_to "Inicio" , inicio_path %></li>
+          <li><%= link_to "Contacto", contacto_path %></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
