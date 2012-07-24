@@ -2,6 +2,13 @@
 <div class="page-header">
   <h2><%=t '.title', :default => model_class.model_name.human.pluralize %></h2>
 </div>
+    
+    <div>        
+        <% flash.each do |key, value| %>
+          <div class="alert alert-<%= key %>"><%= value %></div>
+        <% end %>
+    </div>
+
 <table class="table table-striped">
   <thead>
     <tr>
@@ -9,19 +16,19 @@
       <th><%= model_class.human_attribute_name(:nodo_id) %></th>
       <th><%= model_class.human_attribute_name(:vaca_id) %></th>
       <th><%= model_class.human_attribute_name(:bateria) %></th>
+      <th>Alarma</th>
       <th>Accion</th>
     </tr>
   </thead>
   <tbody>
     <% @nodos.each do |nodo| %>
       <tr>
-        <td><%= link_to nodo.id, nodo_path(nodo) %></td>
+        <td><%= nodo.id %></td>
         <td><%= nodo.nodo_id %></td>
         <td><%= nodo.vaca_id %></td>
         <td><span class="badge badge-success"><%= nodo.bateria %> % carga</span></td>
+        <td></td>
         <td>
-          <%= link_to 'Editar',
-                      edit_nodo_path(nodo), :class => 'btn btn-mini' %>
           <%= link_to 'Eliminar',
                       nodo_path(nodo),
                       :method => :delete,
@@ -33,6 +40,4 @@
   </tbody>
 </table>
 
-<%= link_to 'Agregar Nodo',
-            new_nodo_path,
-            :class => 'btn btn-primary' %>
+<%= link_to 'Agregar Nodo',new_nodo_path,:class => 'btn btn-primary' %>

@@ -23,8 +23,11 @@ class VacasController < ApplicationController
 
   def create
     @vaca = Vaca.new(params[:vaca])
-
+    
     if @vaca.save
+      if !@vaca.nodo_id.nil? && !@vaca.nodo_id.blank? 
+        @vaca.nodo = Nodo.where("nodo_id = ?",@vaca.nodo_id).first
+      end
       flash[:success] = "Vaca creada con exito"
       redirect_to @vaca
     else
@@ -35,13 +38,16 @@ class VacasController < ApplicationController
 
   def update
     @vaca = Vaca.find(params[:id])
-
+    
       if @vaca.update_attributes(params[:vaca])
+        if !@vaca.nodo_id.nil? && !@vaca.nodo_id.blank? 
+          @vaca.nodo = Nodo.where("nodo_id = ?",@vaca.nodo_id).first
+        end
         flash[:success] = "Vaca actualizada"
         redirect_to @vaca
       else
         @nodos = nodos_disponibles
-        if !@vaca.nodo.nil?
+        if !@vaca.nodo_id.nil?
           @nodos.push(@vaca.nodo)
         end
         render 'edit'
@@ -50,7 +56,9 @@ class VacasController < ApplicationController
 
   def destroy
     @vaca = Vaca.find(params[:id])
+    @vaca.nodo = nil
     @vaca.destroy
+    flash[:success] = "Vaca eliminada"
     redirect_to vacas_path
   end
 
@@ -59,10 +67,5 @@ class VacasController < ApplicationController
   def nodos_disponibles
     @nodos = Nodo.where("vaca_id IS NULL")
   end
-
-  def save_nodo(vaca)
-    
-  end
-
 
 end

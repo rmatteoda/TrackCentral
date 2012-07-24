@@ -17,7 +17,7 @@ TrackCentral::Application.routes.draw do
  
   resources :vacas
 
-  resources :nodos, only: [:new, :create, :destroy]
+  resources :nodos, only: [:new, :create, :destroy, :index]
  
   # The priority is based upon order of creation:
   # first created -> highest priority.

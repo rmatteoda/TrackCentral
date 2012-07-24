@@ -2,6 +2,11 @@
 <div class="page-header">
   <h2><%=t '.title', :default => model_class.model_name.human.pluralize %></h2>
 </div>
+    <div>        
+        <% flash.each do |key, value| %>
+          <div class="alert alert-<%= key %>"><%= value %></div>
+        <% end %>
+    </div>
 <table class="table table-striped">
   <thead>
     <tr>

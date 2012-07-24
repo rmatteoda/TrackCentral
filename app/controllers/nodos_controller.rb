@@ -43,6 +43,7 @@ class NodosController < ApplicationController
   def destroy
     @nodo = Nodo.find(params[:id])
     @nodo.destroy
+    flash[:success] = "Nodo Eliminado"
     redirect_to nodos_path
   end
 
