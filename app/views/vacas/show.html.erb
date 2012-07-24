@@ -1,0 +1,22 @@
+<%- model_class = Vaca -%>
+<div class="page-header">
+  <h2><%=t '.title', :default => model_class.model_name.human %></h2>
+</div>
+
+<dl class="dl-horizontal">
+  <dt><strong><%= model_class.human_attribute_name(:caravana) %>:</strong></dt>
+  <dd><%= @vaca.caravana %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:raza) %>:</strong></dt>
+  <dd><%= @vaca.raza %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:estado) %>:</strong></dt>
+  <dd><%= @vaca.estado %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:nodo_id) %>:</strong></dt>
+  <dd><%= @vaca.nodo_id %></dd>
+</dl>
+
+<div class="form-actions">
+  <%= link_to 'Volver',
+              vacas_path, :class => 'btn'  %>
+  <%= link_to 'Editar',
+              edit_vaca_path(@vaca), :class => 'btn' %>
+</div>

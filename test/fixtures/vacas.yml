@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  caravana: 1
+  raza: MyString
+  estado: MyString
+  nodo_id: MyString
+
+two:
+  caravana: 1
+  raza: MyString
+  estado: MyString
+  nodo_id: MyString

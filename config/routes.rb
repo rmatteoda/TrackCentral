@@ -1,6 +1,5 @@
 TrackCentral::Application.routes.draw do
-  resources :nodos
-
+ 
   root to: 'static_pages#home'
 
   match '/',    to: 'static_pages#home'
@@ -15,7 +14,11 @@ TrackCentral::Application.routes.draw do
   match '/signout', to: 'sessions#destroy', via: :delete
  
   resources :users
-  
+ 
+  resources :vacas
+
+  resources :nodos, only: [:new, :create, :destroy]
+ 
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

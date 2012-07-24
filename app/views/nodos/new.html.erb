@@ -3,4 +3,19 @@
   <h2><%=t '.title', :default => t('helpers.titles.new', :model => model_class.model_name.human,
                                  :default => "Nuevo #{model_class.model_name.human}") %></h2>
 </div>
-<%= render :partial => 'form' %>
+<div class="row">
+  <div class="span6 offset3">
+
+  <%= form_for (@nodo) do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+  
+    <%= f.label :nodo_id, :class => 'control-label' %>
+    <%= f.text_field :nodo_id, :class => 'text_field' %>
+  
+   <div class="actions">
+    <%= f.submit 'Crear Nodo', :class => 'btn btn-primary' %>
+    <%= link_to 'Cancelar',nodos_path, :class => 'btn' %>
+   </div>
+  <% end %>
+  </div>
+</div>

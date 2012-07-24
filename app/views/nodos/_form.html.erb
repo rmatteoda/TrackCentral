@@ -1,22 +1,17 @@
-<%= form_for @nodo, :html => { :class => 'form-horizontal' } do |f| %>
-  
-  <div class="control-group">
-    <%= f.label :nodo_id, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :nodo_id, :class => 'text_field' %>
-    </div>
-  </div>
 
-  <div class="control-group">
-    <%= f.label :vaca_id, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.number_field :vaca_id, :class => 'number_field' %>
-    </div>
-  </div>
+<div class="row">
+  <div class="span6 offset3">
+
+  <%= form_for (@nodo) do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
   
-  <div class="form-actions">
+    <%= f.label :nodo_id, :class => 'control-label' %>
+    <%= f.text_field :nodo_id, :class => 'text_field' %>
+  
+   <div class="actions">
     <%= f.submit nil, :class => 'btn btn-primary' %>
-    <%= link_to 'Cancelar',
-                nodos_path, :class => 'btn' %>
+    <%= link_to 'Cancelar',nodos_path, :class => 'btn' %>
+   </div>
+  <% end %>
   </div>
-<% end %>
+</div>

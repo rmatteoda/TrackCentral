@@ -1,0 +1,35 @@
+<%- model_class = Vaca -%>
+<div class="page-header">
+  <h2><%=t '.title', :default => model_class.model_name.human.pluralize %></h2>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:id) %></th>
+      <th><%= model_class.human_attribute_name(:caravana) %></th>
+      <th><%= model_class.human_attribute_name(:raza) %></th>
+      <th><%= model_class.human_attribute_name(:estado) %></th>
+      <th><%= model_class.human_attribute_name(:nodo_id) %></th>
+      <th>Accion</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @vacas.each do |vaca| %>
+      <tr>
+        <td><%= link_to vaca.id, vaca_path(vaca) %></td>
+        <td><%= vaca.caravana %></td>
+        <td><%= vaca.raza %></td>
+        <td><%= vaca.estado %></td>
+        <td><%= vaca.nodo_id %></td>
+        <td>
+          <%= link_to 'Editar',
+                      edit_vaca_path(vaca), :class => 'btn btn-mini' %>
+          <%= link_to 'Eliminar',vaca_path(vaca),:method => :delete,
+                      :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Esta seguro de eliminar la vaca?')), :class => 'btn btn-mini btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'Agregar Vaca', new_vaca_path,:class => 'btn btn-primary' %>
