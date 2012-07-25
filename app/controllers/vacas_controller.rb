@@ -43,6 +43,9 @@ class VacasController < ApplicationController
         if !@vaca.nodo_id.nil? && !@vaca.nodo_id.blank? 
           @vaca.nodo = Nodo.where("nodo_id = ?",@vaca.nodo_id).first
         end
+        if !@vaca.nodo_id.nil? && @vaca.nodo_id.blank? 
+          @vaca.nodo = nil
+        end
         flash[:success] = "Vaca actualizada"
         redirect_to @vaca
       else

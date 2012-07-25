@@ -15,7 +15,10 @@
       <th><%= model_class.human_attribute_name(:raza) %></th>
       <th><%= model_class.human_attribute_name(:estado) %></th>
       <th><%= model_class.human_attribute_name(:nodo_id) %></th>
-      <th>Accion</th>
+      <th>Alarma</th>
+     <% if signed_in? && current_user.admin?%>
+       <th>Accion</th>
+       <% end %>
     </tr>
   </thead>
   <tbody>
@@ -26,15 +29,19 @@
         <td><%= vaca.raza %></td>
         <td><%= vaca.estado %></td>
         <td><%= vaca.nodo_id %></td>
+        <td></td>
+        <% if signed_in? && current_user.admin?%>
         <td>
           <%= link_to 'Editar',
                       edit_vaca_path(vaca), :class => 'btn btn-mini' %>
           <%= link_to 'Eliminar',vaca_path(vaca),:method => :delete,
                       :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Esta seguro de eliminar la vaca?')), :class => 'btn btn-mini btn-danger' %>
-        </td>
+        </td> <% end %>
       </tr>
     <% end %>
   </tbody>
 </table>
-
+     <% if signed_in? && current_user.admin?%>
+    
 <%= link_to 'Agregar Vaca', new_vaca_path,:class => 'btn btn-primary' %>
+       <% end %>

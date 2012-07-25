@@ -1,0 +1,2 @@
+class CeloController < ApplicationController
+end

@@ -1,0 +1,2 @@
+module CeloHelper
+end

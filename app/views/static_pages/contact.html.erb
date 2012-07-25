@@ -1,2 +1,44 @@
-<h1>StaticPages#contact</h1>
-<p>Find me in app/views/static_pages/contact.html.erb</p>
+<div class="page-header">
+  <h3>Contacto del Tambo</h3>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Email</th>
+      <th>Celular</th>
+      <th>Responsabilidad</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.name %></td>
+        <td><%= user.email %></td>
+        <td><%= user.celular %></td>
+        <td><%= user.role %></td>
+       </tr>
+    <% end %>
+  </tbody>
+</table>
+<div class="page-header">
+  <h3>Contacto Empresa TrackTambo</h3>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Email</th>
+      <th>Celular</th>
+      <th>Responsabilidad</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td>Ramiro</td>
+        <td>contacto@tracktambo.com</td>
+        <td>003</td>
+        <td>Encargado de Sistema</td>
+       </tr>
+  </tbody>
+</table>
