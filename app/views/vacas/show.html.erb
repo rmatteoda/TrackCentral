@@ -1,18 +1,50 @@
-<%- model_class = Vaca -%>
 <div class="page-header">
-  <h2><%=t '.title', :default => model_class.model_name.human %></h2>
+  <h4>DETALLE DE VACA <%= @vaca.caravana %></h4>
 </div>
 
-<dl class="dl-horizontal">
-  <dt><strong><%= model_class.human_attribute_name(:caravana) %>:</strong></dt>
-  <dd><%= @vaca.caravana %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:raza) %>:</strong></dt>
-  <dd><%= @vaca.raza %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:estado) %>:</strong></dt>
-  <dd><%= @vaca.estado %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:nodo_id) %>:</strong></dt>
-  <dd><%= @vaca.nodo_id %></dd>
-</dl>
+<div class="container-fluid">
+  
+<div class="row">
+        <div class="span4">
+          <h4>DATOS</h4>
+          <ul>
+          <li><strong>Raza: </strong> <%= @vaca.raza %></li>
+          <li><strong>Estado: </strong> <%= @vaca.estado %></li>
+          <li><strong>Nodo: </strong> <%= @vaca.nodo_id %></li>
+          </ul>
+        
+        </div><!--/span-->
+        <div class="span4">
+          <h4>CELOS</h4>
+          <ul>
+          <li><strong>Ultimo Celo: </strong></li>
+          <li><strong>Ultimo Servicio: </strong></li>
+          <li><strong>Servicios post-parto: </strong> 3</li>
+          </ul>
+        </div><!--/span-->
+        <div class="span4">
+          <h4>PARTOS</h4>
+          <ul>
+          <li><strong>Ultimo Parto: </strong></li>
+          <li><strong>Intervalo entre partos: </strong> 380 dias</li>
+          </ul>
+        </div><!--/span-->
+  </div><!--/row-->
+
+  <div class="page-header">
+  <h4>Historial de partos y servicios</h4>
+  </div>
+    
+  <div class="span8">  
+    <div id='time_line_chart' style='width: 700px; height: 200px;'></div>
+        <%= render_chart(@time_line_chart, 'time_line_chart') %>
+    </div> 
+  </div> 
+
+ <div class="page-header">
+  <h4>Grafico de Actividad</h4>
+  </div>
+  <br>
 
 <div class="form-actions">
   <%= link_to 'Volver',

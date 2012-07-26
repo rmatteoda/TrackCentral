@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  tipo: MyString
+  vaca_id: 1
+  nodo_id: 1
+  registrada: 2012-07-25 18:44:56
+  horas_de_valides: 1
+  mensaje: MyString
+  vista: false
+
+two:
+  tipo: MyString
+  vaca_id: 1
+  nodo_id: 1
+  registrada: 2012-07-25 18:44:56
+  horas_de_valides: 1
+  mensaje: MyString
+  vista: false

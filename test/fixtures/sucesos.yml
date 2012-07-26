@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  tipo: MyString
+  vaca_id: 1
+  momento: 2012-07-25
+
+two:
+  tipo: MyString
+  vaca_id: 1
+  momento: 2012-07-25

@@ -21,6 +21,8 @@ TrackCentral::Application.routes.draw do
  
   resources :alarmas, only: [:index]
   
+  resources :celos, only: [:index]
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

@@ -1,0 +1,49 @@
+  
+<div class="page-header">
+  <h3>Vacas en Celo</h3>
+</div>
+  <div class="span9">
+    <% if !@vacas_en_celo.nil? %>
+  <ul class="nav nav-tabs">
+        <li class="active"><a href="#">Detectadas Hoy</a></li>
+    <li><a href="#">Ultima Semana</a></li>
+        <li><a href="#">Ultimo Mes</a></li>
+     
+  <table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>Vaca</th>
+      <th>Comienzo</th>
+      <th>Horario para Inseminacion</th>
+      <th>Actividad</th>
+      <th>Servicios Post-Parto</th>
+      <th>Ultimo Celo</th>
+    </tr>
+  </thead>
+    <tbody>
+      <% @vacas_en_celo.each do |vaca_en_celo| %>
+      <tr>
+        <td><%= vaca_en_celo.caravana %></td>
+        <td><%= @celo_start.strftime("%d/%m %H:%M:%S") %> hrs</td>
+        <td>desde <%= @celo_start.advance(:hours => 8).strftime("%d/%m %H") %>hrs hasta <%= @celo_start.advance(:hours => 17).strftime("%d/%m %H") %>hrs <br> optimo: <%= @celo_start.advance(:hours => 12).strftime("%d/%m %H") %>hrs</td>
+        <td>Aumento</td>
+        <td>2</td>
+        <td><%= @celo_start.advance(:days => -21).strftime("%d/%m %H") %>hrs</td>
+      </tr>
+      <% end%>
+  </tbody>
+ </table>
+ 
+    <div class="alert alert-info">
+      <strong>Celos!</strong> se han detectado <%= @vacas_en_celo.count %> vacas en celo.
+    </div>
+      </ul>
+    <% else %>
+    <div class="alert alert-info">
+      <button class="close" data-dismiss="alert">&times;</button>
+      No se han detectado vacas en celo.
+    </div>
+  <% end %>
+ 
+  </div>
+

@@ -1,11 +1,18 @@
 class VacasController < ApplicationController
-  
+  include PlotHelper
+
   def index
-    @vacas = Vaca.all
+    @vacas = Vaca.paginate(:page => params[:page], :per_page => 10)
   end
 
   def show
     @vaca = Vaca.find(params[:id])
+
+    if @vaca.actividades.any? 
+      @act_chart = activiti_chart(@vaca)
+    end
+
+    @time_line_chart = vaca_time_line(@vaca)
   end
 
   def new

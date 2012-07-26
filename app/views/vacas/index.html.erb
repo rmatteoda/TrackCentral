@@ -7,16 +7,16 @@
           <div class="alert alert-<%= key %>"><%= value %></div>
         <% end %>
     </div>
-<table class="table table-striped">
+<table class="table table-striped table-bordered">
   <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
       <th><%= model_class.human_attribute_name(:caravana) %></th>
       <th><%= model_class.human_attribute_name(:raza) %></th>
       <th><%= model_class.human_attribute_name(:estado) %></th>
       <th><%= model_class.human_attribute_name(:nodo_id) %></th>
       <th>Alarma</th>
-     <% if signed_in? && current_user.admin?%>
+      <th>Detalle</th>
+      <% if signed_in? && current_user.admin?%>
        <th>Accion</th>
        <% end %>
     </tr>
@@ -24,12 +24,13 @@
   <tbody>
     <% @vacas.each do |vaca| %>
       <tr>
-        <td><%= link_to vaca.id, vaca_path(vaca) %></td>
         <td><%= vaca.caravana %></td>
         <td><%= vaca.raza %></td>
         <td><%= vaca.estado %></td>
         <td><%= vaca.nodo_id %></td>
         <td></td>
+        <td><%= link_to 'Ver', vaca_path(vaca), :class => 'btn btn-mini' %></td>
+        
         <% if signed_in? && current_user.admin?%>
         <td>
           <%= link_to 'Editar',
@@ -41,7 +42,9 @@
     <% end %>
   </tbody>
 </table>
-     <% if signed_in? && current_user.admin?%>
-    
-<%= link_to 'Agregar Vaca', new_vaca_path,:class => 'btn btn-primary' %>
-       <% end %>
+<div class="digg_pagination">
+<%= will_paginate @vacas %>
+</div> 
+  <% if signed_in? && current_user.admin?%>  
+    <%= link_to 'Agregar Vaca', new_vaca_path,:class => 'btn btn-primary' %>
+  <% end %>

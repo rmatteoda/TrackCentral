@@ -2,7 +2,7 @@ class NodosController < ApplicationController
   # GET /nodos
   # GET /nodos.json
   def index
-    @nodos = Nodo.all
+    @nodos = Nodo.paginate(:page => params[:page], :per_page => 10)
   end
 
   def show
