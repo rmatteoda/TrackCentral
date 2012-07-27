@@ -5,6 +5,11 @@
     <title><%= full_title(yield(:title)) %></title>
     <%= stylesheet_link_tag    "application", media: "all" %>
     <%= javascript_include_tag "application" %>
+	
+    <link type="text/css" href="assets/jquery-ui-1.8.22.custom.css" rel="Stylesheet"/>
+	<script type="text/javascript" src="assets/jquery-1.7.2.min.js?body=1"></script>
+	<script type="text/javascript" src="assets/jquery-ui-1.8.22.custom.min.js?body=1"></script>
+
     <%= csrf_meta_tags %>
   </head>
   <body>
@@ -12,7 +17,7 @@
     <div class="container-fluid">
 
 	<div class="row-fluid">
-	<div class="span3">    
+	<div class="span2">    
     	<%= render 'layouts/left_menu'%>
     </div>
   	<div class="span9"> 

@@ -23,9 +23,10 @@ namespace :db do
   def populate_vacas
     14.times do |n|
         cv = n.to_i + 1
-        Vaca.create!(caravana: cv,
+        vaca = Vaca.create!(caravana: cv,
                    raza: "Holando",
                    estado: "Normal") 
+        populate_actividades(vaca)
     end
   end
 
@@ -47,5 +48,19 @@ namespace :db do
       vaca.nodo = nodo
       vaca.save
     end
+  end
+
+  def populate_actividades(vaca)
+    inicio = 4.days.ago
+    48.times do |n|
+      registro = inicio.advance(:hours => 2*n)
+      value = rand_int(50,70)    
+      #value = rand_int(100,120) if n>3  
+      vaca.actividades.create!(registrada: registro, tipo: "recorrido", valor: value)
+    end 
+  end
+
+  def rand_int(from, to)
+  (rand * (to - from) + from).to_i
   end
 end

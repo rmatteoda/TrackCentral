@@ -1,15 +1,16 @@
 module PlotHelper
 
 def activitad_chart(vaca)
+
     data_table = GoogleVisualr::DataTable.new
     data_table.new_column('datetime', 'Date')
-    data_table.new_column('number', vaca.nombre)
+    data_table.new_column('number', "Vaca " + vaca.caravana.to_s)
     
     data_table.add_rows(vaca.actividades.count)
     n = 0
 
     vaca.actividades.each do |actividad|
-      data_table.set_cell(n, 0, actividad.registrada_en)
+      data_table.set_cell(n, 0, actividad.registrada)
       data_table.set_cell(n, 1, actividad.valor)
       n = n+1
     end
@@ -46,7 +47,6 @@ def vaca_time_line(vaca)
     :displayRangeSelector => true, :displayZoomButtons => false, :scaleColumns => [], 
     :displayLegendValues => false, :displayLegendDots => false}
   @chart = GoogleVisualr::Interactive::AnnotatedTimeLine.new(data_table, opts)
-  
   return @chart
 end
 

@@ -1,0 +1,24 @@
+<% provide(:title, "Agregar Evento") %>
+<div class="page-header">
+  <h3>Agregar Evento</h3>
+</div>
+
+  <div class="span9">
+  	
+     <%= form_for(@suceso) do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+  
+      <%= f.label :vaca %>
+      <%= f.collection_select :vaca_id, @vacas, :caravana, :caravana %>
+  
+      <%= f.label :tipo, 'Evento' %>
+      <%= f.select :tipo, options_for_select([["Servicio", "servicio"],["Parto", "parto"],["Deteccion de Preñes", "preniada"]]) %>
+
+      <%= f.label :momento, 'Fecha' %>
+      <%= f.datepicker 'momento' %>
+    
+    <div class="actions">
+      <%= f.submit "Agregar", :class => "actions btn-small btn-primary" %>
+    </div>
+    <% end %>
+  </div>

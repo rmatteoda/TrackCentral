@@ -10,7 +10,7 @@
           <ul>
           <li><strong>Raza: </strong> <%= @vaca.raza %></li>
           <li><strong>Estado: </strong> <%= @vaca.estado %></li>
-          <li><strong>Nodo: </strong> <%= @vaca.nodo_id %></li>
+          <li><strong>Collar: </strong> <%= @vaca.nodo_id %></li>
           </ul>
         
         </div><!--/span-->
@@ -29,22 +29,37 @@
           <li><strong>Intervalo entre partos: </strong> 380 dias</li>
           </ul>
         </div><!--/span-->
-  </div><!--/row-->
+</div><!--/row-->
 
+<div class="row">
   <div class="page-header">
-  <h4>Historial de partos y servicios</h4>
+    <h4>Historial de partos y servicios</h4>
   </div>
     
-  <div class="span8">  
+  <div class="span10">  
     <div id='time_line_chart' style='width: 700px; height: 200px;'></div>
         <%= render_chart(@time_line_chart, 'time_line_chart') %>
-    </div> 
   </div> 
+</div>
+<% if @vaca.actividades.any? && !@act_chart.nil?%>
+<div class="row">
 
- <div class="page-header">
-  <h4>Grafico de Actividad</h4>
+<br>
+  <div class="page-header">
+   <h4>Grafico de Actividad</h4>
   </div>
-  <br>
+
+  <div class="span9"> 
+      <div id='act_chart'></div>
+        <%= render_chart(@act_chart, 'act_chart') %>
+  </div>
+  </div>
+ <% end %>
+
+</div>
+
+
+<br>
 
 <div class="form-actions">
   <%= link_to 'Volver',
