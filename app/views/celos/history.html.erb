@@ -1,0 +1,39 @@
+<div class="page-header">
+  <h4>Vacas en Celo - detectadas ultimos 7 dias</h4>
+</div>
+ 
+  <div class="span9">
+  
+  <table class="table table-bordered table-striped">
+
+  <thead>
+    <tr>
+      <th>Vaca</th>
+      <th>Comienzo</th>
+      <th>Inseminada</th>
+    </tr>
+  </thead>
+    <tbody>
+      <tr>
+        <td><%= @vaca_en_celo.caravana %></td>
+        <td><%= @celo_start.strftime("%d/%m %H:%M:%S") %> hrs</td>
+        <td>Si</td>
+      </tr>
+  </tbody>
+ </table>
+ 
+ <div class="row">
+   <br>
+   <div class="page-header">
+    <h4>Estadistica mensual</h4>
+   </div>
+   <div class="span11"> 
+      <div id='hist_chart'></div>
+        <%= render_chart(@hist_chart, 'hist_chart') %>
+   </div>
+ </div>
+
+</div>
+
+</div>
+

@@ -16,4 +16,10 @@ include PlotHelper
         end
 	end
 
+	def history
+		@vaca_en_celo = Vaca.find(8)
+		@celo_start = Date.today.advance(:days => -2).to_datetime
+		@hist_chart = estadistica_celo_chart
+	end
+
 end

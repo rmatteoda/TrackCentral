@@ -21,7 +21,11 @@ TrackCentral::Application.routes.draw do
  
   resources :alarmas, only: [:index]
   
-  resources :celos, only: [:index]
+  resources :celos, only: [:index] do
+    member do
+      get :history
+    end
+  end
   
   resources :sucesos, only: [:new, :create]
  

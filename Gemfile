@@ -13,6 +13,9 @@ gem "google_visualr", "~> 2.1.0"
 #to define cron task
 gem 'whenever', :require => false
 
+#builder for xml
+#gem 'builder update', '~> 2.0'
+
 group :development, :test do
   gem 'sqlite3'
 end
