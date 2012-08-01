@@ -42,7 +42,7 @@ gem 'jquery-rails'
 
 gem 'jquery_datepicker'
 
-gem 'thin'
+gem 'passenger'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

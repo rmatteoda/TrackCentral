@@ -8,7 +8,9 @@ class SucesosController < ApplicationController
 
 
   def create
-    @suceso = Suceso.new(params[:suceso])
+    #@suceso = Suceso.new(params[:suceso])
+    @vaca = Vaca.find(params[:suceso][:vaca_id])
+    @suceso = @vaca.sucesos.build(params[:suceso])
     
     if @suceso.save
        flash[:success] = "Evento Agregado con exito"

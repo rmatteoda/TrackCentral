@@ -9,8 +9,9 @@ def activitad_chart(vaca)
     
     data_table.add_rows(vaca.actividades.count)
     n = 0
-
-    vaca.actividades.each do |actividad|
+    actividades_celo = vaca.actividades.where("registrada >= ?", 36.hours.ago)
+ 
+    actividades_celo.each do |actividad|
       data_table.set_cell(n, 0, actividad.registrada)
       data_table.set_cell(n, 1, actividad.valor)
       promedio = actividad_promedio(actividad.registrada)    
@@ -18,9 +19,7 @@ def activitad_chart(vaca)
       n = n+1
     end
 
-    #opts   = {:title => 'Actividad', :vAxis => { :title => 'Eventos'}, :hAxis => { :title => 'Tiempo'},:series => {'0' => {:color => 'green'}} }
-    #@chart = GoogleVisualr::Interactive::AreaChart.new(data_table, opts)
-    opts   = {:title => 'Actividad', :vAxis => {:title => 'Eventos'}, :hAxis => {:title => 'Tiempo'}, :seriesType => 'area', :series => {'1' => {:type => 'line',:color => 'green'}} }
+    opts   = {:pointSize => 3,:legend => {:position => 'top'},:title => 'Actividad vaca '+ vaca.caravana.to_s + ' ultimas 36 horas', :vAxis => {:title => 'Eventos', :minValue => 0,:maxValue => 200}, :hAxis => {:title => 'Tiempo'}, :seriesType => 'area', :series => {'1' => {:type => 'line',:color => 'green'}} }
     @chart = GoogleVisualr::Interactive::ComboChart.new(data_table, opts)
 
     return @chart
@@ -47,18 +46,26 @@ def vaca_time_line(vaca)
   data_table.new_column('string', 'title1')
   data_table.new_column('number', 'Partos'   )
   data_table.new_column('string', 'title2')
-  data_table.add_rows( [
-    [ Date.parse("2010-9-1"), 100, '', 200, ''],
-    [ Date.parse("2010-10-1"), 100, '', 200, 'Parto'],
-    [ Date.parse("2011-1-20"), 100, 'Servicio 1', 200, ''],
-    [ Date.parse("2011-2-3"), 100, 'Servicio 2', 200, ''],
-    [ Date.parse("2011-11-25"), 100, '', 200, 'Parto'],
-    [ Date.parse("2012-2-25"), 100, 'Servicio 1', 200, ''],
-    [ Date.parse("2012-3-16"), 100, 'Servicio 2', 200, ''],
-    [ Date.parse("2012-4-7"), 100, 'Servicio 3', 200, ''],
-    [ Date.parse("2012-4-29"), 100, 'Servicio 4', 200, ''],
-    [ Date.parse("2012-6-20"), 100, '', 200, '']
-    ] )
+
+  data_table.add_rows(vaca.sucesos.count)
+  index = 0
+  
+  vaca.sucesos.each do |suceso|
+
+  	data_table.set_cell(index,0,suceso.momento);
+  	data_table.set_cell(index,1,100);
+  	data_table.set_cell(index,2,'');
+  	data_table.set_cell(index,3,200);
+  	data_table.set_cell(index,4,'');
+  	
+  	if suceso.tipo == "parto"
+  		data_table.set_cell(index,4,'Parto');
+  	else
+  		data_table.set_cell(index,2,'Servicio');
+  	end	
+
+  	index = index + 1
+  end
 
   opts   = {:title => 'Historial de Partos y Servicios', :displayAnnotations => true, 
     :displayRangeSelector => true, :displayZoomButtons => false, :scaleColumns => [], 
@@ -72,13 +79,12 @@ def estadistica_celo_chart
     data_table.new_column('string', 'Mes'       )
     data_table.new_column('number', 'Celos Detectados')
     data_table.new_column('number', 'Servicios')
-    data_table.new_column('number', 'Vacas Preniadas')
     data_table.add_rows( [
-    ['enero', 21, 21, 10],
-    ['febrero', 18, 18, 9],
-    ['marzo', 25, 23, 11],
-    ['abril', 28, 26, 15],
-    ['mayo', 30, 29, 20]] )
+    ['enero', 21, 21],
+    ['febrero', 18, 18],
+    ['marzo', 25, 23],
+    ['abril', 28, 26],
+    ['mayo', 30, 29]] )
 
     opts   = { :width => 700, :height => 400, :title => 'Analisis de Celo', 
     :vAxis => {:title => 'Numero de Vacas'}, :hAxis => {:title => 'Mes'}, :seriesType => 'bars' }

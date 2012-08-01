@@ -2,7 +2,7 @@ class CelosController < ApplicationController
 include PlotHelper
 
 	def index
-		@vacas_en_celo = Vaca.limit(3)
+		@vacas_en_celo = [Vaca.find(3),Vaca.find(4)]
 		@celo_start = Date.today.to_datetime
 	
 		if params[:vaca_select].nil?
@@ -10,6 +10,9 @@ include PlotHelper
 		else
 			@vaca_selected = Vaca.find(params[:vaca_select])
 		end
+
+		actividad_en_celo = @vaca_selected.actividades.where("valor > 100").first
+		@celo_start = actividad_en_celo.registrada
 
 		if @vaca_selected.actividades.any? 
           @act_chart = activitad_chart(@vaca_selected)

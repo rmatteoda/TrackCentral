@@ -12,7 +12,7 @@
       <%= f.collection_select :vaca_id, @vacas, :caravana, :caravana %>
   
       <%= f.label :tipo, 'Evento' %>
-      <%= f.select :tipo, options_for_select([["Servicio", "servicio"],["Parto", "parto"],["Deteccion de Preñes", "preniada"]]) %>
+      <%= f.select :tipo, options_for_select([["Servicio", "servicio"],["Parto", "parto"]]) %>
 
       <%= f.label :momento, 'Fecha' %>
       <%= f.datepicker 'momento' %>

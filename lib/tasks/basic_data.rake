@@ -5,6 +5,7 @@ namespace :db do
     populate_vacas
     populate_nodos
     align_vacas_nodos
+    populate_alarmas
   end
 
   def populate_usuarios
@@ -27,6 +28,7 @@ namespace :db do
                    raza: "Holando",
                    estado: "Normal") 
         populate_actividades(vaca)
+        populate_sucesos(vaca)
     end
   end
 
@@ -37,6 +39,54 @@ namespace :db do
                   bateria: 100)   
     end
   end
+
+  def populate_alarmas
+    registro = 2.hours.ago
+    Alarma.create!(vaca_id: 5,
+                  horas_de_valides: 18,
+                  tipo: "celo_detectado",
+                  vista: false,
+                  registrada: registro)   
+
+    registro = 2.days.ago
+    Alarma.create!(vaca_id: 7,
+                  tipo: "servicios",
+                  vista: false,
+                  registrada: registro)   
+  end
+
+  def populate_actividades(vaca)
+    inicio = 4.days.ago
+    48.times do |n|
+      registro = inicio.advance(:hours => 2*n)
+      value = rand_int(50,70)    
+      if (vaca.caravana >= 3 && vaca.caravana < 5 && n>=40 && n<44)
+        value = rand_int(130,150)
+      end
+      vaca.actividades.create!(registrada: registro, tipo: "recorrido", valor: value)
+    end 
+  end
+
+  def populate_sucesos(vaca)
+    inicio = 26.months.ago
+    vaca.sucesos.create!(momento: inicio, tipo: "servicio")
+    
+    inicio = 16.months.ago
+    vaca.sucesos.create!(momento: inicio, tipo: "parto")
+    
+    inicio = 14.months.ago
+    vaca.sucesos.create!(momento: inicio, tipo: "servicio")
+ 
+    inicio = 13.months.ago
+    vaca.sucesos.create!(momento: inicio, tipo: "servicio")
+        
+    inicio = 3.months.ago
+    vaca.sucesos.create!(momento: inicio, tipo: "parto")
+  
+    inicio = 20.days.ago
+    vaca.sucesos.create!(momento: inicio, tipo: "servicio")
+  end
+
 
   def align_vacas_nodos
     14.times do |n|
@@ -50,17 +100,8 @@ namespace :db do
     end
   end
 
-  def populate_actividades(vaca)
-    inicio = 4.days.ago
-    48.times do |n|
-      registro = inicio.advance(:hours => 2*n)
-      value = rand_int(50,70)    
-      #value = rand_int(100,120) if n>3  
-      vaca.actividades.create!(registrada: registro, tipo: "recorrido", valor: value)
-    end 
-  end
-
   def rand_int(from, to)
   (rand * (to - from) + from).to_i
   end
+
 end
