@@ -1,19 +1,22 @@
 <div>    
-		<div class="alert alert-error">
-		  <button class="close" data-dismiss="alert">&times;</button>
-		  <h4 class="alert-heading">Problema!</h4>
-		  se han detectado 1 vaca con mas de cuatro servicios sin ser preñada.
-		</div>
-
+		<% if @alarmas_servicio.any? %>
+			<div class="alert alert-error">
+			  <h4 class="alert-heading">Problema!</h4>
+			  se han detectado vacas con mas de cuatro servicios sin ser preñada.
+			</div>
+		<% end %>
+		
+		<% if @alarmas_parto.any? %>
 		<div class="alert alert-block">
-		  <a class="close" data-dismiss="alert" href="#">×</a>
 		  <h4 class="alert-heading">Warning!</h4>
-		  Se han detectado 2 vacas con mas de 130 dias post-parto sin ser preñadas
+		  Se han detectado vacas con mas de 130 dias post-parto sin ser preñadas
 		</div>
-
+		<% end %>
+		
+		<% if @alarmas_celo.any? %>
 		<div class="alert alert-info">
-		  <button class="close" data-dismiss="alert">&times;</button>
 		  <h4 class="alert-heading">Celo!</h4>
-		  se han detectado 1 vaca en celo.
+		  se han detectado vacas en celo.
 		</div>
+		<% end %>
 </div>

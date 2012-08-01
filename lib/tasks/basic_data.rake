@@ -53,7 +53,13 @@ namespace :db do
                   tipo: "servicios",
                   vista: false,
                   registrada: registro)   
-  end
+ 
+    registro = 2.days.ago
+    Alarma.create!(vaca_id: 4,
+                  tipo: "post-parto",
+                  vista: false,
+                  registrada: registro)   
+ end
 
   def populate_actividades(vaca)
     inicio = 4.days.ago
