@@ -1,11 +1,13 @@
 namespace :db do
   desc "Fill database with sample data"
+  #limppiar la base rake db:purge
   task populate: :environment do
     populate_usuarios
     populate_vacas
     populate_nodos
     align_vacas_nodos
-    populate_alarmas
+    #populate_alarmas
+    populate_alert_data
   end
 
   def populate_usuarios
@@ -91,6 +93,29 @@ namespace :db do
   
     inicio = 20.days.ago
     vaca.sucesos.create!(momento: inicio, tipo: "servicio")
+  end
+
+  def populate_alert_data
+    vaca = Vaca.create!(caravana: 17,
+                   raza: "Holando",
+                   estado: "Normal") 
+    populate_actividades(vaca)
+        
+    ultimo_parto = 125.days.ago
+    vaca.sucesos.create!(momento: ultimo_parto, tipo: "parto")
+  
+    inicio = 50.days.ago
+    vaca.sucesos.create!(momento: inicio, tipo: "servicio")
+    
+    inicio = 30.days.ago
+    vaca.sucesos.create!(momento: inicio, tipo: "servicio")
+  
+    inicio = 15.days.ago
+    vaca.sucesos.create!(momento: inicio, tipo: "servicio")
+  
+    inicio = 1.days.ago
+    vaca.sucesos.create!(momento: inicio, tipo: "servicio")
+  
   end
 
 
