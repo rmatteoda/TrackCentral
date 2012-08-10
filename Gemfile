@@ -41,7 +41,7 @@ gem 'jquery-rails'
 
 gem 'jquery_datepicker'
 
-gem 'passenger'
+#gem 'passenger'
 
 # Use unicorn as the app server
 # gem 'unicorn'
