@@ -99,7 +99,7 @@ namespace :db do
     vaca = Vaca.create!(caravana: 17,
                    raza: "Holando",
                    estado: "Normal") 
-    populate_actividades(vaca)
+    #populate_actividades(vaca)
         
     ultimo_parto = 125.days.ago
     vaca.sucesos.create!(momento: ultimo_parto, tipo: "parto")

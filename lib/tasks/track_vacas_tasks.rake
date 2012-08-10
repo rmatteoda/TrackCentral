@@ -1,20 +1,21 @@
 namespace :track_vacas do
   desc "Task de control de vacas"
       
+  #genera las alarmas del sistema para problemas en vacas:
   task detectar_alarmas: :environment do
-  	#eliminar alarmas con mas de 10 dias de antiguedad
-   #Alarma.destroy_all(["registrada <= ?", 9.days.ago])
-   Alarma.destroy_all(["registrada > ?", 9.days.ago])
+   #eliminar alarmas con mas de 10 dias de antiguedad
+   #Alarma.destroy_all(["registrada < ?", 9.days.ago.to_date])
+   Alarma.destroy_all()
    
-   #genera las alarmas del sistema para problemas en vacas:
    #vacas_alerts = Vaca.joins(:sucesos).where("sucesos.tipo = 'parto'")
    vacas_alerts = Vaca.all
    limite_parto = 120.days.ago.to_date
    
    vacas_alerts.each do |vaca| 
+
    	sucesos_parto = vaca.sucesos.where("tipo = 'parto'").order("momento DESC")
    	ultimo_parto = 100.days.ago.to_date
- 	ultimo_parto = sucesos_parto.first.momento if sucesos_parto.any?
+ 	  ultimo_parto = sucesos_parto.first.momento if sucesos_parto.any?
  	
    	#vacas con mas de 120 dias sin estar preñadas
     if ultimo_parto.to_date <= limite_parto.to_date
@@ -32,8 +33,26 @@ namespace :track_vacas do
 	end
 	
    end
+
   end
 
+  #detecta posible perdida de collares
+  task detectar_perdida: :environment do
+   Alarma.destroy_all(["tipo = 'collar_perdido'"])
+   
+   vacas_alerts = Vaca.all
+   ultimo_registro = 36.hours.ago
+   
+   vacas_alerts.each do |vaca| 
+   		actividades = vaca.actividades.where("registrada > ?",ultimo_registro)
+
+   		if actividades.count < 5
+   			crear_alarma(vaca.id,"collar_perdido","no se detectaron datos en collar, posible perdida de collar, controle en la vaca y contacte a TrackTambo")
+		end
+   end
+  end
+
+  #crea una alarma en la DB
   def crear_alarma(vaca,tipo,mensaje)
     registro = 1.hours.ago
     Alarma.create!(vaca_id: vaca,

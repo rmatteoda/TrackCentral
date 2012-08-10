@@ -17,14 +17,14 @@ gem 'whenever', :require => false
 #gem 'builder update', '~> 2.0'
 
 group :development do
-  #gem 'sqlite3'
-  gem 'mysql2'
+  gem 'sqlite3'
+  #gem 'mysql2'
 end
 
 #bundle install --without production
 group :production, :test do
-  gem 'sqlite3'
-  #gem 'pg'
+  #gem 'sqlite3'
+  gem 'pg'
 end
 
 # Gems used only for assets and not required
