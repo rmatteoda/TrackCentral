@@ -3,7 +3,6 @@ namespace :track_data do
   #Rake::Task['morning:make_coffee'].invoke
       
   task create_demo_data: :environment do
-    #File.delete(File.join(directory, 'data_from_collector.txt'))
     File.open('./tmp/data_from_collector.txt', 'a+') do |f|     
       registro = Time.now.to_datetime
       vacas = Vaca.all
@@ -30,6 +29,8 @@ namespace :track_data do
     File.delete('./tmp/data_from_collector.txt')    
   end
 
+####################### PRIVATE METHODS ################
+private
   def save_activity(nodo_id,eventos,registro)
   	#puts "guardo " + nodo_id.to_s + " - " + eventos.to_s
   	vacas = Vaca.where("nodo_id = ?",nodo_id)

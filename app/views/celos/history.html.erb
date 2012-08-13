@@ -1,39 +1,41 @@
+  
 <div class="page-header">
-  <h4>Vacas en Celo - detectadas ultimos 7 dias</h4>
+    <h4>Historial de Celos</h4>
 </div>
- 
+   
+  <div class="span11"> 
+      <div id='hist_chart'></div>
+        <%= render_chart(@hist_chart, 'hist_chart') %>
+  </div>
+
+<% if @celos.any? %>
+ <div class="span11"> 
+  <div class="page-header">
+  <h4>Vacas en Celo - detectadas ultimos 7 dias</h4>
+ </div>
+
   <div class="span9">
   
   <table class="table table-bordered table-striped">
-
   <thead>
     <tr>
       <th>Vaca</th>
       <th>Comienzo</th>
-      <th>Inseminada</th>
     </tr>
   </thead>
     <tbody>
+      <% @celos.each do |celo| %>
       <tr>
-        <td><%= @vaca_en_celo.caravana %></td>
-        <td><%= @celo_start.strftime("%d/%m %H:%M:%S") %> hrs</td>
-        <td>Si</td>
+        <td><%= celo.vaca_id %></td>
+        <td><%= celo.comienzo.strftime("%d/%m %H") %> hrs</td>
       </tr>
+      <% end%>
   </tbody>
  </table>
- 
- <div class="row">
-   <br>
-   <div class="page-header">
-    <h4>Estadistica mensual</h4>
-   </div>
-   <div class="span11"> 
-      <div id='hist_chart'></div>
-        <%= render_chart(@hist_chart, 'hist_chart') %>
-   </div>
- </div>
-
+</div>
 </div>
 
-</div>
+ <% end %>
+
+
 

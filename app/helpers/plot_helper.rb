@@ -86,7 +86,7 @@ def estadistica_celo_chart
     ['abril', 28, 26],
     ['mayo', 30, 29]] )
 
-    opts   = { :width => 700, :height => 400, :title => 'Analisis de Celo', 
+    opts   = { :width => 700, :height => 400, :title => 'Estadistica mensual', 
     :vAxis => {:title => 'Numero de Vacas'}, :hAxis => {:title => 'Mes'}, :seriesType => 'bars' }
     @chart = GoogleVisualr::Interactive::ColumnChart.new(data_table, opts)
     return @chart

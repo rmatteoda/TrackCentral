@@ -2,6 +2,8 @@
   <h4>Alarmas</h4>
 </div>
 
+<% if @alarmas.any? %>
+
 <div>    
 		<table class="table table-striped">
 		  <thead>
@@ -28,7 +30,7 @@
 </div> 
 <hr>
 
-<% if @alarmas_servicio.any? %>
+		<% if @alarmas_servicio.any? %>
 			<div class="alert alert-error">
 			  <strong>Problema:</strong>
 			  Se han detectado vacas con mas de cuatro servicios sin ser preñada.
@@ -45,6 +47,12 @@
 		<div class="alert alert-block">
 		  <strong>Alerta:</strong> Se han detectado vacas con mas de 120 dias post-parto sin ser preñadas
 		</div>
+		<% end %>
+
+<% else %>
+<div class="alert alert-info">
+	<strong>INFO:</strong> No se han detectado alarmas
+	</div>
 <% end %>
 
 

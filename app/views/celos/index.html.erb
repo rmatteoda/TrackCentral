@@ -3,11 +3,7 @@
   <h3>Vacas en Celo</h3>
 </div>
   <div class="span11">
-    <% if !@vacas_en_celo.nil? %>
-
- <!--    <div class="alert alert-info">
-      <strong>Celos!</strong> se han detectado <%= @vacas_en_celo.count %> vacas en celo.
-    </div> -->
+    <% if !@celos.nil? %>
     
   <table class="table table-bordered table-striped">
 
@@ -16,20 +12,19 @@
       <th>Vaca</th>
       <th>Comienzo</th>
       <th>Horario para Inseminacion</th>
-      <!-- <th>Servicios Post-Parto</th>
-       --><th>Ultimo Celo</th>
+      <th>Ultimo Celo</th>
       <th>Actividad</th>
     </tr>
   </thead>
     <tbody>
-      <% @vacas_en_celo.each do |vaca_en_celo| %>
+      <% @celos.each do |celo| %>
       <tr>
-        <td><%= vaca_en_celo.caravana %></td>
-        <td><%= @celo_start.strftime("%d/%m %H") %> hrs</td>
-        <td>desde <%= @celo_start.advance(:hours => 8).strftime("%d/%m %H") %>hrs hasta <%= @celo_start.advance(:hours => 17).strftime("%d/%m %H") %>hrs <br> optimo: <%= @celo_start.advance(:hours => 11).strftime("%d/%m %H") %>hrs</td>
-        <td><%= @celo_start.advance(:days => -21).strftime("%d/%m %H") %>hrs</td>
+        <td><%= celo.vaca_id %></td>
+        <td><%= celo.comienzo.strftime("%d/%m %H") %> hrs</td>
+        <td>desde <%= celo.comienzo.advance(:hours => 8).strftime("%d/%m %H") %>hrs hasta <%= celo.comienzo.advance(:hours => 17).strftime("%d/%m %H") %>hrs <br> optimo: <%= celo.comienzo.advance(:hours => 11).strftime("%d/%m %H") %>hrs</td>
+        <td><%= celo.comienzo.advance(:days => -21).strftime("%d/%m %H") %>hrs</td>
         <td>
-        <%= link_to 'Ver', celos_path(:vaca_select => vaca_en_celo), :class => 'btn'%>
+        <%= link_to 'Ver', celos_path(:vaca_select => celo.vaca_id), :class => 'btn'%>
         </td>
       </tr>
       <% end%>
@@ -46,7 +41,7 @@
  </div>
 <% end %>
       
-    <% else %>
+<% else %>
     <div class="alert alert-info">
       <button class="close" data-dismiss="alert">&times;</button>
       No se han detectado vacas en celo.

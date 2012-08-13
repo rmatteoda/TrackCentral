@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  vaca_id: 1
+  comienzo: 2012-08-13 10:02:07
+  probabilidad: MyString
+  causa: MyString
+
+two:
+  vaca_id: 1
+  comienzo: 2012-08-13 10:02:07
+  probabilidad: MyString
+  causa: MyString

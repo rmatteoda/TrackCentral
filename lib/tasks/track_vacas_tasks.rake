@@ -20,17 +20,17 @@ namespace :track_vacas do
    	#vacas con mas de 120 dias sin estar preñadas
     if ultimo_parto.to_date <= limite_parto.to_date
 		crear_alarma(vaca.id,"post-parto","vaca con mas de 120 dias sin estar preniada")
-	end
+	  end
 	
- 	#detecto vacas con mas de 4 servicios sin estar preñadas
-  	sucesos_serv_pp = vaca.sucesos.where("momento > ? and tipo = 'servicio'",ultimo_parto)
-   	if sucesos_serv_pp.count >= 4
-		crear_alarma(vaca.id,"servicios","vaca con " + sucesos_serv_pp.count.to_s + " servicios post-parto")
-	end
-	
-	if !vaca.nodo.nil? && vaca.nodo.bateria < 20
-		crear_alarma(vaca.id,"bateria_collar","collar en vaca con bateria baja, contacte a TrackTambo")
-	end
+   	#detecto vacas con mas de 4 servicios sin estar preñadas
+    sucesos_serv_pp = vaca.sucesos(true).where("momento > ? and tipo = 'servicio'",ultimo_parto)
+    if sucesos_serv_pp.count >= 4
+  		crear_alarma(vaca.id,"servicios","vaca con " + sucesos_serv_pp.count.to_s + " servicios post-parto")
+  	end
+  	
+  	if !vaca.nodo.nil? && vaca.nodo.bateria < 20
+  		crear_alarma(vaca.id,"bateria_collar","collar en vaca con bateria baja, contacte a TrackTambo")
+  	end
 	
    end
 

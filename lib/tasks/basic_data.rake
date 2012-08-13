@@ -6,8 +6,9 @@ namespace :db do
     populate_vacas
     populate_nodos
     align_vacas_nodos
-    #populate_alarmas
     populate_alert_data
+    #populate_alarmas
+    #Rake::Task['morning:make_coffee'].invoke
   end
 
   def populate_usuarios
@@ -64,13 +65,13 @@ namespace :db do
  end
 
   def populate_actividades(vaca)
-    inicio = 4.days.ago
+    inicio = 2.days.ago
     48.times do |n|
-      registro = inicio.advance(:hours => 2*n)
+      registro = inicio.advance(:hours => n)
       value = rand_int(50,70)    
-      if (vaca.caravana >= 3 && vaca.caravana < 5 && n>=40 && n<44)
-        value = rand_int(130,150)
-      end
+      #if (vaca.caravana >= 3 && vaca.caravana < 5 && n>=40 && n<44)
+      #  value = rand_int(130,150)
+      #end
       vaca.actividades.create!(registrada: registro, tipo: "recorrido", valor: value)
     end 
   end

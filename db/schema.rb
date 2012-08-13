@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120725214456) do
+ActiveRecord::Schema.define(:version => 20120813130207) do
 
   create_table "actividads", :force => true do |t|
     t.string   "tipo"
@@ -32,6 +32,15 @@ ActiveRecord::Schema.define(:version => 20120725214456) do
     t.boolean  "vista"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
+  end
+
+  create_table "celos", :force => true do |t|
+    t.integer  "vaca_id"
+    t.datetime "comienzo"
+    t.string   "probabilidad"
+    t.string   "causa"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "nodos", :force => true do |t|
