@@ -22,7 +22,7 @@ group :development, :test do
 end
 
 #bundle install --without production
-group :production, :test do
+group :production do
   #gem 'sqlite3'
   gem 'pg'
 end
