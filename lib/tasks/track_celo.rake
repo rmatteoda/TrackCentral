@@ -38,8 +38,8 @@ private
     casos = 0
     celo_start = nil
 
-  	12.times do |n|
-      hora = (12-n).hours.ago.to_datetime
+  	24.times do |n|
+      hora = (24-n).hours.ago.to_datetime
       hora_start = hora.change(:min => 0) 
       hora_end = hora_start.advance(:hours => 1)
       #controlo la actividad de cada hora en las ultimas 12
