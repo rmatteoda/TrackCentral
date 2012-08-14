@@ -29,6 +29,17 @@ namespace :track_data do
     File.delete('./public/data_from_collector.txt')    
   end
 
+  task simulate_demo_data: :environment do
+      registro = Time.now.to_datetime
+      vacas = Vaca.all
+      vacas.each do |vaca|
+        value = (rand * (50 - 80) + 80).to_i
+        if !vaca.nodo_id.nil?
+          save_activity(vaca.nodo_id.to_s,value,registro.to_s)
+        end
+      end
+  end
+  
 ####################### PRIVATE METHODS ################
 private
   def save_activity(nodo_id,eventos,registro)
