@@ -7,8 +7,9 @@ namespace :db do
     populate_nodos
     align_vacas_nodos
     populate_alert_data
-    #populate_alarmas
-    #Rake::Task['morning:make_coffee'].invoke
+    Rake::Task['track_vacas:detectar_alarmas'].invoke
+    Rake::Task['track_celo:simular_celos'].invoke
+    Rake::Task['track_celo:detectar_celos'].invoke
   end
 
   def populate_usuarios
@@ -25,7 +26,7 @@ namespace :db do
   end
 
   def populate_vacas
-    14.times do |n|
+    54.times do |n|
         cv = n.to_i + 1
         vaca = Vaca.create!(caravana: cv,
                    raza: "Holando",
@@ -36,42 +37,18 @@ namespace :db do
   end
 
   def populate_nodos
-    14.times do |n|
+    54.times do |n|
       nodo = "ND_" + (n+1).to_s 
       Nodo.create!(nodo_id: nodo,
                   bateria: 100)   
     end
   end
 
-  def populate_alarmas
-    registro = 2.hours.ago
-    Alarma.create!(vaca_id: 5,
-                  horas_de_valides: 18,
-                  tipo: "celo_detectado",
-                  vista: false,
-                  registrada: registro)   
-
-    registro = 2.days.ago
-    Alarma.create!(vaca_id: 7,
-                  tipo: "servicios",
-                  vista: false,
-                  registrada: registro)   
- 
-    registro = 2.days.ago
-    Alarma.create!(vaca_id: 4,
-                  tipo: "post-parto",
-                  vista: false,
-                  registrada: registro)   
- end
-
   def populate_actividades(vaca)
     inicio = 2.days.ago
     48.times do |n|
       registro = inicio.advance(:hours => n)
       value = rand_int(50,70)    
-      #if (vaca.caravana >= 3 && vaca.caravana < 5 && n>=40 && n<44)
-      #  value = rand_int(130,150)
-      #end
       vaca.actividades.create!(registrada: registro, tipo: "recorrido", valor: value)
     end 
   end
@@ -97,7 +74,7 @@ namespace :db do
   end
 
   def populate_alert_data
-    vaca = Vaca.create!(caravana: 17,
+    vaca = Vaca.create!(caravana: 55,
                    raza: "Holando",
                    estado: "Normal") 
     #populate_actividades(vaca)
@@ -121,7 +98,7 @@ namespace :db do
 
 
   def align_vacas_nodos
-    14.times do |n|
+    54.times do |n|
       ind = n+1
       nodo_id = "ND_" + ind.to_s
       nodo = Nodo.where("nodo_id = ?",nodo_id).first

@@ -3,7 +3,7 @@
   <h3>Vacas en Celo</h3>
 </div>
   <div class="span11">
-    <% if !@celos.nil? %>
+    <% if @celos.any? %>
     
   <table class="table table-bordered table-striped">
 
@@ -31,16 +31,16 @@
   </tbody>
  </table>
  
- <% if @vaca_selected.actividades.any? && !@act_chart.nil?%>
- <div class="row">
-   <br>
-   <div class="span11"> 
-      <div id='act_chart'></div>
-        <%= render_chart(@act_chart, 'act_chart') %>
+   <% if !@vaca_selected.nil? && @vaca_selected.actividades.any? && !@act_chart.nil?%>
+   <div class="row">
+     <br>
+     <div class="span11"> 
+        <div id='act_chart'></div>
+          <%= render_chart(@act_chart, 'act_chart') %>
+     </div>
    </div>
- </div>
-<% end %>
-      
+  <% end %>
+        
 <% else %>
     <div class="alert alert-info">
       <button class="close" data-dismiss="alert">&times;</button>

@@ -30,11 +30,12 @@ end
 
 every 1.days, :at => '8:30 am' do #???
   #generar vacas en celo aumentando actividad a 3 elejidas al azar
-  rake "track_data:simular_celos"
+  rake "track_celo:simular_celos"
 end
 
 every 6.hours do
   #controlar y detectar vacas en celo ActivityCeloDetect
+  rake "track_celo:detectar_celos"
 end
 
 every 2.days, :at => '2:30 am' do

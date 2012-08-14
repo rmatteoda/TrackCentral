@@ -11,20 +11,20 @@ gem 'will_paginate', '3.0.3'
 gem "google_visualr", "~> 2.1.0"
 
 #to define cron task
-gem 'whenever', :require => false
+#gem 'whenever', :require => false
 
 #builder for xml
 #gem 'builder update', '~> 2.0'
 
-group :development do
-  #gem 'sqlite3'
-  gem 'mysql2'
+group :development, :test do
+  gem 'sqlite3'
+  #gem 'mysql2'
 end
 
 #bundle install --without production
 group :production, :test do
-  gem 'sqlite3'
-  #gem 'pg'
+  #gem 'sqlite3'
+  gem 'pg'
 end
 
 # Gems used only for assets and not required
