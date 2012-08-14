@@ -7,9 +7,9 @@ namespace :track_data do
       registro = Time.now.to_datetime
       vacas = Vaca.all
       vacas.each do |vaca|
-      	value = (rand * (150 - 180) + 180).to_i
+      	value = (rand * (50 - 80) + 80).to_i
       	if !vaca.nodo_id.nil?
-        	f.puts vaca.nodo_id.to_s + "," + rand_int(150, 180).to_s + "," + registro.to_s
+        	f.puts vaca.nodo_id.to_s + "," + rand_int(50, 80).to_s + "," + registro.to_s
     	end
       end
       f.puts "#end_data\n"
