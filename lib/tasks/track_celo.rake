@@ -74,7 +74,7 @@ private
 
     #si se detectaron varios casos, la vaca esta en celo
     if casos > 5
-        puts "vaca " + vaca.caravana.to_s + " en celo desde " + celo_start.to_s 
+        #puts "vaca " + vaca.caravana.to_s + " en celo desde " + celo_start.to_s 
         vaca.celos.create!(comienzo: celo_start,
                            probabilidad: "alta",
                            causa: "aumento de actividad")
@@ -107,7 +107,7 @@ private
 
   #temporal, para simular aumento de actividad de vaca en celo
   def actividad_celo(vaca)
-    puts "cargo vaca en celo " + vaca.caravana.to_s
+    #puts "cargo vaca en celo " + vaca.caravana.to_s
     momento_celo_start = 8.hours.ago
     actividad_celo = vaca.actividades.where("registrada > ? ", momento_celo_start)
     
