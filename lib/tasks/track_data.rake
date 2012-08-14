@@ -3,7 +3,7 @@ namespace :track_data do
   #Rake::Task['morning:make_coffee'].invoke
       
   task create_demo_data: :environment do
-    File.open('./tmp/data_from_collector.txt', 'a+') do |f|     
+    File.open('./public/data_from_collector.txt', 'a+') do |f|     
       registro = Time.now.to_datetime
       vacas = Vaca.all
       vacas.each do |vaca|
@@ -17,7 +17,7 @@ namespace :track_data do
   end
 
   task read_demo_data: :environment do
-    data_file = File.open('./tmp/data_from_collector.txt', 'r')      
+    data_file = File.open('./public/data_from_collector.txt', 'r')      
       
     while (line = data_file.gets)
        data = line.split(',')
@@ -26,7 +26,7 @@ namespace :track_data do
        end
     end
     
-    File.delete('./tmp/data_from_collector.txt')    
+    File.delete('./public/data_from_collector.txt')    
   end
 
 ####################### PRIVATE METHODS ################
