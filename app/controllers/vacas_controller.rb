@@ -1,5 +1,6 @@
 class VacasController < ApplicationController
   include PlotHelper
+  include VacasHelper
 
   def index
     @vacas = Vaca.paginate(:page => params[:page], :per_page => 10)
@@ -13,6 +14,11 @@ class VacasController < ApplicationController
     end
 
     @time_line_chart = vaca_time_line(@vaca)
+
+    @ultimo_parto = ultimo_parto(@vaca)
+    @ultimo_servicio = ultimo_servicio(@vaca)
+    @ultimo_celo = ultimo_celo(@vaca)
+    @servicios_pp = servicios_post_parto(@vaca)
   end
 
   def new
