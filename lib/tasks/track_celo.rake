@@ -25,12 +25,12 @@ namespace :track_celo do
     celo_id = (rand * (1 - 50) + 50).to_i
     vaca = Vaca.find(celo_id)
     actividad_celo(vaca)
-    puts "simulado para " + vaca.caravana.to_s
+    #puts "simulado para " + vaca.caravana.to_s
 
     celo_id = (rand * (1 - 50) + 50).to_i
     vaca = Vaca.find(celo_id)
     actividad_celo(vaca)
-    puts "simulado para " + vaca.caravana.to_s
+    #puts "simulado para " + vaca.caravana.to_s
   end
 
   ####################### PRIVATE METHODS ################
