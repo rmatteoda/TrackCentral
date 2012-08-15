@@ -66,7 +66,7 @@ private
             casos = casos + 1
           end
           
-          if actividad.valor > (actividad_prev.valor * 1.5) && celo_start.nil?
+          if !actividad_prev.nil? && actividad.valor > (actividad_prev.valor * 1.5) && celo_start.nil?
             celo_start = hora_start
             casos = casos + 1
           end
