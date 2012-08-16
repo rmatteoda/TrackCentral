@@ -57,12 +57,10 @@ private
           #controlo aumento respecto de la actividad promedio
           actividad_promedio = Actividad.where("tipo = 'promedio' AND registrada >= ? and registrada < ?", hora_start,hora_end).first
           if !actividad_promedio.nil? && actividad.valor > (actividad_promedio.valor * 1.8)
-           # puts "mayor actividad que la promedio " + vaca.caravana.to_s + " : " + actividad.valor.to_s
             casos = casos + 1
           end
 
-          if !actividad_old.valor.nil? && (actividad.valor > (actividad_old.valor * 2.0))
-            #puts "mayor actividad que ayer " + vaca.caravana.to_s
+          if !actividad_old.nil? && (actividad.valor > (actividad_old.valor * 2.0))
             casos = casos + 1
           end
           
@@ -76,7 +74,6 @@ private
 
     #si se detectaron varios casos, la vaca esta en celo
     if casos > 5
-        #puts "vaca " + vaca.caravana.to_s + " en celo desde " + celo_start.to_s 
         vaca.celos.create!(comienzo: celo_start,
                            probabilidad: "alta",
                            causa: "aumento de actividad")
