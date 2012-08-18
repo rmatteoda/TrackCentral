@@ -4,7 +4,7 @@ namespace :track_db do
       
   task clear_old_data: :environment do
    #eliminar actividades con mas de 30 dias de antiguedad
-   Actividad.destroy_all(["registrada <= ?", 30.days.ago])
+   Actividad.destroy_all(["registrada <= ?", 3.days.ago])
   
   end
 end
