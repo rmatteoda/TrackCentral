@@ -9,7 +9,7 @@ def activitad_chart(vaca)
     
     data_table.add_rows(vaca.actividades.count)
     n = 0
-    actividades_celo = vaca.actividades.where("registrada >= ?", 36.hours.ago)
+    actividades_celo = vaca.actividades.where("registrada >= ? ", 36.hours.ago)
  
     actividades_celo.each do |actividad|
       data_table.set_cell(n, 0, actividad.registrada)
@@ -25,6 +25,41 @@ def activitad_chart(vaca)
     return @chart
 end
 
+def activitad_accelerometer_chart(vaca)
+
+    data_table = GoogleVisualr::DataTable.new
+    data_table.new_column('datetime', 'Date')
+    data_table.new_column('number', "Actividad Suave")
+    data_table.new_column('number', "Actividad Media")
+    data_table.new_column('number', "Actividad Fuerte")
+    data_table.new_column('number', "Actividad Continua")
+    
+    #data_table.add_rows(vaca.actividades.count)
+
+    actividades_suave = vaca.actividades.where("registrada >= ? and tipo = ?", 36.hours.ago,'recorrido_lento')
+    actividades_media = vaca.actividades.where("registrada >= ? and tipo = ?", 36.hours.ago,'recorrido_medio')
+    actividades_fuerte = vaca.actividades.where("registrada >= ? and tipo = ?", 36.hours.ago,'recorrido_rapido')
+    actividades_continua = vaca.actividades.where("registrada >= ? and tipo = ?", 36.hours.ago,'recorrido_continuo')
+ 
+    data_table.add_rows(actividades_suave.count)
+
+    n = 0
+    actividades_suave.each do |actividad|
+      data_table.set_cell(n, 0, actividad.registrada)
+      data_table.set_cell(n, 1, actividad.valor)
+      data_table.set_cell(n, 2, actividades_media[n].valor)
+      data_table.set_cell(n, 3, actividades_fuerte[n].valor)
+      data_table.set_cell(n, 4, actividades_continua[n].valor)
+      n = n+1
+    end
+
+    opts   = {:pointSize => 3,:legend => {:position => 'top'},:title => 'Actividad vaca '+ vaca.caravana.to_s + ' ultimas 36 horas', 
+              :vAxis => {:title => 'Eventos', :minValue => -10,:maxValue => 200}, 
+              :hAxis => {:title => 'Tiempo'}}
+    @chart = GoogleVisualr::Interactive::LineChart.new(data_table, opts)
+
+    return @chart
+end
 def actividad_promedio(momento)
   
  actividades = Actividad.where("registrada between ? and ?", momento,momento+1.hour)

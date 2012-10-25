@@ -1,5 +1,5 @@
 namespace :track_data do
-  desc "Task para generar dato que vendra del colector"
+  desc "Task para leer datos que vendran del colector"
   #Rake::Task['morning:make_coffee'].invoke
       
   task create_demo_data: :environment do
@@ -29,6 +29,34 @@ namespace :track_data do
     File.delete('./public/data_from_collector.txt')    
   end
 
+  task load_collected_data: :environment do
+    if File.exist?('./public/data_from_collector.txt')
+   
+    data_file = File.open('./public/data_from_collector.txt', 'r')      
+    data_file.flock(File::LOCK_EX)
+
+    while (line = data_file.gets)
+      data = line.split(',')
+       if data[0].to_s.eql? "Start"
+         vacas = Vaca.where("nodo_id = ?",data[1])
+         if vacas.any?
+          current_vaca = vacas.first 
+          last_activity = current_vaca.actividades.last
+          last_register = last_activity.registrada
+         end
+        elsif data.length >= 4
+          if !current_vaca.nil? && !last_register.nil?
+            last_register = last_register.advance(:hours => 1)
+            save_collected_activity(current_vaca,data[0],data[1],data[2],data[3],last_register)
+          end
+        end
+    end
+    data_file.flock(File::LOCK_UN)
+
+    #File.delete('./public/data_from_collector.txt')    
+    end
+  end
+
   task simulate_demo_data: :environment do
       registro = Time.now.to_datetime
       vacas = Vaca.all
@@ -49,6 +77,20 @@ private
   		vaca_selected = vacas.first
   		vaca_selected.actividades.create!(registrada: registro, tipo: "recorrido", valor: eventos)
   	end
+  end
+
+  def save_collected_activity(vaca,accel_slow,accel_medium,accel_fast,accel_cont,registro)
+    puts "guardo " + vaca.nodo_id.to_s + " - " + accel_slow.to_s + " - " + registro.to_s
+
+      vaca_selected = vaca
+      vaca_selected.actividades.create!(registrada: registro, tipo: "recorrido_lento", 
+                                        valor: accel_slow)
+      vaca_selected.actividades.create!(registrada: registro, tipo: "recorrido_medio", 
+                                        valor: accel_medium)
+      vaca_selected.actividades.create!(registrada: registro, tipo: "recorrido_rapido", 
+                                        valor: accel_fast)
+      vaca_selected.actividades.create!(registrada: registro, tipo: "recorrido_continuo", 
+                                        valor: accel_cont)
   end
 
 end

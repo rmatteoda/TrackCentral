@@ -10,7 +10,7 @@ class VacasController < ApplicationController
     @vaca = Vaca.find(params[:id])
 
     if @vaca.actividades.any? 
-      @act_chart = activitad_chart(@vaca)
+      @act_chart = activitad_accelerometer_chart(@vaca)
     end
 
     @time_line_chart = vaca_time_line(@vaca)
