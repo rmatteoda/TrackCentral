@@ -23,8 +23,8 @@ end
 
 #bundle install --without production
 group :production do
-  #gem 'sqlite3'
-  gem 'pg'
+  gem 'sqlite3'
+  #gem 'pg'
 end
 
 # Gems used only for assets and not required
@@ -41,7 +41,11 @@ gem 'jquery-rails'
 
 gem 'jquery_datepicker'
 
-#gem 'passenger'
+gem 'passenger'
+
+#gem 'mongrel'
+
+#mongrel_rails start -p 3001 -e production -d
 
 # Use unicorn as the app server
 # gem 'unicorn'

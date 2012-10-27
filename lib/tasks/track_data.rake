@@ -34,8 +34,11 @@ namespace :track_data do
    
     data_file = File.open('./public/data_from_collector.txt', 'r')      
     data_file.flock(File::LOCK_EX)
+    all_lines = data_file.readlines
+    #File.truncate('./public/data_from_collector.txt',0)
+    data_file.flock(File::LOCK_UN)
 
-    while (line = data_file.gets)
+    all_lines.each do |line|
       data = line.split(',')
        if data[0].to_s.eql? "Start"
          vacas = Vaca.where("nodo_id = ?",data[1])
@@ -51,9 +54,7 @@ namespace :track_data do
           end
         end
     end
-    data_file.flock(File::LOCK_UN)
-
-    #File.delete('./public/data_from_collector.txt')    
+    
     end
   end
 
@@ -80,7 +81,7 @@ private
   end
 
   def save_collected_activity(vaca,accel_slow,accel_medium,accel_fast,accel_cont,registro)
-    puts "guardo " + vaca.nodo_id.to_s + " - " + accel_slow.to_s + " - " + registro.to_s
+    #puts "guardo " + vaca.nodo_id.to_s + " - " + accel_slow.to_s + " - " + registro.to_s
 
       vaca_selected = vaca
       vaca_selected.actividades.create!(registrada: registro, tipo: "recorrido_lento", 
