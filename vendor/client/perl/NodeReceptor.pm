@@ -1,6 +1,7 @@
 package NodeReceptor;
       
 use strict; #obliga a declarar las variables antes de usarlas
+use Fcntl qw(:flock SEEK_END);
  
 #***********************************************************
 # declaracion de variables globales
@@ -19,7 +20,7 @@ use strict; #obliga a declarar las variables antes de usarlas
  my $accelFast;
  my $accelContn;
  my $fileName;
- 
+ my $app_dir;
     
     #***********************************************************
     # constructor de la clase
@@ -30,7 +31,8 @@ use strict; #obliga a declarar las variables antes de usarlas
         $self ->{NODES} = {}; #inicializo como hash vacio
         $self ->{NODES_HOUR} = {}; #inicializo como hash vacio
                
-        $fileName = "Data_From_Collector.txt";
+        $app_dir = "/home/tracktambo/TrackCentral/";
+        $fileName = $app_dir . "public/data_from_collector.txt";
         
         bless $self , $class; #Perl asocia la referencia $self con la clase que corresponde
         return $self; #retornamos la instancia de la clase                                 
@@ -127,7 +129,7 @@ use strict; #obliga a declarar las variables antes de usarlas
         $from_id = $data_aux[1];
         &dumpData;
         
-        print "End Dump from: " . $from_id . " \n";          
+        #print "End Dump from: " . $from_id . " \n";          
     }
     
     #***********************************************************
@@ -140,6 +142,8 @@ use strict; #obliga a declarar las variables antes de usarlas
         #controlo si existe el nodo en la hash
         if($hash_nodes{$from_id}){
             open(FH, ">>",$fileName);
+            flock(FH,2);
+
             print FH "Start,".$from_id . ",".$hash_nodes_hr{$from_id}.",\n";
             
             my $i;
@@ -148,6 +152,9 @@ use strict; #obliga a declarar las variables antes de usarlas
             }
 
             print FH "End,".$from_id . ",\n";
+
+            flock(FH, LOCK_UN);
+
             close(FH);
         }
     }
@@ -169,7 +176,7 @@ use strict; #obliga a declarar las variables antes de usarlas
         my($day, $month, $year) = (localtime)[3,4,5];
         $month = sprintf '%02d', $month+1;
         $day   = sprintf '%02d', $day;
-        my $logFileName = $year+1900 . $month . $day . "_NodeReceptor_Log.txt";
+        my $logFileName = $app_dir . "log/" . ($year+1900) . $month . $day . "_NodeReceptor_Log.txt";
         
         open(FH, ">>","$logFileName");
         print FH $msgRecv . "\n";

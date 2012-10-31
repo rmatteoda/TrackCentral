@@ -1,2 +1,52 @@
-Use this README file to introduce your application and point to useful places in the API for learning more.
-Run "rake doc:app" to generate API documentation for your models, controllers, helpers, and libraries.
+Instalar Framework RoR
+
+## MAS RECOMENDADA: seguir instrucciones para usar rvm en:
+http://xenodesystems.blogspot.mx/2012/05/entorno-de-desarrollo-ruby-ruby-on.html (mysql root user admin passw)
+
+## manualmente desde repo ubuntu
+- instalar ruby
+ sudo apt-get install ruby1.9.3
+- instalar git
+ sudo apt-get install git-core
+- instalar gem manager
+ sudo apt-get install rubygems
+- instalar rails
+ sudo gem install rails -v 3.2.3
+- instalar base de datos
+ *instalar librerias para sqlite3
+  sudo apt-get install zlib1g zlib1g-dev build-essential sqlite3 libsqlite3-dev openssl libssl-dev libyaml-dev
+ sudo apt-get install sqlite3
+- instalar nodejs
+  sudo apt-get install nodejs
+*si algo falla probar antes sudo apt-get update
+*** comprobar que la version isntalada de ruby sea 1.9.3 y rails 3.2.3
+ruby -v
+rails -v
+
+** podria generar alguna aplicacion rails de ejemplo para ver si todo anda bien
+
+- instalar java jre 6
+  sudo apt_get install openjdk-6-jre  
+- descargar aplicacion TrackCentral
+ - crear carpeta donde se va a guardar la aplicacion ej: TrackTambo
+ - en terminal cd path/TrackTambo
+ - ejecutar git clone https://github.com/rmatteoda/TrackCentral.git
+ - cd TrackCentral
+ - bundle install
+ si todo salio bien hay que ejecutar scripts para generar la base de datos
+   - rake db:reset
+   - rake db:migrate
+   - rake db:populate - genera datos de ejemplo
+   - rails s -p 3020 para arrancar el servidor
+   - ir al navegador localhost:3020 y ver si anda TrackTambo central para control de celo
+
+
+NOTAS:
+- configurar bien las tareas de inicio en cron y testear. ver script que setea enviroment rvm
+- probar script serialreader y hacer que corra sin sudo
+   ver editar sudoers file %admin ALL=ALL NOPASSWD: path to file
+   sudo chmod 0777 /dev/ttyACM0 otra forma, agregarlo al rc.local
+- programar tareas de control, crlockwork
+- generar GUI SWT para linux
+- tratar de tener todo en ruby
+- controlar acceso a ficheros, ver ejemplos con flock
