@@ -16,14 +16,15 @@ include PlotHelper
 			end
 
 			if @vaca_selected.actividades.any? 
-	          @act_chart = activitad_chart(@vaca_selected)
+	          #@act_chart = activitad_chart(@vaca_selected)
+	          @act_chart = activitad_accelerometer_chart(@vaca_selected)
 	        end
     	end
 	end
 
 	def history
 		@celos = Celo.where("comienzo >= ?", 7.days.ago)
-		@hist_chart = estadistica_celo_chart
+		@hist_chart = estadistica_celo_chart_high
 	end
 
 end

@@ -1,14 +1,37 @@
 require 'clockwork'
-require 'rake'
+require 'stalker'
 include Clockwork
 
-handler do |job|
-  puts "Running #{job}"
+File.open('/home/tracktambo/TrackCentral/tmp/pids/clockwork.pid', 'w') do |fcl|  
+  fcl.puts Process.pid.to_s
+end  
+
+Clockwork.configure do |config|
+  config[:sleep_timeout] = 5 #en real ejecucion deberia ser mas tiempo
+  config[:logger] = Logger.new('/home/tracktambo/TrackCentral/log/clockwork.log')
 end
 
-every(10.seconds, 'frequent.job')
-every(3.minutes, 'less.frequent.job') do
- # Rake::Task['update_feed'].invoke
- system "rake update_feed"
+handler { |job| Stalker.enqueue(job) }
+
+every(1.minute, 'test.job')
+
+every 3.hours, 'collect_data' do
+  system "rake track_data:load_collected_data"
 end
 
+every 6.hours, 'detect_celo' do
+  system "rake track_celo:detectar_celos"
+end
+
+every 2.days, 'detect_perdida',:at => '2:30 am' do
+  system "rake track_vacas:detectar_perdida"
+end
+
+every 10.days, 'detect_alarms' do
+  system "rake track_vacas:detectar_alarmas"
+end
+
+every 90.days, :at => '2:00 am' do
+  #borrar registro de actividades con mas de 1 mes de antiguedad ActivityClearDB
+  system "rake track_db:clear_old_data"
+end

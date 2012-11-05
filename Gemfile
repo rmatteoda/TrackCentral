@@ -10,6 +10,9 @@ gem 'will_paginate', '3.0.3'
 #for google chart
 gem "google_visualr", "~> 2.1.0"
 
+#for highchart in rails
+gem 'lazy_high_charts'
+
 #to define cron task
 #gem 'whenever', :require => false
 
@@ -43,6 +46,9 @@ gem 'jquery_datepicker'
 
 gem 'passenger'
 
+#gem to schedule task
+gem 'clockwork'
+gem 'stalker'
 #gem 'mongrel'
 
 #mongrel_rails start -p 3001 -e production -d
