@@ -57,20 +57,36 @@ def activitad_accelerometer_chart(vaca)
     #          :hAxis => {:title => 'Tiempo'}}
     #@chart = GoogleVisualr::Interactive::LineChart.new(data_table, opts)
 
-    actividades_celo = vaca.actividades.where("registrada >= ? and tipo = ?", 36.hours.ago,'recorrido_lento')
+    #actividades_celo = vaca.actividades.where("registrada >= ? and tipo = ?", 36.hours.ago,'recorrido_lento')
+    actividades_suave = vaca.actividades.where("registrada >= ? and tipo = ?", 36.hours.ago,'recorrido_lento')
+    actividades_media = vaca.actividades.where("registrada >= ? and tipo = ?", 36.hours.ago,'recorrido_medio')
+    actividades_fuerte = vaca.actividades.where("registrada >= ? and tipo = ?", 36.hours.ago,'recorrido_rapido')
+    actividades_continua = vaca.actividades.where("registrada >= ? and tipo = ?", 36.hours.ago,'recorrido_continuo')
+ 
     n=0
-    data_table = []
-    actividades_celo.each do |actividad|
-      data_table[n] = actividad.valor
+    data_slow = []
+    data_medium = []
+    data_fast = []
+    data_contn = []
+    
+    actividades_suave.each do |actividad|
+      data_slow[n] = actividad.valor
+      data_medium[n] = actividades_media[n].valor
+      data_fast[n] = actividades_fuerte[n].valor
+      data_contn[n] = actividades_continua[n].valor
       n = n+1
     end 
+    
     xStart = 36.hours.ago
     xStartUTC = Time.now.utc
 
     @chart = LazyHighCharts::HighChart.new('graph') do |f|
      f.options[:chart][:defaultSeriesType] = "spline"
      f.options[:chart][:zoomType] = "x"
-     f.series(:name=>'Actividad', :data => data_table, :pointInterval => 3600000)
+     f.series(:name=>'Actividad Lenta', :data => data_slow, :pointInterval => 3600000)
+     f.series(:name=>'Actividad Media', :data => data_medium, :pointInterval => 3600000)
+     f.series(:name=>'Actividad Fuerte', :data => data_fast, :pointInterval => 3600000)
+     f.series(:name=>'Actividad Continua', :data => data_contn, :pointInterval => 3600000)
      f.xAxis(type: :datetime)
      f.options[:yAxis][:title] = {text: "Eventos"}
      f.options[:xAxis][:maxZoom] = "14 * 24 * 3600000"
