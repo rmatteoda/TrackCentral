@@ -26,7 +26,7 @@ namespace :db do
   end
 
   def populate_vacas
-    54.times do |n|
+    5.times do |n|
         cv = n.to_i + 1
         vaca = Vaca.create!(caravana: cv,
                    raza: "Holando",
@@ -37,8 +37,9 @@ namespace :db do
   end
 
   def populate_nodos
-    54.times do |n|
-      nodo = "ND_" + (n+1).to_s 
+    5.times do |n|
+      #nodo = "ND_" + (n+1).to_s 
+      nodo = (n + 101).to_s 
       Nodo.create!(nodo_id: nodo,
                   bateria: 100)   
     end
@@ -50,6 +51,14 @@ namespace :db do
       registro = inicio.advance(:hours => n)
       value = rand_int(50,70)    
       vaca.actividades.create!(registrada: registro, tipo: "recorrido", valor: value)
+      value = rand_int(50,70)    
+      vaca.actividades.create!(registrada: registro, tipo: "recorrido_lento", valor: value)
+      value = rand_int(30,40)    
+      vaca.actividades.create!(registrada: registro, tipo: "recorrido_medio", valor: value)
+      value = rand_int(10,20)    
+      vaca.actividades.create!(registrada: registro, tipo: "recorrido_rapido", valor: value)
+      value = rand_int(2,7)    
+      vaca.actividades.create!(registrada: registro, tipo: "recorrido_continuo", valor: value)
     end 
   end
 
@@ -74,7 +83,7 @@ namespace :db do
   end
 
   def populate_alert_data
-    vaca = Vaca.create!(caravana: 55,
+    vaca = Vaca.create!(caravana: 6,
                    raza: "Holando",
                    estado: "Normal") 
     #populate_actividades(vaca)
@@ -98,9 +107,11 @@ namespace :db do
 
 
   def align_vacas_nodos
-    54.times do |n|
+    5.times do |n|
       ind = n+1
-      nodo_id = "ND_" + ind.to_s
+      ind2 = n+101
+      #nodo_id = "ND_" + ind.to_s
+      nodo_id = ind2.to_s
       nodo = Nodo.where("nodo_id = ?",nodo_id).first
       vaca = Vaca.find(ind.to_i)
       vaca.nodo_id = nodo_id

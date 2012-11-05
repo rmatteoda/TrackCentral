@@ -38,23 +38,23 @@
   </div>
 
   <div class="span9"> 
-      <div id='act_chart'></div>
-        <%= render_chart(@act_chart, 'act_chart') %>
-  </div>
+    <div id='act_chart'></div>
+      <%= high_chart("act_chart",@act_chart) %>
+    </div>
   </div>
  <% end %>
-
+<!-- 
+  
 <div class="row">
   <div class="page-header">
     <h4>Historial de partos y servicios</h4>
   </div>
-    
-  <div class="span10">  
+   <div class="span10">  
     <div id='time_line_chart' style='width: 700px; height: 200px;'></div>
         <%= render_chart(@time_line_chart, 'time_line_chart') %>
   </div> 
 </div>
-
+-->
 </div>
 
 

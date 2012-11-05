@@ -22,12 +22,12 @@ namespace :track_celo do
 
   #task temporal, es para marcar algunas vacas en celo y que sean detectadas por aumento de actividad
   task simular_celos: :environment do
-    celo_id = (rand * (1 - 50) + 50).to_i
+    celo_id = (rand * (1 - 5) + 5).to_i
     vaca = Vaca.find(celo_id)
     actividad_celo(vaca)
     #puts "simulado para " + vaca.caravana.to_s
 
-    celo_id = (rand * (1 - 50) + 50).to_i
+    celo_id = (rand * (1 - 5) + 5).to_i
     vaca = Vaca.find(celo_id)
     actividad_celo(vaca)
     #puts "simulado para " + vaca.caravana.to_s
@@ -40,7 +40,7 @@ private
     casos = 0
     celo_start = nil
 
-  	24.times do |n|
+    24.times do |n|
       hora = (24-n).hours.ago.to_datetime
       hora_start = hora.change(:min => 0) 
       hora_end = hora_start.advance(:hours => 1)

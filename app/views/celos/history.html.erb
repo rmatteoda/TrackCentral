@@ -5,7 +5,7 @@
    
   <div class="span11"> 
       <div id='hist_chart'></div>
-        <%= render_chart(@hist_chart, 'hist_chart') %>
+        <%= high_chart("hist_chart",@hist_chart) %>
   </div>
 
 <% if @celos.any? %>

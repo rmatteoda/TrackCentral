@@ -57,7 +57,7 @@ def activitad_accelerometer_chart(vaca)
     #          :hAxis => {:title => 'Tiempo'}}
     #@chart = GoogleVisualr::Interactive::LineChart.new(data_table, opts)
 
-    actividades_celo = vaca.actividades.where("registrada >= ? ", 36.hours.ago)
+    actividades_celo = vaca.actividades.where("registrada >= ? and tipo = ?", 36.hours.ago,'recorrido_lento')
     n=0
     data_table = []
     actividades_celo.each do |actividad|
@@ -79,6 +79,7 @@ def activitad_accelerometer_chart(vaca)
 
     return @chart
 end
+
 def actividad_promedio(momento)
   
  actividades = Actividad.where("registrada between ? and ?", momento,momento+1.hour)
