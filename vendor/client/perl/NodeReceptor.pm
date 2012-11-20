@@ -1,7 +1,7 @@
 package NodeReceptor;
       
 use strict; #obliga a declarar las variables antes de usarlas
-use Fcntl qw(:flock SEEK_END);
+#use Fcntl qw(:flock SEEK_END);
  
 #***********************************************************
 # declaracion de variables globales
@@ -63,6 +63,8 @@ use Fcntl qw(:flock SEEK_END);
                 &causeEnd;
             }elsif(($msgRecv =~ m/Dump_Memory/)){
                 &causeDump;
+            }elsif(($msgRecv =~ m/Init_Connect/)){
+                &logInitMsg;
             }else{
                 &logBadMsg;
             }
@@ -127,9 +129,8 @@ use Fcntl qw(:flock SEEK_END);
         @data_tmp = split(/,/,$msgRecv);
         @data_aux = split(/=/,$data_tmp[0]);
         $from_id = $data_aux[1];
-        &dumpData;
-        
-        #print "End Dump from: " . $from_id . " \n";          
+        &dumpData;   
+        $hash_nodes{$from_id} = ();
     }
     
     #***********************************************************
@@ -138,13 +139,14 @@ use Fcntl qw(:flock SEEK_END);
     #***********************************************************
     sub dumpData {
         my $self = shift;
-        
+            
         #controlo si existe el nodo en la hash
         if($hash_nodes{$from_id}){
             open(FH, ">>",$fileName);
-            flock(FH,2);
+            #flock(FH,2);
 
-            print FH "Start,".$from_id . ",".$hash_nodes_hr{$from_id}.",\n";
+            #print FH "Start,".$from_id . ",".$hash_nodes_hr{$from_id}.",\n";
+            print FH "Start,".$from_id . ",0,\n";
             
             my $i;
             for $i ( 0 .. $#{$hash_nodes{$from_id}} ) {
@@ -153,7 +155,7 @@ use Fcntl qw(:flock SEEK_END);
 
             print FH "End,".$from_id . ",\n";
 
-            flock(FH, LOCK_UN);
+            #flock(FH, LOCK_UN);
 
             close(FH);
         }
@@ -164,10 +166,22 @@ use Fcntl qw(:flock SEEK_END);
     #***********************************************************
     sub validMsg {
         my $self = shift; #el primer parametro es la clase en si
-       # return (($msgRecv =~ m/Params{/) && ($msgRecv =~ m/}EndParams/) && ($msgRecv =~ m/From/) && ($msgRecv =~ m/Cause/));
-        return (($msgRecv =~ m/Params{/) &&  ($msgRecv =~ m/From/) && ($msgRecv =~ m/Cause/));
+        return (($msgRecv =~ m/Params{/) && ($msgRecv =~ m/}EndParams/) && ($msgRecv =~ m/From/) && ($msgRecv =~ m/Cause/));
+        #return (($msgRecv =~ m/Params{/) &&  ($msgRecv =~ m/From/) && ($msgRecv =~ m/Cause/));
     }
     
+    #***********************************************************
+    # log de mensaje de inicio de coneccion 
+    #***********************************************************
+    sub logInitMsg {
+        my $self = shift; #el primer parametro es la clase en si
+        my $logFileName = $app_dir . "log/Init_Nodes_Log.txt";
+        
+        open(FH, ">>","$logFileName");
+        print FH $msgRecv . "\n";
+        close(FH);
+    }
+
     #***********************************************************
     # log de mensaje recibido con formato invalido
     #***********************************************************

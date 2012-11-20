@@ -1,0 +1,32 @@
+
+- configurar monit para largar serial reader//LISTO
+- controlar orden de envio para guardar elementos
+
+
+TAREAS PARA PRUEBA 27 de Nov.
+- armar gabinetes con nodos y collares
+   - cambiar de posicion conector de pilas y pegar al gabinete
+- probar sistema andando con varios nodos //LISTO
+- configurar sistema con nodos y datos de inicio //LISTO 
+- configurar firmware para que intente transmitir cada 5 minutos //LISTO
+ - si paso los datos duerma 6 horas 
+- configurar PC para que se levante cuando se reinicia
+- configurar monit para largar serial reader//LISTO
+- comprar:
+  - soporte para monitor
+  - soporte para PC
+  - soporte para router en sala de ordeñe si es necesario
+  - cable zapatilla extensos
+  - taladro en caso de ser necesario
+  - otro elemento necesario para la instalacion en tambo
+
+FIRMWARE
+- probar con varios nodos //LISTO
+- probar distancia aproximada //LISTO 
+  - configurar y probar router //LISTO
+- probar la memoria bien://LISTO
+   - agregar un limite al indice de memoria
+   - controlar orden de envio para guardar elementos
+- configurar valores optimos de acelerometro
+- programar clock cada X segundos, optimo por consumo
+- mandar un mensaje cuando inicia el nodo, //LISTO

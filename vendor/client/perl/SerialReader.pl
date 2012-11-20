@@ -41,6 +41,11 @@ close(FH);
 #**********************************
 #Serial port Parameters
 #**********************************
+#enchufar solo el programador
+#correr dmesg
+#ejecutar sudo stty 9600 -brkint -icrnl -imaxbel -opost -onlcr -isig -icanon -iexten -echo -echoe -echok -echoctl -echoke -F /dev/ttyACM0
+#enchufar el coordinador
+#ejecutar sudo chmod 0777 /dev/ttyACM0
 
 #uncomment depend of linux or windows
 my $port_n ="/dev/ttyACM0";
@@ -67,7 +72,7 @@ while (1) {
     my $msg = $port_obj->lookfor();
     # If we get data
     if ($msg) {
-        #print "Recieved: " . $msg . " \n";
+        print "Recieved: " . $msg . " \n";
         $receptor->receiveData($msg);
     }
     #sleep(1);

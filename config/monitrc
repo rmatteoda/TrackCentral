@@ -4,9 +4,12 @@
 #--------------------------------------------
 # Global set entries
 #--------------------------------------------
-set daemon 10 
+set daemon 120 with start delay 120
 
 set logfile /home/tracktambo/TrackCentral/log/monit.log
+
+set httpd port 2812 and allow localhost
+allow admin:pass  #user admin password pass
 
 #############################################
 # Services entries
@@ -17,16 +20,13 @@ set logfile /home/tracktambo/TrackCentral/log/monit.log
 check process passenger with pidfile /home/tracktambo/TrackCentral/tmp/pids/server.pid
   start = "/home/tracktambo/TrackCentral/script/launch_server.sh"
   stop  = "/home/tracktambo/TrackCentral/script/stop_server.sh"
-  if failed port 3000 protocol HTTP request /system/token with timeout 10 seconds then restart
-  if cpu usage is greater than 60 percent for 2 cycles then alert
+  #if failed port 3000 protocol HTTP request /system/token with 
+  #if cpu usage is greater than 60 percent for 2 cycles then alert
   if cpu usage > 98% for 5 cycles then restart
-  if 5 restarts within 5 cycles then timeout
-  if totalmem is greater than 100.0 MB for 5 cycles then restart       
+  #if 5 restarts within 5 cycles then timeout
+  if totalmem is greater than 160.0 MB for 5 cycles then restart       
   if cpu is greater than 80% for 3 cycles then restart                
-  if loadavg(5min) greater than 10 for 8 cycles then restart
-
-#check file server_log with path /home/tracktambo/TrackCentral/log/server.log
-#      if size > 60 Mb then exec "mv /home/tracktambo/TrackCentral/log/server.log /home/tracktambo/TrackCentral/log/server_2.log"
+ # if loadavg(5min) greater than 10 for 8 cycles then restart
 
 #--------------------------------------------
 # Monitoring ClockWork
@@ -44,12 +44,12 @@ check process clockwork with pidfile /home/tracktambo/TrackCentral/tmp/pids/cloc
 #--------------------------------------------
 # Monitoring SerialReader
 #--------------------------------------------
-#check process serialreader with pidfile /home/tracktambo/TrackCentral/tmp/pids/serialreader.pid
-#   start = "/home/tracktambo/TrackCentral/script/launch_serialreader.sh"
-#   stop  = "/home/tracktambo/TrackCentral/script/stop_serialreader.sh"
-#   if cpu is greater than 80% for 3 cycles then restart  
-#   if cpu usage > 90% for 3 cycles then restart
-#   if totalmem is greater than 160.0 MB for 5 cycles then restart  
+check process serialreader with pidfile /home/tracktambo/TrackCentral/tmp/pids/serialreader.pid
+   start = "/home/tracktambo/TrackCentral/script/launch_serialreader.sh"
+   stop  = "/home/tracktambo/TrackCentral/script/stop_serialreader.sh"
+   if cpu is greater than 80% for 3 cycles then restart  
+   if cpu usage > 90% for 3 cycles then restart
+   if totalmem is greater than 160.0 MB for 5 cycles then restart  
   
 #--------------------------------------------
 # Monitoring TrackClientGUI
@@ -59,7 +59,7 @@ check process trackclient_gui with pidfile /home/tracktambo/TrackCentral/tmp/pid
    stop  = "/home/tracktambo/TrackCentral/script/stop_clientgui.sh"
    if cpu is greater than 80% for 3 cycles then restart  
    if cpu usage > 90% for 3 cycles then restart
-   if totalmem is greater than 160.0 MB for 5 cycles then restart  
+   if totalmem is greater than 260.0 MB for 5 cycles then restart  
   
 #--------------------------------------------
 # Monitoring devices (usb collector port)

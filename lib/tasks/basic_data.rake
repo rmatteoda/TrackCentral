@@ -12,6 +12,13 @@ namespace :db do
     Rake::Task['track_celo:detectar_celos'].invoke
   end
 
+  task populate_basic: :environment do
+    populate_usuarios
+    populate_vacas
+    populate_nodos
+    align_vacas_nodos
+  end
+
   def populate_usuarios
     admin = User.create!(name: "Administrador",
                  email: "admin@tracktambo.com",
@@ -46,18 +53,20 @@ namespace :db do
   end
 
   def populate_actividades(vaca)
-    inicio = 2.days.ago
-    48.times do |n|
+    #inicio = 2.days.ago
+    inicio = 2.hours.ago
+    #48.times do |n|
+    2.times do |n|
       registro = inicio.advance(:hours => n)
-      value = rand_int(50,70)    
+      value = rand_int(6,7)    
       vaca.actividades.create!(registrada: registro, tipo: "recorrido", valor: value)
-      value = rand_int(50,70)    
+      value = rand_int(6,7)    
       vaca.actividades.create!(registrada: registro, tipo: "recorrido_lento", valor: value)
-      value = rand_int(30,40)    
+      value = rand_int(4,5)    
       vaca.actividades.create!(registrada: registro, tipo: "recorrido_medio", valor: value)
-      value = rand_int(10,20)    
+      value = rand_int(3,2)    
       vaca.actividades.create!(registrada: registro, tipo: "recorrido_rapido", valor: value)
-      value = rand_int(2,7)    
+      value = rand_int(2,1)    
       vaca.actividades.create!(registrada: registro, tipo: "recorrido_continuo", valor: value)
     end 
   end

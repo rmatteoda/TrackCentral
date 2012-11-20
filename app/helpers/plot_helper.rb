@@ -64,6 +64,8 @@ def activitad_accelerometer_chart(vaca)
     actividades_continua = vaca.actividades.where("registrada >= ? and tipo = ?", 36.hours.ago,'recorrido_continuo')
  
     n=0
+    @data_full = Array.new(2) { Array.new(37) }
+    #@data_full = []
     data_slow = []
     data_medium = []
     data_fast = []
@@ -77,12 +79,14 @@ def activitad_accelerometer_chart(vaca)
       n = n+1
     end 
     
-    xStart = 36.hours.ago
-    xStartUTC = Time.now.utc
+    xStart = 35.hours.ago.to_datetime
+    xStartUTC = "Date.UTC(" + xStart.year.to_s + "," + xStart.month.to_s + ","+ xStart.day.to_s + ",03)" 
+     # + xStart.day.to_s + "," + xStart.hour.to_s + ")" 
 
     @chart = LazyHighCharts::HighChart.new('graph') do |f|
      f.options[:chart][:defaultSeriesType] = "spline"
      f.options[:chart][:zoomType] = "x"
+     #f.series(:name=>'Actividad Full', :data => @data_slow, :pointInterval => 3600000, pointStart: xStartUTC.to_s)
      f.series(:name=>'Actividad Lenta', :data => data_slow, :pointInterval => 3600000)
      f.series(:name=>'Actividad Media', :data => data_medium, :pointInterval => 3600000)
      f.series(:name=>'Actividad Fuerte', :data => data_fast, :pointInterval => 3600000)

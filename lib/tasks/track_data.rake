@@ -3,7 +3,7 @@ namespace :track_data do
   #Rake::Task['morning:make_coffee'].invoke
       
   task create_demo_data: :environment do
-    File.open('./public/data_from_collector.txt', 'a+') do |f|     
+    File.open('./public/data_from_collector_t.txt', 'a+') do |f|     
       registro = Time.now.to_datetime
       vacas = Vaca.all
       vacas.each do |vaca|
@@ -30,25 +30,35 @@ namespace :track_data do
   end
 
   task load_collected_data: :environment do
-    if File.exist?('./public/data_from_collector.txt')
+
+    File.open('/home/tracktambo/TrackCentral/log/data_collected_log.txt', 'a+') do |f|     
+      
+    if File.exist?('/home/tracktambo/TrackCentral/public/data_from_collector.txt')
    
-    data_file = File.open('./public/data_from_collector.txt', 'r')      
+    data_file = File.open('/home/tracktambo/TrackCentral/public/data_from_collector.txt', 'r')      
     data_file.flock(File::LOCK_EX)
     all_lines = data_file.readlines
-    #File.truncate('./public/data_from_collector.txt',0)
-    data_file.flock(File::LOCK_UN)
-
+    #data_file.flock(File::LOCK_UN)
+    File.delete('/home/tracktambo/TrackCentral/public/data_from_collector.txt')
+    
+    current_vaca = nil
+    last_register = nil
+    f.puts "loaded " + all_lines.length.to_s + " " + DateTime.now.to_s+"\n "
+         
     all_lines.each do |line|
       data = line.split(',')
        if data[0].to_s.eql? "Start"
-         vacas = Vaca.where("nodo_id = ?",data[1])
+         #f.puts "busca vaca " + data[1].to_s + " \n "
+         vacas = Vaca.where("nodo_id = ?",data[1].to_s)
          if vacas.any?
+         #f.puts "encontro vaca " + vacas.first.id.to_s + " \n "
           current_vaca = vacas.first 
           last_activity = current_vaca.actividades.last
           last_register = last_activity.registrada
          end
         elsif data.length >= 4
-          if !current_vaca.nil? && !last_register.nil?
+           #f.puts "voy a guarder " + current_vaca.id.to_s + " \n "
+           if !current_vaca.nil? && !last_register.nil?
             last_register = last_register.advance(:hours => 1)
             save_collected_activity(current_vaca,data[0],data[1],data[2],data[3],last_register)
           end
@@ -56,6 +66,8 @@ namespace :track_data do
     end
     
     end
+    
+    end 
   end
 
   task simulate_demo_data: :environment do
@@ -81,7 +93,7 @@ private
   end
 
   def save_collected_activity(vaca,accel_slow,accel_medium,accel_fast,accel_cont,registro)
-    #puts "guardo " + vaca.nodo_id.to_s + " - " + accel_slow.to_s + " - " + registro.to_s
+      #puts "guardo " + vaca.nodo_id.to_s + " - " + accel_slow.to_s + " - " + registro.to_s
 
       vaca_selected = vaca
       vaca_selected.actividades.create!(registrada: registro, tipo: "recorrido_lento", 

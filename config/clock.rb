@@ -13,25 +13,26 @@ end
 
 handler { |job| Stalker.enqueue(job) }
 
-every(1.minute, 'test.job')
+every(10.minute, 'test.job')
 
-every 3.hours, 'collect_data' do
-  system "rake track_data:load_collected_data"
+every 30.minute, 'collect_data' do
+  system "cd /home/tracktambo/TrackCentral &"
+  system "rake track_data:load_collected_data &"
 end
 
-every 6.hours, 'detect_celo' do
-  system "rake track_celo:detectar_celos"
-end
+#every 6.hours, 'detect_celo' do
+#  system "rake track_celo:detectar_celos"
+#end
 
-every 2.days, 'detect_perdida',:at => '2:30 am' do
-  system "rake track_vacas:detectar_perdida"
-end
+#every 2.days, 'detect_perdida',:at => '2:30 am' do
+#  system "rake track_vacas:detectar_perdida"
+#end
 
-every 10.days, 'detect_alarms' do
-  system "rake track_vacas:detectar_alarmas"
-end
+#every 10.days, 'detect_alarms' do
+#  system "rake track_vacas:detectar_alarmas"
+#end
 
-every 90.days, :at => '2:00 am' do
+#every 90.days, :at => '2:00 am' do
   #borrar registro de actividades con mas de 1 mes de antiguedad ActivityClearDB
-  system "rake track_db:clear_old_data"
-end
+#  system "rake track_db:clear_old_data"
+#end
