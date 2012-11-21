@@ -1,6 +1,5 @@
 PROBLEMAS
 
-- borrar y bloquear archivos en linux con ruby y perl//LISTO - revisar
 - ver que pasa al reiniciar la pc con el serialreader, tengo que enchufarlo separado y ejecuatar unos comandos para el puerto, si reinicio no se como queda eso, si voy a leer bien los datos
 - gui:
   - si la base de datos esta bloqueada me queda una pantalla de error que tengo que cerrar la gui para que se recupere

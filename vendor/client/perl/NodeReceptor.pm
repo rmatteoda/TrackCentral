@@ -149,8 +149,9 @@ use strict; #obliga a declarar las variables antes de usarlas
             print FH "Start,".$from_id . ",0,\n";
             
             my $i;
+            my $last = $#{$hash_nodes{$from_id}};
             for $i ( 0 .. $#{$hash_nodes{$from_id}} ) {
-                print FH $hash_nodes{$from_id}[$i] . ",\n";
+                print FH $hash_nodes{$from_id}[$last - $i] . ",\n";
             }
 
             print FH "End,".$from_id . ",\n";
