@@ -27,45 +27,12 @@ end
 
 def activitad_accelerometer_chart(vaca)
 
-    #data_table.new_column('datetime', 'Date')
-    #data_table.new_column('number', "Actividad Suave")
-    #data_table.new_column('number', "Actividad Media")
-    #data_table.new_column('number', "Actividad Fuerte")
-    #data_table.new_column('number', "Actividad Continua")
-    
-    #data_table.add_rows(vaca.actividades.count)
-
-    #actividades_suave = vaca.actividades.where("registrada >= ? and tipo = ?", 36.hours.ago,'recorrido_lento')
-    #actividades_media = vaca.actividades.where("registrada >= ? and tipo = ?", 36.hours.ago,'recorrido_medio')
-    #actividades_fuerte = vaca.actividades.where("registrada >= ? and tipo = ?", 36.hours.ago,'recorrido_rapido')
-    #actividades_continua = vaca.actividades.where("registrada >= ? and tipo = ?", 36.hours.ago,'recorrido_continuo')
- 
-    #data_table.add_rows(actividades_suave.count)
-
-    #n = 0
-    #actividades_suave.each do |actividad|
-    #  data_table.set_cell(n, 0, actividad.registrada)
-    #  data_table.set_cell(n, 1, actividad.valor)
-    #  data_table.set_cell(n, 2, actividades_media[n].valor)
-    #  data_table.set_cell(n, 3, actividades_fuerte[n].valor)
-    #  data_table.set_cell(n, 4, actividades_continua[n].valor)
-    #  n = n+1
-    #end
-
-    #opts   = {:pointSize => 3,:legend => {:position => 'top'},:title => 'Actividad vaca '+ vaca.caravana.to_s + ' ultimas 36 horas', 
-    #          :vAxis => {:title => 'Eventos', :minValue => -10,:maxValue => 200}, 
-    #          :hAxis => {:title => 'Tiempo'}}
-    #@chart = GoogleVisualr::Interactive::LineChart.new(data_table, opts)
-
-    #actividades_celo = vaca.actividades.where("registrada >= ? and tipo = ?", 36.hours.ago,'recorrido_lento')
     actividades_suave = vaca.actividades.where("registrada >= ? and tipo = ?", 36.hours.ago,'recorrido_lento')
     actividades_media = vaca.actividades.where("registrada >= ? and tipo = ?", 36.hours.ago,'recorrido_medio')
     actividades_fuerte = vaca.actividades.where("registrada >= ? and tipo = ?", 36.hours.ago,'recorrido_rapido')
     actividades_continua = vaca.actividades.where("registrada >= ? and tipo = ?", 36.hours.ago,'recorrido_continuo')
  
     n=0
-    @data_full = Array.new(2) { Array.new(37) }
-    #@data_full = []
     data_slow = []
     data_medium = []
     data_fast = []
@@ -81,12 +48,10 @@ def activitad_accelerometer_chart(vaca)
     
     xStart = 35.hours.ago.to_datetime
     xStartUTC = "Date.UTC(" + xStart.year.to_s + "," + xStart.month.to_s + ","+ xStart.day.to_s + ",03)" 
-     # + xStart.day.to_s + "," + xStart.hour.to_s + ")" 
-
+    
     @chart = LazyHighCharts::HighChart.new('graph') do |f|
      f.options[:chart][:defaultSeriesType] = "spline"
      f.options[:chart][:zoomType] = "x"
-     #f.series(:name=>'Actividad Full', :data => @data_slow, :pointInterval => 3600000, pointStart: xStartUTC.to_s)
      f.series(:name=>'Actividad Lenta', :data => data_slow, :pointInterval => 3600000)
      f.series(:name=>'Actividad Media', :data => data_medium, :pointInterval => 3600000)
      f.series(:name=>'Actividad Fuerte', :data => data_fast, :pointInterval => 3600000)
@@ -100,16 +65,60 @@ def activitad_accelerometer_chart(vaca)
     return @chart
 end
 
+def activitad_total_chart(vaca)
+
+    actividades_total = vaca.actividades.where("registrada >= ? and tipo = ?", 36.hours.ago,'recorrido_total')
+    
+    n=0
+    data_total = []
+    data_prom = []
+    
+    actividades_total.each do |actividad|
+      data_total[n] = actividad.valor
+      act_prom = actividad_promedio_total(actividad.registrada)
+      data_prom[n] = act_prom
+      n = n+1
+    end 
+    
+    @chart = LazyHighCharts::HighChart.new('graph') do |f|
+     f.options[:chart][:defaultSeriesType] = "spline"
+     f.options[:chart][:zoomType] = "x"
+     f.series(:name=>'Actividad Total', :data => data_total, :pointInterval => 3600000)
+     f.series(:name=>'Actividad Promedio', :data => data_prom, :pointInterval => 3600000)
+     f.xAxis(type: :datetime)
+     f.options[:yAxis][:title] = {text: "Eventos"}
+     f.options[:xAxis][:maxZoom] = "14 * 24 * 3600000"
+     f.title(text: 'Actividad vaca ultimas 36 horas') 
+    end
+
+    return @chart
+end
+
+def actividad_promedio_total(momento)
+ from = momento.advance(:minutes => -20) 
+ to   = momento.advance(:minutes => 20) 
+ actividades = Actividad.where("registrada between ? and ? and tipo = ?", from,to,'recorrido_total')
+ actividad_promedio = 0
+ actividades.each { |actividad| actividad_promedio = actividad_promedio + actividad.valor}
+ 
+ if actividades.count > 0
+  actividad_promedio = (actividad_promedio/actividades.count)
+ end
+ 
+ return actividad_promedio
+end
+
 def actividad_promedio(momento)
   
  actividades = Actividad.where("registrada between ? and ?", momento,momento+1.hour)
  actividad_promedio = 0
  actividades.each { |actividad| actividad_promedio = actividad_promedio + actividad.valor}
+ 
  if actividades.count > 0
   actividad_promedio = (actividad_promedio/actividades.count)
  end
-return actividad_promedio
-
+ 
+ return actividad_promedio
 end
 
 # http://code.google.com/apis/chart/interactive/docs/gallery/annotatedtimeline.html#Example

@@ -1,5 +1,7 @@
-namespace :db do
+  
+  namespace :db do
   desc "Fill database with sample data"
+  
   #limppiar la base rake db:purge
   task populate: :environment do
     populate_usuarios
@@ -54,9 +56,9 @@ namespace :db do
 
   def populate_actividades(vaca)
     #inicio = 2.days.ago
-    inicio = 2.hours.ago
+    inicio = 4.hours.ago
     #48.times do |n|
-    2.times do |n|
+    4.times do |n|
       registro = inicio.advance(:hours => n)
       value = rand_int(6,7)    
       vaca.actividades.create!(registrada: registro, tipo: "recorrido", valor: value)
@@ -68,6 +70,8 @@ namespace :db do
       vaca.actividades.create!(registrada: registro, tipo: "recorrido_rapido", valor: value)
       value = rand_int(2,1)    
       vaca.actividades.create!(registrada: registro, tipo: "recorrido_continuo", valor: value)
+      value = rand_int(4,9)
+      vaca.actividades.create!(registrada: registro, tipo: "recorrido_total", valor: value)
     end 
   end
 

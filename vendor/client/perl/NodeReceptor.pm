@@ -184,6 +184,19 @@ use strict; #obliga a declarar las variables antes de usarlas
     }
 
     #***********************************************************
+    # log de registro de dump 
+    #***********************************************************
+    sub logDumpMsg {
+        my $self = shift; #el primer parametro es la clase en si
+        my $logFileName = $app_dir . "log/Dump_Nodes_Log.txt";
+        my($seg, $minute, $hour, $day, $month) = (localtime)[0,1,2,3,4];
+        
+        open(FH, ">>","$logFileName");
+        print FH "dump from " . $from_id . " day ". $day . " hour  ".$hour.":".$minute.":".$seg ."\n";
+        close(FH);
+    }
+
+    #***********************************************************
     # log de mensaje recibido con formato invalido
     #***********************************************************
     sub logBadMsg {

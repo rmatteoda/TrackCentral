@@ -31,19 +31,23 @@ namespace :track_data do
 
   task load_collected_data: :environment do
 
-    File.open('/home/tracktambo/TrackCentral/log/data_collected_log.txt', 'a+') do |f|     
+    #File.open('/home/tracktambo/TrackCentral/log/data_collected_log.txt', 'a+') do |f|     
       
-    if File.exist?('/home/tracktambo/TrackCentral/public/data_from_collector.txt')
+    #if File.exist?('/home/tracktambo/TrackCentral/public/data_from_collector.txt')
+    if File.exist?('public/data_from_collector.txt')
    
-    data_file = File.open('/home/tracktambo/TrackCentral/public/data_from_collector.txt', 'r')      
+    data_file = File.open('public/data_from_collector.txt', 'r')      
     data_file.flock(File::LOCK_EX)
     all_lines = data_file.readlines
     #data_file.flock(File::LOCK_UN)
-    File.delete('/home/tracktambo/TrackCentral/public/data_from_collector.txt')
+    data_file.close
+    FileUtils.cp("./data_from_collector.txt", Time.now.strftime("%Y%m%d-%H:%M") + "_data_from_collector.txt")
+    #File.delete('/home/tracktambo/TrackCentral/public/data_from_collector.txt')
     
     current_vaca = nil
     last_register = nil
-    f.puts "loaded " + all_lines.length.to_s + " " + DateTime.now.to_s+"\n "
+    #f.puts "loaded " + all_lines.length.to_s + " " + DateTime.now.to_s+"\n "
+    puts "loaded " + all_lines.length.to_s + " " + DateTime.now.to_s+"\n "
          
     all_lines.each do |line|
       data = line.split(',')
@@ -67,7 +71,7 @@ namespace :track_data do
     
     end
     
-    end 
+    #end 
   end
 
   task simulate_demo_data: :environment do
@@ -94,6 +98,7 @@ private
 
   def save_collected_activity(vaca,accel_slow,accel_medium,accel_fast,accel_cont,registro)
       #puts "guardo " + vaca.nodo_id.to_s + " - " + accel_slow.to_s + " - " + registro.to_s
+      act_total = accel_slow.to_i + accel_medium.to_i + accel_fast.to_i + accel_cont.to_i
 
       vaca_selected = vaca
       vaca_selected.actividades.create!(registrada: registro, tipo: "recorrido_lento", 
@@ -104,6 +109,8 @@ private
                                         valor: accel_fast)
       vaca_selected.actividades.create!(registrada: registro, tipo: "recorrido_continuo", 
                                         valor: accel_cont)
+      vaca_selected.actividades.create!(registrada: registro, tipo: "recorrido_total", 
+                                        valor: act_total)
   end
 
 end
