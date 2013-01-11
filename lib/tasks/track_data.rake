@@ -100,16 +100,18 @@ private
       #puts "guardo " + vaca.nodo_id.to_s + " - " + accel_slow.to_s + " - " + registro.to_s
       act_total = accel_slow.to_i + accel_medium.to_i + accel_fast.to_i + accel_cont.to_i
 
+      registro_hr = DateTime.new(registro.year, registro.month, registro.day, registro.hour, 0, 0, 0)
+
       vaca_selected = vaca
-      vaca_selected.actividades.create!(registrada: registro, tipo: "recorrido_lento", 
+      vaca_selected.actividades.create!(registrada: registro_hr, tipo: "recorrido_lento", 
                                         valor: accel_slow)
-      vaca_selected.actividades.create!(registrada: registro, tipo: "recorrido_medio", 
+      vaca_selected.actividades.create!(registrada: registro_hr, tipo: "recorrido_medio", 
                                         valor: accel_medium)
-      vaca_selected.actividades.create!(registrada: registro, tipo: "recorrido_rapido", 
+      vaca_selected.actividades.create!(registrada: registro_hr, tipo: "recorrido_rapido", 
                                         valor: accel_fast)
-      vaca_selected.actividades.create!(registrada: registro, tipo: "recorrido_continuo", 
+      vaca_selected.actividades.create!(registrada: registro_hr, tipo: "recorrido_continuo", 
                                         valor: accel_cont)
-      vaca_selected.actividades.create!(registrada: registro, tipo: "recorrido_total", 
+      vaca_selected.actividades.create!(registrada: registro_hr, tipo: "recorrido_total", 
                                         valor: act_total)
   end
 

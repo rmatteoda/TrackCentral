@@ -46,12 +46,12 @@ def activitad_accelerometer_chart(vaca)
       n = n+1
     end 
     
-    xStart = 35.hours.ago.to_datetime
-    xStartUTC = "Date.UTC(" + xStart.year.to_s + "," + xStart.month.to_s + ","+ xStart.day.to_s + ",03)" 
-    
     @chart = LazyHighCharts::HighChart.new('graph') do |f|
      f.options[:chart][:defaultSeriesType] = "spline"
      f.options[:chart][:zoomType] = "x"
+     f.options[:legend][:align] = "right"
+     f.options[:legend][:verticalAlign] = "top"
+     f.options[:legend][:floating] = "true"
      f.series(:name=>'Actividad Lenta', :data => data_slow, :pointInterval => 3600000)
      f.series(:name=>'Actividad Media', :data => data_medium, :pointInterval => 3600000)
      f.series(:name=>'Actividad Fuerte', :data => data_fast, :pointInterval => 3600000)
@@ -70,24 +70,34 @@ def activitad_total_chart(vaca)
     actividades_total = vaca.actividades.where("registrada >= ? and tipo = ?", 36.hours.ago,'recorrido_total')
     
     n=0
-    data_total = []
-    data_prom = []
+    data_total = [[]]
+    data_prom = [[]]
     
+    startPoint = Time.now
+
     actividades_total.each do |actividad|
-      data_total[n] = actividad.valor
+      data_total[n] = [actividad.registrada,actividad.valor]
       act_prom = actividad_promedio_total(actividad.registrada)
-      data_prom[n] = act_prom
+      data_prom[n] = [actividad.registrada,act_prom]
       n = n+1
     end 
-    
+    startPoint = data_total[0][0]
+
     @chart = LazyHighCharts::HighChart.new('graph') do |f|
      f.options[:chart][:defaultSeriesType] = "spline"
      f.options[:chart][:zoomType] = "x"
-     f.series(:name=>'Actividad Total', :data => data_total, :pointInterval => 3600000)
-     f.series(:name=>'Actividad Promedio', :data => data_prom, :pointInterval => 3600000)
-     f.xAxis(type: :datetime)
+     f.options[:legend][:align] = "right"
+     f.options[:legend][:verticalAlign] = "top"
+     f.options[:legend][:floating] = "true"
+     
+     f.series(:name=>'Actividad Total', :data => data_total, 
+      :pointInterval => 3600000,:pointStart => (startPoint.to_i * 1000))
+     f.series(:name=>'Actividad Promedio', :data => data_prom, 
+      :pointInterval => 3600000,:pointStart => (startPoint.to_i * 1000))
+     
      f.options[:yAxis][:title] = {text: "Eventos"}
      f.options[:xAxis][:maxZoom] = "14 * 24 * 3600000"
+     f.options[:xAxis][:type] = "datetime"
      f.title(text: 'Actividad vaca ultimas 36 horas') 
     end
 
