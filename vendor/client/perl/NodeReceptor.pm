@@ -108,14 +108,20 @@ use strict; #obliga a declarar las variables antes de usarlas
         #obtengo los valores de aceleracion desde el mensaje recibido
         @data_aux = split(/:/,$data_tmp[3]);
         
-        if(@data_aux > 3){
+        if(@data_aux > 1){
              
-            $accelSlow =  $data_aux[1];
-            $accelMedium =  $data_aux[2];
-            $accelFast =  $data_aux[3];
-            $accelContn =  $data_aux[4];
+            #$accelSlow =  $data_aux[1];
+            #$accelMedium =  $data_aux[2];
+            #$accelFast =  $data_aux[3];
+            #$accelContn =  $data_aux[4];
+            #my $accel_data = $accelSlow.",".$accelMedium.",".$accelFast.",".$accelContn;
             
-            my $accel_data = $accelSlow.",".$accelMedium.",".$accelFast.",".$accelContn;
+            #*** NUEVO MODELO ****
+            my $accel_data = ""
+            for($ind = 1 ; $ind < @data_aux; $ind = $ind +1){
+                $accel_data = $data_aux[$ind].",";
+            }
+            #chop($accel_data);
             push @{$hash_nodes{$from_id}}, $accel_data;
          }#TODO: log error sino pasa esto
     }
@@ -151,9 +157,11 @@ use strict; #obliga a declarar las variables antes de usarlas
             my $i;
             my $last = $#{$hash_nodes{$from_id}};
             for $i ( 0 .. $#{$hash_nodes{$from_id}} ) {
-                print FH $hash_nodes{$from_id}[$last - $i] . ",\n";
+                #print FH $hash_nodes{$from_id}[$last - $i];
+                print FH $hash_nodes{$from_id}[$i];#RM 11-01-2013
             }
 
+            print FH "\n";
             print FH "End,".$from_id . ",\n";
 
             #flock(FH, LOCK_UN);

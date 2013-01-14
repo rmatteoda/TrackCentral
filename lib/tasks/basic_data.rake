@@ -56,7 +56,7 @@
 
   def populate_actividades(vaca)
     #inicio = 2.days.ago
-    inicio = 8.hours.ago
+    inicio = 18.hours.ago
     #48.times do |n|
     8.times do |n|
       registro = inicio.advance(:hours => n)
