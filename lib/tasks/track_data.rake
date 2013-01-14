@@ -4,11 +4,11 @@ namespace :track_data do
       
    task load_collected_data: :environment do
 
-    #File.open('/home/tracktambo/TrackCentral/log/data_collected_log.txt', 'a+') do |f|     
     #data_file.flock(File::LOCK_UN)
-    #FileUtils.cp("public/data_from_collector.txt", "public/" + Time.now.strftime("%Y%m%d-%H:%M") + "_data_from_collector.txt")
     #f.puts "loaded " + all_lines.length.to_s + " " + DateTime.now.to_s+"\n "
-    #if File.exist?('/home/tracktambo/TrackCentral/public/data_from_collector.txt')
+    #data_file.flock(File::LOCK_UN)
+    
+    File.open('./log/data_collected_log.txt', 'a+') do |f|     
     
     if File.exist?('public/data_from_collector.txt')
    
@@ -16,6 +16,9 @@ namespace :track_data do
     data_file.flock(File::LOCK_EX)
     all_lines = data_file.readlines
     data_file.close
+    #FileUtils.cp("public/data_from_collector.txt", "public/" + Time.now.strftime("%Y%m%d-%H:%M") + "_data_from_collector.txt")
+    #File.unlink('./public/data_from_collector.txt')
+    f.puts "loaded " + all_lines.length.to_s + " " + DateTime.now.to_s+"\n "
     
     current_vaca = nil
     last_register = nil
@@ -39,7 +42,7 @@ namespace :track_data do
         end
     end  
     end
-     #end 
+    end 
   end
   
 ####################### PRIVATE METHODS ################

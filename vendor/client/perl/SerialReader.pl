@@ -48,11 +48,13 @@ close(FH);
 #ejecutar sudo chmod 0777 /dev/ttyACM0
 
 #uncomment depend of linux or windows
-my $port_n ="/dev/ttyACM0";
-my $port_obj = new Device::SerialPort ($port_n) || die " Can't open $port_n $!";
-#my $port_n ="COM7";
-#my $port_obj = new Win32::SerialPort ($port_n) || die " Can't open $port_n $!";
-$baud_rate=9600;
+#my $port_n ="/dev/ttyACM0";
+#my $port_obj = new Device::SerialPort ($port_n) || die " Can't open $port_n $!";
+sleep(30);
+my $port_n ="COM3";
+my $port_obj = new Win32::SerialPort ($port_n) || die " Can't open $port_n $!";
+
+$baud_rate = 9600;
 $port_obj->databits(8);
 $port_obj->handshake("none");
 $port_obj->baudrate($baud_rate);

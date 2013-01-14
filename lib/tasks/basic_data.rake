@@ -27,11 +27,11 @@
                  password: "admin",
                  password_confirmation: "admin")
     admin.toggle!(:admin)
-    User.create!(name: "Cesar",
-                 email: "cesar@tracktambo.com",
+    User.create!(name: "Ramiro",
+                 email: "rm@tracktambo.com",
                  role: "Encargado",
-                 password: "cesar",
-                 password_confirmation: "cesar")
+                 password: "ramiro",
+                 password_confirmation: "ramiro")
   end
 
   def populate_vacas

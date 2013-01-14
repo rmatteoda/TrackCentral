@@ -15,6 +15,7 @@ gem 'lazy_high_charts'
 
 #to define cron task
 #gem 'whenever', :require => false
+gem 'rufus-scheduler'
 
 #builder for xml
 #gem 'builder update', '~> 2.0'
@@ -38,13 +39,18 @@ group :assets do
 
   gem 'uglifier', '>= 1.0.3'
   gem 'twitter-bootstrap-rails'
+  #para windows
+  #gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git' 
+  #tambien gem install libv8 --v 3.11.8.0
+  #antes instalar Active Python
 end
 
 gem 'jquery-rails'
 
 gem 'jquery_datepicker'
 
-gem 'passenger'
+#gem 'passenger'
+gem "thin"
 
 #gem to schedule task
 gem 'clockwork'

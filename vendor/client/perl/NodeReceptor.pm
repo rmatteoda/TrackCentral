@@ -33,6 +33,8 @@ use strict; #obliga a declarar las variables antes de usarlas
                
         $app_dir = "/home/tracktambo/TrackCentral/";
         $fileName = $app_dir . "public/data_from_collector.txt";
+        #$app_dir = "C:/TrackTambo/TrackCentral/";
+        #$fileName = $app_dir . "public/data_from_collector.txt";
         
         bless $self , $class; #Perl asocia la referencia $self con la clase que corresponde
         return $self; #retornamos la instancia de la clase                                 
@@ -167,6 +169,7 @@ use strict; #obliga a declarar las variables antes de usarlas
             #flock(FH, LOCK_UN);
 
             close(FH);
+            &logDumpMsg;
         }
     }
     
@@ -176,7 +179,6 @@ use strict; #obliga a declarar las variables antes de usarlas
     sub validMsg {
         my $self = shift; #el primer parametro es la clase en si
         return (($msgRecv =~ m/Params{/) && ($msgRecv =~ m/}EndParams/) && ($msgRecv =~ m/From/) && ($msgRecv =~ m/Cause/));
-        #return (($msgRecv =~ m/Params{/) &&  ($msgRecv =~ m/From/) && ($msgRecv =~ m/Cause/));
     }
     
     #***********************************************************
