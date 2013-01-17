@@ -55,13 +55,14 @@
   end
 
   def populate_actividades(vaca)
-    #inicio = 2.days.ago
     inicio = 18.hours.ago
-    #48.times do |n|
-    8.times do |n|
-      registro = inicio.advance(:hours => n)
-      registro_hr = DateTime.new(registro.year, registro.month, registro.day, registro.hour, 0, 0, 0)
-
+    #8.times do |n|
+     # registro = inicio.advance(:hours => n)
+      #registro_hr = DateTime.new(registro.year, registro.month, registro.day, 
+      #  registro.hour, 0, 0, 0)
+      registro_hr = DateTime.new(Time.now.year, Time.now.month, Time.now.day, 
+        (Time.now.hour-1), 0, 0, 0)
+      
       value = rand_int(6,7)    
       vaca.actividades.create!(registrada: registro_hr, tipo: "recorrido", valor: value)
       value = rand_int(6,7)    
@@ -74,7 +75,7 @@
       vaca.actividades.create!(registrada: registro_hr, tipo: "recorrido_continuo", valor: value)
       value = rand_int(4,9)
       vaca.actividades.create!(registrada: registro_hr, tipo: "recorrido_total", valor: value)
-    end 
+    #end 
   end
 
   def populate_sucesos(vaca)

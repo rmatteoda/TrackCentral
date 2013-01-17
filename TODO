@@ -5,20 +5,23 @@
   - agregar hora inicial en que se guarda el primer reg de dump//LISTO
 - RECEPTOR:
   - agregar al grafico la fecha y hora real //LISTO
-  - adaptarlo al nuevo firmware
+  - adaptarlo al nuevo firmware //LISTO
   - mejorar el sistema de almacenado(registro de hora de actividad)//LISTO
-
+  - revisar historial de celo y metodo detector de celo
+  
 - correr rails server y serial reader como windows service
 - obtener valor y medir capacidad de bateria
 - medir consumo en nodo y router
 - averiguar modular para guardar pc y ups o gabinete industrial
+- revisar codigo y hacer mas test del nodo(almacenamiento) si da el tiempo
 
 COMPRAR:
 - remaches pop y arandelas
-- 12 gabinetes
+- 12 gabinetes //LISTO
 - barra de silicona para pistola de plastico
 - cable usb de 10 metros
 - retaso de cuero
+- cinta aisladora y soporte router
 
 *** completadas ****
 - averiguar cinta y material de collares // LISTO
@@ -34,7 +37,7 @@ COMPRAR:
 - agregar log para dejar una copia del archivo que mando a la db //LISTO, probar
 - averiguar precio de thin client  //Listo
    - http://thinclientsolutions.com.ar/productos cod 002. Diego Pico.
-   - http://tigertech.com.ar/productos/category/ncomputing/
+   - http://tigertech.com.ar/productos/category/ncomputing/ NO ANDA
    - http://www.arm.com.ar/TC/#
    - http://microtec.com.ar/productos/computadoras-industriales
    - http://www.panarmia.com.ar/

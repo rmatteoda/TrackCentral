@@ -5,7 +5,6 @@ namespace :track_data do
    task load_collected_data: :environment do
 
     #data_file.flock(File::LOCK_UN)
-    #f.puts "loaded " + all_lines.length.to_s + " " + DateTime.now.to_s+"\n "
     #data_file.flock(File::LOCK_UN)
     
     File.open('./log/data_collected_log.txt', 'a+') do |f|     
@@ -16,8 +15,8 @@ namespace :track_data do
     data_file.flock(File::LOCK_EX)
     all_lines = data_file.readlines
     data_file.close
-    #FileUtils.cp("public/data_from_collector.txt", "public/" + Time.now.strftime("%Y%m%d-%H:%M") + "_data_from_collector.txt")
-    #File.unlink('./public/data_from_collector.txt')
+    #FileUtils.cp("public/data_from_collector.txt", "public/" + Time.now.strftime("%Y%m%d-%H_%M").to_s + "_data_from_collector.txt")
+    #File.unlink('public/data_from_collector.txt')
     f.puts "loaded " + all_lines.length.to_s + " " + DateTime.now.to_s+"\n "
     
     current_vaca = nil
@@ -60,7 +59,8 @@ private
         vaca_selected.actividades.create!(registrada: reg_actividad, 
           tipo: "recorrido_nivelado", valor: events[ev_ind+1])
 
-        reg_actividad = reg_actividad.advance(:hours => 1)
+        reg_actividad.utc.to_s        
+        reg_actividad = reg_actividad.advance(:hours => 1).to_datetime
         ev_ind = ev_ind + 2
       end
   end
@@ -78,12 +78,6 @@ private
 
     estimate_time.advance(:hours => -diff_initial_estimate)
     
-    #puts "ultimo reg  : " + ultimo_registro.to_s
-    #puts "estimado : " + estimate_time.to_s
-    #puts "estimado inicial : " + estimate_to_initial.to_s
-    #puts "dif estimado inicial : " + diff_initial_estimate.to_s
-    #puts "dif hr estimado  : " + diff_hr_estimate.to_s
-
     #TODO agregar log de errores en este metodo
     if diff_hr_estimate <= 0
       return ultimo_registro.advance(:hours => 1)
@@ -110,16 +104,13 @@ private
   def completar_horas_noreg(vaca,ultimo_reg,proximo_reg)
    diff_hr_estimate = (((proximo_reg - ultimo_reg)/3600).to_i - 1)
    reg_actividad = ultimo_reg.advance(:hours => 1)
-    #puts "proximo " + proximo_reg.to_s
-    #puts "ultimo " + ultimo_reg.to_s
-
+  
     diff_hr_estimate.times do
         vaca.actividades.create!(registrada: reg_actividad, 
           tipo: "recorrido_total",valor: -1)
         vaca.actividades.create!(registrada: reg_actividad, 
           tipo: "recorrido_nivelado", valor: -1)
-    #    puts "cargo -1 a " + reg_actividad.to_s
-        reg_actividad = reg_actividad.advance(:hours => 1)
+        reg_actividad = reg_actividad.advance(:hours => 1).to_datetime
     end
 
   end
