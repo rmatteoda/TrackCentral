@@ -15,8 +15,8 @@ namespace :track_data do
     data_file.flock(File::LOCK_EX)
     all_lines = data_file.readlines
     data_file.close
-    #FileUtils.cp("public/data_from_collector.txt", "public/" + Time.now.strftime("%Y%m%d-%H_%M").to_s + "_data_from_collector.txt")
-    #File.unlink('public/data_from_collector.txt')
+    FileUtils.cp("public/data_from_collector.txt", "public/" + Time.now.strftime("%Y%m%d-%H_%M").to_s + "_data_from_collector.txt")
+    File.unlink('public/data_from_collector.txt')
     f.puts "loaded " + all_lines.length.to_s + " " + DateTime.now.to_s+"\n "
     
     current_vaca = nil

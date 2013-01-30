@@ -1,4 +1,19 @@
 
+- IMPORTANTE: medir consumo en nodo y router
+- generar tareas para agregar nuevas vacas al sistema sin sacar el resto//LISTO
+- revisar funcion printf y codigo cordinador
+- arreglar error con hora inicial cuando se llena el buffer//LISTO
+- ver de limiar el buffer usb con el reader???
+- agregar log por si se apaga un programa???
+- revisar metodo detector de celo
+- revisar opciones financiamiento
+- preparar collares y gabinetes
+- preparar nodos y pilas
+- generar tares que calculen promedios de vacas y individual
+- IMP: correr rails server y serial reader como windows service
+- averiguar modular para guardar pc y ups o gabinete industrial
+
+*** completadas ****
 - FIRMWARE si paso los datos duerma "x" horas // LISTO
   - guardar evento y ev_metricas, testear bien. usar array?//LISTO
   - controlar cantidad de datos guardados y enviados, 24 horas maximo//LISTO
@@ -7,34 +22,8 @@
   - agregar al grafico la fecha y hora real //LISTO
   - adaptarlo al nuevo firmware //LISTO
   - mejorar el sistema de almacenado(registro de hora de actividad)//LISTO
-  - revisar historial de celo y metodo detector de celo
-  
-- correr rails server y serial reader como windows service
-- obtener valor y medir capacidad de bateria
-- medir consumo en nodo y router
-- averiguar modular para guardar pc y ups o gabinete industrial
-- revisar codigo y hacer mas test del nodo(almacenamiento) si da el tiempo
+  - revisar codigo y hacer mas test del nodo(almacenamiento) //LISTO
 
-COMPRAR:
-- remaches pop y arandelas
-- 12 gabinetes //LISTO
-- barra de silicona para pistola de plastico
-- cable usb de 10 metros
-- retaso de cuero
-- cinta aisladora y soporte router
-
-*** completadas ****
-- averiguar cinta y material de collares // LISTO
-- analizar problema de apagado en windows 7 //LISTO
-  - tiene que ver con la configuracion de la tarea, tratar de usar servicio
-- compra de kits para mas collares // LISTO
-- mejorar conexion de alimentacion para disco SATA //LISTO
-- analizar y configurar router para menor consumo //LISTO
-- modificar codigo de router para test de connecion cada 5 minutos //LISTO
-  - ver posiblidad de darle alimentacion directa al router //LISTO: cable usb de 5m
-- subir planilla de gastos //LISTO
-- subir codigo firmware al repo de github //LISTO
-- agregar log para dejar una copia del archivo que mando a la db //LISTO, probar
 - averiguar precio de thin client  //Listo
    - http://thinclientsolutions.com.ar/productos cod 002. Diego Pico.
    - http://tigertech.com.ar/productos/category/ncomputing/ NO ANDA
@@ -42,3 +31,5 @@ COMPRAR:
    - http://microtec.com.ar/productos/computadoras-industriales
    - http://www.panarmia.com.ar/
 
+125,126 menores niveles de threshold
+127 no cuento el valor del acelerometro, solo el evento

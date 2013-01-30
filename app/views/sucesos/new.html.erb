@@ -9,7 +9,7 @@
       <%= render 'shared/error_messages', object: f.object %>
   
       <%= f.label :vaca %>
-      <%= f.collection_select :vaca_id, @vacas, :caravana, :caravana %>
+      <%= f.collection_select :vaca_id, @vacas, :id, :caravana %>
   
       <%= f.label :tipo, 'Evento' %>
       <%= f.select :tipo, options_for_select([["Servicio", "servicio"],["Parto", "parto"]]) %>

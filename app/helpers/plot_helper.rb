@@ -25,46 +25,6 @@ def activitad_chart(vaca)
     return @chart
 end
 
-def activitad_accelerometer_chart(vaca)
-
-    actividades_suave = vaca.actividades.where("registrada >= ? and tipo = ?", 36.hours.ago,'recorrido_lento')
-    actividades_media = vaca.actividades.where("registrada >= ? and tipo = ?", 36.hours.ago,'recorrido_medio')
-    actividades_fuerte = vaca.actividades.where("registrada >= ? and tipo = ?", 36.hours.ago,'recorrido_rapido')
-    actividades_continua = vaca.actividades.where("registrada >= ? and tipo = ?", 36.hours.ago,'recorrido_continuo')
- 
-    n=0
-    data_slow = []
-    data_medium = []
-    data_fast = []
-    data_contn = []
-    
-    actividades_suave.each do |actividad|
-      data_slow[n] = actividad.valor
-      data_medium[n] = actividades_media[n].valor
-      data_fast[n] = actividades_fuerte[n].valor
-      data_contn[n] = actividades_continua[n].valor
-      n = n+1
-    end 
-    
-    @chart = LazyHighCharts::HighChart.new('graph') do |f|
-     f.options[:chart][:defaultSeriesType] = "spline"
-     f.options[:chart][:zoomType] = "x"
-     f.options[:legend][:align] = "right"
-     f.options[:legend][:verticalAlign] = "top"
-     f.options[:legend][:floating] = "true"
-     f.series(:name=>'Actividad Lenta', :data => data_slow, :pointInterval => 3600000)
-     f.series(:name=>'Actividad Media', :data => data_medium, :pointInterval => 3600000)
-     f.series(:name=>'Actividad Fuerte', :data => data_fast, :pointInterval => 3600000)
-     f.series(:name=>'Actividad Continua', :data => data_contn, :pointInterval => 3600000)
-     f.xAxis(type: :datetime)
-     f.options[:yAxis][:title] = {text: "Eventos"}
-     f.options[:xAxis][:maxZoom] = "14 * 24 * 3600000"
-     f.title(text: 'Actividad vaca ultimas 36 horas') 
-    end
-
-    return @chart
-end
-
 def activitad_total_chart(vaca)
 
     actividades_total = vaca.actividades.where("registrada >= ? and tipo = ?", 36.hours.ago,'recorrido_total')
@@ -105,8 +65,8 @@ def activitad_total_chart(vaca)
 end
 
 def actividad_promedio_total(momento)
- from = momento.advance(:minutes => -20) 
- to   = momento.advance(:minutes => 20) 
+ from = momento.advance(:minutes => -10) 
+ to   = momento.advance(:minutes => 10) 
  actividades = Actividad.where("registrada between ? and ? and tipo = ?", from,to,'recorrido_total')
  actividad_promedio = 0
  actividades.each { |actividad| actividad_promedio = actividad_promedio + actividad.valor}
@@ -194,11 +154,20 @@ def estadistica_celo_chart_high
      f.options[:xAxis][:title] = {text: "Mes"}
      f.title(text: 'Estadistica Mensual') 
      f.options[:plotOptions][:column] = {dataLabels: {enabled: true}}
-     
-     f.options[:xAxis][:categories] = ['Julio','Agosto','Septiembre','Octubre','Noviembre']
-     
-     f.series(:name=>'Celos Detectados', :data => [21,18,25,28,30])
-     f.series(:name=>'Servicios', :data => [21,18,23,26,29])
+          
+     mydate = Date.new(2013, 1, 1)
+     @celos_enero = Celo.where("comienzo between ? and ?" , mydate,mydate.at_end_of_month)
+    
+     mydate = Date.new(2013, 2, 1)
+     @celos_feb = Celo.where("comienzo between ? and ?" , mydate,mydate.at_end_of_month)
+    
+     mydate = Date.new(2013, 3, 1)
+     @celos_marz = Celo.where("comienzo between ? and ?" , mydate,mydate.at_end_of_month)
+    
+     f.options[:xAxis][:categories] = ['Enero','Febrero','Marzo']
+
+     f.series(:name=>'Celos Detectados', :data => [@celos_enero.size,@celos_feb.size,@celos_marz.size])
+     #f.series(:name=>'Servicios', :data => [21,18,23,26,29])
      
     end
     

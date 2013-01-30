@@ -16,9 +16,21 @@
 
   task populate_basic: :environment do
     populate_usuarios
-    populate_vacas
-    populate_nodos
-    align_vacas_nodos
+    populate_vacas(7,1)
+    populate_nodos(7,101)
+    align_vacas_nodos(7,1,101)
+    #populate_celos
+  end
+
+  task agregar_vacas: :environment do
+    #populate_vacas(25,25)
+    #populate_nodos(25,125)
+    #align_vacas_nodos(25,25,125)
+    populate_celos
+  end
+  
+  task eliminar_vacas: :environment do
+    delete_vacas(25,25)   
   end
 
   def populate_usuarios
@@ -34,9 +46,9 @@
                  password_confirmation: "ramiro")
   end
 
-  def populate_vacas
-    5.times do |n|
-        cv = n.to_i + 1
+  def populate_vacas (num_vacas,id_inicio)
+    num_vacas.times do |n|
+        cv = n.to_i + id_inicio.to_i
         vaca = Vaca.create!(caravana: cv,
                    raza: "Holando",
                    estado: "Normal") 
@@ -45,10 +57,27 @@
     end
   end
 
-  def populate_nodos
-    5.times do |n|
-      #nodo = "ND_" + (n+1).to_s 
-      nodo = (n + 101).to_s 
+  def delete_vacas (num_vacas,id_inicio)
+    num_vacas.times do |n|
+      cv = n.to_i + id_inicio.to_i
+      @vaca = Vaca.find(cv)
+      @vaca.nodo = nil
+      @vaca.destroy        
+    end
+  end
+
+   def populate_celos
+      celo_start = Time.now.to_datetime
+      vaca = Vaca.find(5)
+      vaca.celos.create!(comienzo: celo_start,
+                           probabilidad: "alta",
+                           causa: "aumento de actividad")
+   end
+
+
+  def populate_nodos (num_nodos,id_inicio)
+    num_nodos.times do |n|
+      nodo = (n + id_inicio.to_i).to_s 
       Nodo.create!(nodo_id: nodo,
                   bateria: 100)   
     end
@@ -63,18 +92,10 @@
       registro_hr = DateTime.new(Time.now.year, Time.now.month, Time.now.day, 
         (Time.now.hour-1), 0, 0, 0)
       
-      value = rand_int(6,7)    
+      value = rand_int(1,2)    
       vaca.actividades.create!(registrada: registro_hr, tipo: "recorrido", valor: value)
-      value = rand_int(6,7)    
-      vaca.actividades.create!(registrada: registro_hr, tipo: "recorrido_lento", valor: value)
-      value = rand_int(4,5)    
-      vaca.actividades.create!(registrada: registro_hr, tipo: "recorrido_medio", valor: value)
-      value = rand_int(3,2)    
-      vaca.actividades.create!(registrada: registro_hr, tipo: "recorrido_rapido", valor: value)
-      value = rand_int(2,1)    
-      vaca.actividades.create!(registrada: registro_hr, tipo: "recorrido_continuo", valor: value)
-      value = rand_int(4,9)
       vaca.actividades.create!(registrada: registro_hr, tipo: "recorrido_total", valor: value)
+      vaca.actividades.create!(registrada: registro_hr, tipo: "recorrido_nivelado", valor: value)
     #end 
   end
 
@@ -102,7 +123,6 @@
     vaca = Vaca.create!(caravana: 6,
                    raza: "Holando",
                    estado: "Normal") 
-    #populate_actividades(vaca)
         
     ultimo_parto = 125.days.ago
     vaca.sucesos.create!(momento: ultimo_parto, tipo: "parto")
@@ -117,19 +137,18 @@
     vaca.sucesos.create!(momento: inicio, tipo: "servicio")
   
     inicio = 1.days.ago
-    vaca.sucesos.create!(momento: inicio, tipo: "servicio")
-  
+    vaca.sucesos.create!(momento: inicio, tipo: "servicio") 
   end
 
 
-  def align_vacas_nodos
-    5.times do |n|
-      ind = n+1
-      ind2 = n+101
-      #nodo_id = "ND_" + ind.to_s
+  def align_vacas_nodos(num_elem,id_vaca_inicio,id_nodo_inicio)
+    num_elem.times do |n|
+      ind = n + id_vaca_inicio.to_i
+      ind2 = n + id_nodo_inicio.to_i
       nodo_id = ind2.to_s
+      caravana = ind.to_s
       nodo = Nodo.where("nodo_id = ?",nodo_id).first
-      vaca = Vaca.find(ind.to_i)
+      vaca = Vaca.where("caravana = ?",caravana).first
       vaca.nodo_id = nodo_id
       vaca.nodo = nodo
       vaca.save

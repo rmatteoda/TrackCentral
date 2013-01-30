@@ -1,102 +1,120 @@
 namespace :track_celo do
   desc "Task para detectar vacas en celo"
-  #Rake::Task['morning:make_coffee'].invoke
       
-  task detectar_celos: :environment do
+  #tarea que deberia correr a las 5 de la tarde y a las 5 de la mañana
+  task detectar_celos: :environment do    
     #defino la actividad promedio de cada hora
     crear_actividad_promedio
-
+    
     vacas = Vaca.all    
     vacas.each  do |vaca| 
-      #controlo en celo de cada vaca que no fueron detectados en las ultimas 36 horas
-      #en un futuro se podria aumentar a dias, ya que entran cada 21 dias aproximadamente
-      reciente = 36.hours.ago.to_datetime
+      #controlo en celo de cada vaca que no fueron detectados en las ultimas 72 horas
+      reciente = 72.hours.ago.to_datetime
       celo_reciente = Celo.where("vaca_id = ? AND comienzo >= ?", vaca.id,reciente)
-
+      
       if !celo_reciente.any?
+        #CREAR RECORRIDO PROMEDIO DE VACA DE LAS ULTIMAS 72 HORAS SINO ESTA
+        #vaca = Vaca.find(5)
         controlar_celo(vaca)
       end 
     end
-
-  end
-
-  #task temporal, es para marcar algunas vacas en celo y que sean detectadas por aumento de actividad
-  task simular_celos: :environment do
-    celo_id = (rand * (1 - 5) + 5).to_i
-    vaca = Vaca.find(celo_id)
-    actividad_celo(vaca)
-    #puts "simulado para " + vaca.caravana.to_s
-
-    celo_id = (rand * (1 - 5) + 5).to_i
-    vaca = Vaca.find(celo_id)
-    actividad_celo(vaca)
-    #puts "simulado para " + vaca.caravana.to_s
   end
 
   ####################### PRIVATE METHODS ################
 private
   #controla si la vaca esta en celo
   def controlar_celo(vaca)
-    casos = 0
-    celo_start = nil
+    actividad_vc_prom = vaca.actividades.where("tipo = 'recorrido_promedio' AND 
+      registrada >= ?",26.hours.ago.to_datetime).first
+    celo_detectado = 0  
+    actividades_vc = []    
+    actividades_prom = [] 
 
     24.times do |n|
-      hora = (24-n).hours.ago.to_datetime
+      #hora = (24-n).hours.ago.to_datetime
+      hora = Time.now.advance(:hours => (-24+n).to_i)
       hora_start = hora.change(:min => 0) 
-      hora_end = hora_start.advance(:hours => 1)
-      #controlo la actividad de cada hora en las ultimas 12
-      actividad = vaca.actividades.where("tipo = 'recorrido' AND registrada >= ? and registrada < ?", hora_start,hora_end).first
+      hora_end = hora_start.advance(:hours => 1)      
+      
+      actividades_vc[n] = 0
+      actividades_prom[n] = 0
+      
+      actividad = vaca.actividades.where("tipo = 'recorrido_total' AND 
+        registrada >= ? and registrada < ?", hora_start,hora_end).first
+      actividad_promedio = Actividad.where("tipo = 'promedio' AND 
+            registrada >= ? and registrada < ?", hora_start,hora_end).first
+      
+      #puts "hora de actividad " + hora_end.to_s
       if !actividad.nil?       
-          #controlo actividad previa para detectar el comienzo
-          actividad_prev = vaca.actividades.where("tipo = 'recorrido' AND registrada >= ? and registrada < ?", 
-            hora_start.advance(:hours => -2),hora_end.advance(:hours => -2)).first
-          #controlo actividad pasada del dia anterior a la misma hora
-          actividad_old = vaca.actividades.where("tipo = 'recorrido' AND registrada >= ? and registrada < ?", 
-            hora_start.advance(:hours => -24),hora_end.advance(:hours => -24)).first
-          
-          #controlo aumento respecto de la actividad promedio
-          actividad_promedio = Actividad.where("tipo = 'promedio' AND registrada >= ? and registrada < ?", hora_start,hora_end).first
-          if !actividad_promedio.nil? && actividad.valor > (actividad_promedio.valor * 1.8)
-            casos = casos + 1
-          end
-
-          if !actividad_old.nil? && (actividad.valor > (actividad_old.valor * 2.0))
-            casos = casos + 1
-          end
-          
-          if !actividad_prev.nil? && actividad.valor > (actividad_prev.valor * 1.5) && celo_start.nil?
-            celo_start = hora_start
-            casos = casos + 1
-          end
+        actividades_vc[n] = actividad.valor
+        if !actividad_promedio.nil?       
+          actividades_prom[n] = actividad_promedio.valor
+        end
       end
-
+      
     end
 
-    #si se detectaron varios casos, la vaca esta en celo
-    if casos > 5
-        vaca.celos.create!(comienzo: celo_start,
-                           probabilidad: "alta",
-                           causa: "aumento de actividad")
-    end
+    20.times do |n|
+      periodo = n
+      casos_prop = 0
+      casos_prom = 0
+      celo_start = nil
 
+      if celo_detectado == 0
+        8.times do |k|
+          ind = periodo + k
+          if ind < 24
+            if actividades_prom[ind] > 0 && actividades_vc[ind] > (actividades_prom[ind] * 1.6)
+              casos_prom = casos_prom + 1
+            end
+
+            if actividades_vc[ind] > 0 && actividades_vc[ind] > actividad_vc_prom.valor
+              casos_prop = casos_prop + 1
+            end
+          end
+        end
+      end
+      #si se detectaron varios casos, la vaca esta en celo
+      if casos_prop >= 4 && casos_prom >= 4
+          #if !celo_start.nil?
+            #celo_start = (24-periodo).hours.ago.to_datetime
+            celo_start = Time.now.advance(:hours => (-24+periodo).to_i)
+            #vaca.celos.create!(comienzo: celo_start,
+            #                   probabilidad: "alta",
+            #                   causa: "aumento de actividad")
+            celo_detectado = 1
+            puts "celo detectado vaca "+ vaca.caravana.to_s + " start " + celo_start.to_s
+          #end
+      end 
+    end
   end
 
-  #PASAR A OTRO ARCHIVO
+  #PASAR A OTRO ARCHIVO (track_stats)
   # crea la actividad promedio de cada hora
   def crear_actividad_promedio
     24.times do |n|
-      hora = (24-n).hours.ago.to_datetime
+      #hora = (24-n).hours.ago.to_datetime
+      hora = Time.now.advance(:hours => (-24+n).to_i)
       hora_start = hora.change(:min => 0) 
       hora_end = hora_start.advance(:hours => 1)
       
-      actividades = Actividad.where("tipo = 'recorrido' AND registrada >= ? and registrada < ?", hora_start,hora_end)
-      actividad_prom = Actividad.where("tipo = 'promedio' AND registrada >= ? and registrada < ?", hora_start,hora_end)
+      actividades = Actividad.where("tipo = 'recorrido_total' AND registrada >= ? 
+        and registrada < ?", hora_start,hora_end)
+      actividad_prom = Actividad.where("tipo = 'promedio' AND registrada >= ? 
+        and registrada < ?", hora_start,hora_end)
       
       if !actividad_prom.any?
         actividad_promedio = 0
-        actividades.each { |actividad| actividad_promedio = actividad_promedio + actividad.valor}
-        if actividades.count > 0
-          actividad_promedio = (actividad_promedio/actividades.count)
+        count = 0
+        actividades.each do |actividad| 
+          if actividad.valor >= 0
+            actividad_promedio = actividad_promedio + actividad.valor 
+            count = count + 1
+          end
+        end
+
+        if count > 0
+          actividad_promedio = (actividad_promedio/count)
         end
 
         Actividad.create!(vaca_id: 0,registrada: hora_start, tipo: "promedio", valor: actividad_promedio)   
