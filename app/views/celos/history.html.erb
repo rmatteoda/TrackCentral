@@ -1,14 +1,5 @@
   
-<div class="page-header">
-    <h4>Historial de Celos</h4>
-</div>
-   
-  <div class="span11"> 
-      <div id='hist_chart'></div>
-        <%= high_chart("hist_chart",@hist_chart) %>
-  </div>
-
-<% if @celos.any? %>
+<% if @vacas_en_celo.any? %>
  <div class="span11"> 
   <div class="page-header">
   <h4>Vacas en Celo - detectadas ultimos 7 dias</h4>
@@ -24,18 +15,26 @@
     </tr>
   </thead>
     <tbody>
-      <% @celos.each do |celo| %>
+      <% @vacas_en_celo.each do |vaca| %>
       <tr>
-        <td><%= celo.vaca_id %></td>
-        <td><%= celo.comienzo.strftime("%d/%m %H") %> hrs</td>
+        <td><%= vaca.caravana %></td>
+        <td><%= vaca.celos.first.comienzo.strftime("%d/%m %H") %> hrs</td>
       </tr>
       <% end%>
   </tbody>
  </table>
 </div>
 </div>
+<% end %>
+  <div class="span11"> 
+    <div class="page-header">
+     <h4>Historial de Celos</h4>
+    </div>
+   
+    <div id='hist_chart'></div>
+      <%= high_chart("hist_chart",@hist_chart) %>
+  </div>
 
- <% end %>
 
 
 

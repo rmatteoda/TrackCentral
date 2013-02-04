@@ -1,0 +1,39 @@
+<div class="page-header">
+  <h3>Vacas para Observar Celos</h3>
+</div>
+  <div class="span11">
+    <% if @vacas_en_obsrv.any? %>
+    
+  <table class="table table-bordered table-striped">
+
+  <thead>
+    <tr>
+      <th>Vaca</th>
+      <th>Rodeo</th>
+      <th>Ultimo Celo</th>
+      <th>Motivo para Observar</th>
+    </tr>
+  </thead>
+    <tbody>
+      <% @vacas_en_obsrv.each do |vaca| %>
+      <tr>
+        <td><%= vaca.caravana %></td>
+        <td><%= vaca.rodeo %></td>
+        <td>hace <%= ((Time.now - vaca.celos.first.comienzo)/(3600*24)).to_i %> dias </td>
+        <td>Esta en periodo para entrar en celo </td>
+      </tr>
+      <%end%>
+  </tbody>
+ </table>
+        
+<% else %>
+    <div class="alert alert-info">
+      <button class="close" data-dismiss="alert">&times;</button>
+      No se han detectado vacas para observacion.
+    </div>
+  <% end %>
+
+</div>
+
+  </div>
+

@@ -2,9 +2,11 @@
       <ul class="nav nav-pills nav-stacked">
         <li><%= link_to "Listado de Vacas", vacas_path %></li>
         <li><%= link_to "Vacas en Celo", celos_path %></li>
-        <li><%= link_to "Historial de Celo", history_celo_path(:id => 3) %></li>
-        <li><%= link_to "Alarmas (" + alarmas().to_s + ")", alarmas_path %></li>
-        <li><%= link_to "Eventos", new_suceso_path %></li>
+        <li><%= link_to "Vacas en Observacion", observer_list_celo_path(:id => 3) %></li>
+        <li><%= link_to "Historial de Celos", history_celo_path(:id => 3) 
+        %></li>
+        <!-- <li> link_to Alarmas (alarmas().to_s),alarmas_path </li> -->
+        <li><%= link_to "Registros", new_suceso_path %></li>
         <% if signed_in? %>
           <li><%= link_to "Collares", nodos_path %></li>
         <% end %>

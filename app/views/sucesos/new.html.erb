@@ -1,6 +1,6 @@
-<% provide(:title, "Agregar Evento") %>
+<% provide(:title, "Agregar Registro") %>
 <div class="page-header">
-  <h3>Agregar Evento</h3>
+  <h3>Agregar Registro</h3>
 </div>
 
   <div class="span9">
@@ -11,7 +11,7 @@
       <%= f.label :vaca %>
       <%= f.collection_select :vaca_id, @vacas, :id, :caravana %>
   
-      <%= f.label :tipo, 'Evento' %>
+      <%= f.label :tipo, 'Registro' %>
       <%= f.select :tipo, options_for_select([["Servicio", "servicio"],["Parto", "parto"]]) %>
 
       <%= f.label :momento, 'Fecha' %>

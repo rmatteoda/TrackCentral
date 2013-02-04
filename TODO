@@ -1,28 +1,21 @@
 
-- IMPORTANTE: medir consumo en nodo y router
-- generar tareas para agregar nuevas vacas al sistema sin sacar el resto//LISTO
-- revisar funcion printf y codigo cordinador
-- arreglar error con hora inicial cuando se llena el buffer//LISTO
-- ver de limiar el buffer usb con el reader???
-- agregar log por si se apaga un programa???
-- revisar metodo detector de celo
+- IMPORTANTE: medir consumo en nodo
 - revisar opciones financiamiento
-- preparar collares y gabinetes
-- preparar nodos y pilas
-- generar tares que calculen promedios de vacas y individual
-- IMP: correr rails server y serial reader como windows service
-- averiguar modular para guardar pc y ups o gabinete industrial
+- averiguar modular para guardar pc o gabinete industrial
+- hacer informe para Roberto Canale de la ultima prueba
+- mejorar cobertura en la sala de ordeñe - asignar(capaldi, pergamo, ?) 
+- correr rails server y serial reader como windows service
+- ver de encender una luz cuando se detecta una vaca en celo que debe ser inseminada
+- buscar mejor caja para collar y mejorar sistema para fijar el nodo
+  - serpac
+  - hammond
+  - polycase
+  - rose bopla
 
-*** completadas ****
-- FIRMWARE si paso los datos duerma "x" horas // LISTO
-  - guardar evento y ev_metricas, testear bien. usar array?//LISTO
-  - controlar cantidad de datos guardados y enviados, 24 horas maximo//LISTO
-  - agregar hora inicial en que se guarda el primer reg de dump//LISTO
-- RECEPTOR:
-  - agregar al grafico la fecha y hora real //LISTO
-  - adaptarlo al nuevo firmware //LISTO
-  - mejorar el sistema de almacenado(registro de hora de actividad)//LISTO
-  - revisar codigo y hacer mas test del nodo(almacenamiento) //LISTO
+- mejorar app web para visualizacion de datos
+  - agregar vacas en observacion por calendario//LISTO
+  - revisar updates y su funcionamiento//LISTO
+  - Registros: agregar mas tipos (disp, gen rh, tratamiento, celo, serv)
 
 - averiguar precio de thin client  //Listo
    - http://thinclientsolutions.com.ar/productos cod 002. Diego Pico.

@@ -19,14 +19,14 @@
     populate_vacas(7,1)
     populate_nodos(7,101)
     align_vacas_nodos(7,1,101)
-    #populate_celos
+    populate_celos
   end
 
   task agregar_vacas: :environment do
-    #populate_vacas(25,25)
-    #populate_nodos(25,125)
-    #align_vacas_nodos(25,25,125)
-    populate_celos
+    populate_vacas(2,8)
+    populate_nodos(2,109)
+    align_vacas_nodos(2,8,109)
+    #populate_celos
   end
   
   task eliminar_vacas: :environment do
@@ -51,6 +51,7 @@
         cv = n.to_i + id_inicio.to_i
         vaca = Vaca.create!(caravana: cv,
                    raza: "Holando",
+                   rodeo: 1,
                    estado: "Normal") 
         populate_actividades(vaca)
         populate_sucesos(vaca)
@@ -67,11 +68,21 @@
   end
 
    def populate_celos
+      @vacas = Vaca.all
+      @vacas.each do |vaca|
+       celo_start = (19+vaca.id).days.ago.to_datetime
+       vaca.celos.create!(comienzo: celo_start,
+                          probabilidad: "alta",
+                          caravana: vaca.caravana,
+                          causa: "aumento de actividad")
+      end
+
       celo_start = Time.now.to_datetime
       vaca = Vaca.find(5)
       vaca.celos.create!(comienzo: celo_start,
-                           probabilidad: "alta",
-                           causa: "aumento de actividad")
+                          probabilidad: "alta",
+                          caravana: vaca.caravana,
+                          causa: "aumento de actividad")
    end
 
 

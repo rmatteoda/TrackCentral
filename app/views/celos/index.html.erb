@@ -3,7 +3,7 @@
   <h3>Vacas en Celo</h3>
 </div>
   <div class="span11">
-    <% if @celos.any? %>
+    <% if @vacas_en_celo.any? %>
     
   <table class="table table-bordered table-striped">
 
@@ -17,14 +17,19 @@
     </tr>
   </thead>
     <tbody>
-      <% @celos.each do |celo| %>
+      <% @vacas_en_celo.each do |vaca| %>
       <tr>
-        <td><%= celo.vaca_id %></td>
-        <td><%= celo.comienzo.strftime("%d/%m %H") %> hrs</td>
-        <td>desde <%= celo.comienzo.advance(:hours => 8).strftime("%d/%m %H") %>hrs hasta <%= celo.comienzo.advance(:hours => 17).strftime("%d/%m %H") %>hrs <br> optimo: <%= celo.comienzo.advance(:hours => 11).strftime("%d/%m %H") %>hrs</td>
-        <td><%= celo.comienzo.advance(:days => -21).strftime("%d/%m %H") %>hrs</td>
+        <td><%= vaca.caravana %></td>
+        <td><%= vaca.celos.first.comienzo.strftime("%d/%m %H") %> hrs</td>
+        <td>desde <%= vaca.celos.first.comienzo.advance(:hours => 10).strftime("%d/%m %H") %>hrs hasta <%= vaca.celos.first.comienzo.advance(:hours => 18).strftime("%d/%m %H") %>hrs <br> optimo: <%= vaca.celos.first.comienzo.advance(:hours => 11).strftime("%d/%m %H") %>hrs</td>
+        <% if vaca.celos.count > 1 %>   
+        
+        <td>hace <%= ((Time.now - vaca.celos.second.comienzo)/(3600*24)).to_i %> dias</td>
+        <% else %>
+        <td></td>
+        <% end %>
         <td>
-        <%= link_to 'Ver', celos_path(:vaca_select => celo.vaca_id), :class => 'btn'%>
+        <%= link_to 'Ver', celos_path(:vaca_select => vaca.celos.first.vaca_id), :class => 'btn'%>
         </td>
       </tr>
       <% end%>

@@ -23,7 +23,7 @@ TrackCentral::Application.routes.draw do
   
   resources :celos, only: [:index] do
     member do
-      get :history
+      get :history,:observer_list
     end
   end
   

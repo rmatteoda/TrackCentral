@@ -13,8 +13,6 @@ namespace :track_celo do
       celo_reciente = Celo.where("vaca_id = ? AND comienzo >= ?", vaca.id,reciente)
       
       if !celo_reciente.any?
-        #CREAR RECORRIDO PROMEDIO DE VACA DE LAS ULTIMAS 72 HORAS SINO ESTA
-        #vaca = Vaca.find(5)
         controlar_celo(vaca)
       end 
     end
@@ -76,15 +74,14 @@ private
       end
       #si se detectaron varios casos, la vaca esta en celo
       if casos_prop >= 4 && casos_prom >= 4
-          #if !celo_start.nil?
-            #celo_start = (24-periodo).hours.ago.to_datetime
+           #celo_start = (24-periodo).hours.ago.to_datetime
             celo_start = Time.now.advance(:hours => (-24+periodo).to_i)
             #vaca.celos.create!(comienzo: celo_start,
             #                   probabilidad: "alta",
+            #                   caravana: vaca.caravana,
             #                   causa: "aumento de actividad")
             celo_detectado = 1
             puts "celo detectado vaca "+ vaca.caravana.to_s + " start " + celo_start.to_s
-          #end
       end 
     end
   end

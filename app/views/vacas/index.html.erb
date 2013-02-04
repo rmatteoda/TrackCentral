@@ -11,10 +11,10 @@
   <thead>
     <tr>
       <th><%= model_class.human_attribute_name(:caravana) %></th>
-      <th><%= model_class.human_attribute_name(:raza) %></th>
-      <th><%= model_class.human_attribute_name(:estado) %></th>
+      <th><%= model_class.human_attribute_name(:rodeo) %></th>
+      <th>Ultimo Registro</th>
+      <th>Ultimo Celo</th>
       <th>Collar</th>
-      <th>Alarma</th>
       <th>Detalle</th>
       <% if signed_in? && current_user.admin?%>
        <th>Accion</th>
@@ -25,11 +25,17 @@
     <% @vacas.each do |vaca| %>
       <tr>
         <td><%= vaca.caravana %></td>
-        <td><%= vaca.raza %></td>
-        <td><%= vaca.estado %></td>
-        <td><%= vaca.nodo_id %></td>
+        <td><%= vaca.rodeo %></td>
+        <% if vaca.sucesos.any? %>   
+        <td><%= vaca.sucesos.first.tipo.to_s %> el <%= vaca.sucesos.first.momento.strftime("%d/%m") %></td>
+        <% else %>
         <td></td>
-        <td><%= link_to 'Ver', vaca_path(vaca), :class => 'btn btn-mini' %></td>
+        <% end %>
+        <% if vaca.celos.any? %>   
+         <td>hace <%= ((Time.now - vaca.celos.first.comienzo)/(3600*24)).to_i %> dias</td>
+        <% else %><td></td><% end %>
+        <td><%= vaca.nodo_id %></td>
+        <td><%= link_to 'Ver Detalle', vaca_path(vaca), :class => 'btn btn-mini' %></td>
         
         <% if signed_in? && current_user.admin?%>
         <td>

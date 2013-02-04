@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120813130207) do
+ActiveRecord::Schema.define(:version => 20130204113601) do
 
   create_table "actividads", :force => true do |t|
     t.string   "tipo"
@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(:version => 20120813130207) do
     t.string   "causa"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+    t.integer  "caravana"
   end
 
   create_table "nodos", :force => true do |t|
@@ -81,6 +82,7 @@ ActiveRecord::Schema.define(:version => 20120813130207) do
     t.string   "nodo_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "rodeo"
   end
 
 end
