@@ -1,27 +1,45 @@
 
-- IMPORTANTE: medir consumo en nodo
-- revisar opciones financiamiento
-- averiguar modular para guardar pc o gabinete industrial
-- hacer informe para Roberto Canale de la ultima prueba
-- mejorar cobertura en la sala de ordeñe - asignar(capaldi, pergamo, ?) 
-- correr rails server y serial reader como windows service
 - ver de encender una luz cuando se detecta una vaca en celo que debe ser inseminada
-- buscar mejor caja para collar y mejorar sistema para fijar el nodo
-  - serpac
-  - hammond
-  - polycase
-  - rose bopla
+- mejorar cobertura en la sala de ordeñe 
+  - buscar nodos de otras marcas o que usen ti
+    - ver http://e2e.ti.com/support/low_power_rf/f/158/t/93293.aspx
+    - http://www.lsr.com/wireless-products/proflex01-r2
+    - ATMEL zigbee, XBee de Digi, http://www.radiocrafts.com/
+- hacer informe para Roberto Canale de la ultima prueba?
+- buscar alguien para diseño de placa alimentacion con chip control
+- correr rails server y serial reader como windows service
+- mejorar sistema para fijar el nodo - podria quedar bien con los gab.
+- buscar mejor caja para collar //LISTO
+  - serpac - modelo RB22-1TG1BG
+  - hammond - RP1025 modelo que compre.
+  - polycase - ver modelo WP20F
+  - rose bopla 
+     - Polycarbonate Watertight 03 Enclosures modelo 030507040
+     - ABS Watertight 09 Enclosures - 090507040
+     - EuroLite Polycarbonate Watertight Enclosures EM 206
+- revisar opciones financiamiento
+
+- medir consumo en nodo //LISTO
+ * Osciloscopio. CH1=100mV, M=10.0ms.
+  - en reposo Vp-p = 8mv
+  - cuando se activa el timer Vp-p = 12mv
+  - cuando se activa el acelerometro Vp-p = 12-15mv
+  - cuando transmite la info Vp-p = max 28-32mv
+  - cuando intenta transmitir Vp-p = 25-32mv   
+- averiguar modular para guardar pc o gabinete industrial//LISTO
+  - tecno industrial americada: muy caro
+  - gringo: 950
+  - otra: gabinetes de inst electrica estanco, 850
 
 - mejorar app web para visualizacion de datos
-  - agregar vacas en observacion por calendario//LISTO
-  - revisar updates y su funcionamiento//LISTO
-  - Registros: agregar mas tipos (disp, gen rh, tratamiento, celo, serv)
+  - Registros: agregar mas tipos (disp, gen rh, etc)//consultar Roberto
 
 - averiguar precio de thin client  //Listo
    - http://thinclientsolutions.com.ar/productos cod 002. Diego Pico.
    - http://tigertech.com.ar/productos/category/ncomputing/ NO ANDA
    - http://www.arm.com.ar/TC/#
    - http://microtec.com.ar/productos/computadoras-industriales
+     - me comunique con Daniel Kolodzinski, armar una solucion serian del orden de los 2500 dolares
    - http://www.panarmia.com.ar/
 
 125,126 menores niveles de threshold
