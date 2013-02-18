@@ -5,20 +5,22 @@
   #limppiar la base rake db:purge
   task populate: :environment do
     populate_usuarios
-    populate_vacas
-    populate_nodos
-    align_vacas_nodos
-    populate_alert_data
+    populate_vacas(17,1)
+    populate_nodos(17,101)
+    align_vacas_nodos(17,1,101)
+    populate_alert_data(18)
     Rake::Task['track_vacas:detectar_alarmas'].invoke
     Rake::Task['track_celo:simular_celos'].invoke
+    Rake::Task['track_stats:generar_recorrido_promedio'].invoke  
     Rake::Task['track_celo:detectar_celos'].invoke
+    populate_celos
   end
 
   task populate_basic: :environment do
     populate_usuarios
-    populate_vacas(7,1)
-    populate_nodos(7,101)
-    align_vacas_nodos(7,1,101)
+    populate_vacas(17,1)
+    populate_nodos(17,101)
+    align_vacas_nodos(17,1,101)
     populate_celos
   end
 
@@ -53,7 +55,7 @@
                    raza: "Holando",
                    rodeo: 1,
                    estado: "Normal") 
-        populate_actividades(vaca)
+        populate_actividades(vaca,28,28)
         populate_sucesos(vaca)
     end
   end
@@ -70,19 +72,19 @@
    def populate_celos
       @vacas = Vaca.all
       @vacas.each do |vaca|
-       celo_start = (19+vaca.id).days.ago.to_datetime
-       vaca.celos.create!(comienzo: celo_start,
+      celo_start = (19+vaca.id).days.ago.to_datetime
+      vaca.celos.create!(comienzo: celo_start,
                           probabilidad: "alta",
                           caravana: vaca.caravana,
                           causa: "aumento de actividad")
       end
 
-      celo_start = Time.now.to_datetime
-      vaca = Vaca.find(5)
-      vaca.celos.create!(comienzo: celo_start,
-                          probabilidad: "alta",
-                          caravana: vaca.caravana,
-                          causa: "aumento de actividad")
+      #celo_start = Time.now.to_datetime
+      #vaca = Vaca.find(5)
+      #vaca.celos.create!(comienzo: celo_start,
+      #                    probabilidad: "alta",
+      #                    caravana: vaca.caravana,
+      #                    causa: "aumento de actividad")
    end
 
 
@@ -94,20 +96,20 @@
     end
   end
 
-  def populate_actividades(vaca)
-    inicio = 18.hours.ago
-    #8.times do |n|
-     # registro = inicio.advance(:hours => n)
-      #registro_hr = DateTime.new(registro.year, registro.month, registro.day, 
-      #  registro.hour, 0, 0, 0)
-      registro_hr = DateTime.new(Time.now.year, Time.now.month, Time.now.day, 
-        (Time.now.hour-1), 0, 0, 0)
+  def populate_actividades(vaca,hr_inicio,n_act)
+    inicio = hr_inicio.hours.ago
+    n_act.times do |n|
+      registro = inicio.advance(:hours => n)
+      registro_hr = DateTime.new(registro.year, registro.month, registro.day, 
+        registro.hour, 0, 0, 0)
+      #registro_hr = DateTime.new(Time.now.year, Time.now.month, Time.now.day, 
+       # (Time.now.hour-1), 0, 0, 0)
       
-      value = rand_int(1,2)    
+      value = rand_int(100,120)    
       vaca.actividades.create!(registrada: registro_hr, tipo: "recorrido", valor: value)
       vaca.actividades.create!(registrada: registro_hr, tipo: "recorrido_total", valor: value)
       vaca.actividades.create!(registrada: registro_hr, tipo: "recorrido_nivelado", valor: value)
-    #end 
+    end 
   end
 
   def populate_sucesos(vaca)
@@ -130,8 +132,8 @@
     vaca.sucesos.create!(momento: inicio, tipo: "servicio")
   end
 
-  def populate_alert_data
-    vaca = Vaca.create!(caravana: 6,
+  def populate_alert_data(id_vaca)
+    vaca = Vaca.create!(caravana: id_vaca,
                    raza: "Holando",
                    estado: "Normal") 
         

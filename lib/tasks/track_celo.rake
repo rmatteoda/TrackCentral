@@ -18,6 +18,18 @@ namespace :track_celo do
     end
   end
 
+  #task temporal, es para marcar algunas vacas en celo 
+  #que sean detectadas por aumento de actividad
+  task simular_celos: :environment do
+    celo_id = (rand * (1 - 15) + 15).to_i
+    vaca = Vaca.find(celo_id)
+    actividad_celo(vaca)
+    
+    celo_id = (rand * (1 - 15) + 15).to_i
+    vaca = Vaca.find(celo_id)
+    actividad_celo(vaca)
+  end
+
   ####################### PRIVATE METHODS ################
 private
   #controla si la vaca esta en celo
@@ -76,12 +88,12 @@ private
       if casos_prop >= 4 && casos_prom >= 4
            #celo_start = (24-periodo).hours.ago.to_datetime
             celo_start = Time.now.advance(:hours => (-24+periodo).to_i)
-            #vaca.celos.create!(comienzo: celo_start,
-            #                   probabilidad: "alta",
-            #                   caravana: vaca.caravana,
-            #                   causa: "aumento de actividad")
+            vaca.celos.create!(comienzo: celo_start,
+                               probabilidad: "alta",
+                               caravana: vaca.caravana,
+                               causa: "aumento de actividad")
             celo_detectado = 1
-            puts "celo detectado vaca "+ vaca.caravana.to_s + " start " + celo_start.to_s
+            #puts "celo detectado vaca "+ vaca.caravana.to_s + " start " + celo_start.to_s
       end 
     end
   end
@@ -122,11 +134,11 @@ private
   #temporal, para simular aumento de actividad de vaca en celo
   def actividad_celo(vaca)
     #puts "cargo vaca en celo " + vaca.caravana.to_s
-    momento_celo_start = 8.hours.ago
-    actividad_celo = vaca.actividades.where("registrada > ? ", momento_celo_start)
+    momento_celo_start = 10.hours.ago
+    actividad_celo = vaca.actividades.where("tipo = 'recorrido_total' AND registrada > ? ", momento_celo_start)
     
     actividad_celo.each do |actividad|
-      actividad.valor = (actividad.valor) * 2.3
+      actividad.valor = (actividad.valor) * 1.8
       actividad.save
     end
   end
