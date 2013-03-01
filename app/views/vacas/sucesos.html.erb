@@ -1,0 +1,25 @@
+ <div class="span11"> 
+  <div class="page-header">
+  <h4>Historial de Registros Vaca <%= @vaca.id %></h4>
+  </div>
+
+  <div class="span9">
+  
+  <table class="table table-bordered table-striped">
+    <thead>
+     <tr>
+      <th>Fecha</th>
+      <th>Suceso</th>
+     </tr>
+    </thead>
+    <tbody>
+      <% @sucesos.each do |suceso| %>
+        <tr>
+          <td><%= suceso.momento.strftime("%d/%m") %> </td>
+          <td><%= suceso.tipo %></td>
+        </tr>
+      <% end%>
+    </tbody>
+  </table>
+ </div>
+</div>

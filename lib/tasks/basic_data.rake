@@ -9,11 +9,11 @@
     populate_nodos(17,101)
     align_vacas_nodos(17,1,101)
     populate_alert_data(18)
+    populate_celos
     Rake::Task['track_vacas:detectar_alarmas'].invoke
     Rake::Task['track_celo:simular_celos'].invoke
     Rake::Task['track_stats:generar_recorrido_promedio'].invoke  
     Rake::Task['track_celo:detectar_celos'].invoke
-    populate_celos
   end
 
   task populate_basic: :environment do

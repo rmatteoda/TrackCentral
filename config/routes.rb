@@ -15,7 +15,11 @@ TrackCentral::Application.routes.draw do
  
   resources :users
  
-  resources :vacas
+  resources :vacas do
+    member do
+      get :sucesos
+    end
+  end
 
   resources :nodos, only: [:new, :create, :destroy, :index]
  

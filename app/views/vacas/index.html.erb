@@ -27,7 +27,7 @@
         <td><%= vaca.caravana %></td>
         <td><%= vaca.rodeo %></td>
         <% if vaca.sucesos.any? %>   
-        <td><%= vaca.sucesos.first.tipo.to_s %> el <%= vaca.sucesos.first.momento.strftime("%d/%m") %></td>
+        <td><%= vaca.sucesos.first.tipo.to_s %> el <%= vaca.sucesos.first.momento.strftime("%d/%m") %>   <%= link_to 'Historial', sucesos_vaca_path(:id => vaca.id), :class => 'btn btn-mini' %></td>
         <% else %>
         <td></td>
         <% end %>

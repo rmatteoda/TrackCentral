@@ -49,6 +49,11 @@ class VacasController < ApplicationController
     end
   end
 
+  def sucesos
+    @vaca = Vaca.find(params[:id])
+    @sucesos = @vaca.sucesos
+  end
+
   def update
     @vaca = Vaca.find(params[:id])
     

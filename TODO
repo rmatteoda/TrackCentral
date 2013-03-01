@@ -1,17 +1,25 @@
 
 - ver de encender una luz cuando se detecta una vaca en celo que debe ser inseminada
+- hacer GUI java Windows
+- mejorar colar: fijacion electronica
+- revisar opciones financiamiento
+- menu simple para cambio de collar y agregar nueva vaca al sistema
+- hacer historial de registro por vaca//LISTO
+
 - mejorar cobertura en la sala de ordeñe 
-  - buscar nodos de otras marcas o que usen ti
+  - buscar nodos de otras marcas o ti con antena externa
     - http://www.lsr.com/wireless-products/proflex01-r2
     - ATMEL zigbee, XBee de Digi, http://www.radiocrafts.com/
+     linetec - cica
+     electrocomponentes tiene  xb24 cz7pis-004: http://datasheet.octopart.com/XB24CZ7PIS-004-Digi-International-datasheet-10410418.pdf
+    - http://www.taiwantrade.com.tw/resources/member/276716/productcatalog/69929907-0535-4da2-bbc5-d6e4d4257381_DS-MS2530-M03_v1_0.pdf
+    - http://www.fasttech.com/category/1010/texas-instruments-zigbee
+     
 - buscar alguien para diseño de placa alimentacion con chip control
+   - juan flores, rivera indarte 1268
 - correr rails server y serial reader como windows service
-- hacer GUI java Windows
-- revisar opciones financiamiento
-- menu simple para cambio de rodeo y cambio de collar
+- obtener dominio TrackCelo.com y mejorar web y logo
 
-
-- hacer informe para Roberto Canale de la ultima prueba?//LISTO
 - mejorar colar: gabinete y fijacion electronica//LISTO
   - serpac: modelo RB22-1TG1BG
   - hammond: RP1025 modelo que compre
@@ -31,9 +39,6 @@
   - gringo: 950
   - gabinetes genrod estanco 45x60x30: 850
 
-- mejorar app web para visualizacion de datos
-  - Registros: agregar mas tipos (disp, gen rh, etc)//consultar Roberto
-
 - averiguar precio de thin client  //Listo
    - http://thinclientsolutions.com.ar/productos cod 002. Diego Pico.
    - http://tigertech.com.ar/productos/category/ncomputing/ NO ANDA
@@ -41,6 +46,3 @@
    - http://microtec.com.ar/productos/computadoras-industriales
      - me comunique con Daniel Kolodzinski, armar una solucion serian del orden de los 2500 dolares
    - http://www.panarmia.com.ar/
-
-125,126 menores niveles de threshold
-127 no cuento el valor del acelerometro, solo el evento

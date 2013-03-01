@@ -10,8 +10,8 @@
     <%= f.label :raza, :class => 'control-label' %>
     <%= f.select :raza, options_for_select([["Holando Argentina", "holando"],["Jersey", "jersey"],["Holstein", "holstein"],["Roja Suiza", "suiza"]]) %>
 
-    <%= f.label :estado, :class => 'control-label' %>
-    <%= f.text_field :estado, :class => 'text_field' %>
+    <%= f.label :rodeo, :class => 'control-label' %>
+    <%= f.select :rodeo, options_for_select([["1", "1"],["2", "2"],["3", "3"]]) %>
 
     <%= f.label 'Collar', :class => 'control-label' %>
     <%= f.collection_select :nodo_id, @nodos, :nodo_id, :nodo_id, :include_blank => true %>
