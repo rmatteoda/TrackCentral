@@ -8,8 +8,9 @@ namespace :track_celo do
     
     vacas = Vaca.all    
     vacas.each  do |vaca| 
-      #controlo en celo de cada vaca que no fueron detectados en las ultimas 72 horas
-      reciente = 72.hours.ago.to_datetime
+      #controlo en celo de cada vaca que no fueron detectados en las ultimas 90 horas
+      #aumentar a 15 dias cuando este el sistema equilibrado
+      reciente = 90.hours.ago.to_datetime
       celo_reciente = Celo.where("vaca_id = ? AND comienzo >= ?", vaca.id,reciente)
       
       if !celo_reciente.any?
@@ -34,8 +35,9 @@ namespace :track_celo do
 private
   #controla si la vaca esta en celo
   def controlar_celo(vaca)
-    actividad_vc_prom = vaca.actividades.where("tipo = 'recorrido_promedio' AND 
-      registrada >= ?",26.hours.ago.to_datetime).first
+    #obtengo actividad promedio de la vaca
+    actividad_vc_prom = vaca.actividades.where("tipo = 'recorrido_promedio' AND registrada >= ?",50.hours.ago.to_datetime).first
+    
     celo_detectado = 0  
     actividades_vc = []    
     actividades_prom = [] 
@@ -46,11 +48,14 @@ private
       hora_start = hora.change(:min => 0) 
       hora_end = hora_start.advance(:hours => 1)      
       
-      actividades_vc[n] = 0
-      actividades_prom[n] = 0
-      
+      actividades_vc[n] = 0 #almaceno actividad de la vaca ultimas 24 horas
+      actividades_prom[n] = 0 #almeceno act promedio de todas las vacas
+
+      #actividad de la vaca
       actividad = vaca.actividades.where("tipo = 'recorrido_total' AND 
         registrada >= ? and registrada < ?", hora_start,hora_end).first
+
+      #actividad promedio del ganado de la hora en analisis
       actividad_promedio = Actividad.where("tipo = 'promedio' AND 
             registrada >= ? and registrada < ?", hora_start,hora_end).first
       
@@ -78,13 +83,14 @@ private
               casos_prom = casos_prom + 1
             end
 
-            if actividades_vc[ind] > 0 && actividades_vc[ind] > actividad_vc_prom.valor
+            if actividades_vc[ind] > 0 && !actividad_vc_prom.nil? && actividades_vc[ind] > actividad_vc_prom.valor
               casos_prop = casos_prop + 1
             end
           end
         end
       end
       #si se detectaron varios casos, la vaca esta en celo
+      # regular umbral . 4?
       if casos_prop >= 4 && casos_prom >= 4
            #celo_start = (24-periodo).hours.ago.to_datetime
             celo_start = Time.now.advance(:hours => (-24+periodo).to_i)

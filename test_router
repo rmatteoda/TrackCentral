@@ -1,0 +1,24 @@
+Test Router
+
+- probar alcance
+- encender todo, reiniciar cordinator, conectar nodo usando router
+- encender todo, reiniciar nodo, conectar nodo usando router
+- encender todo, desconectar cordinator, usar nodo
+- configurar router y usarlo con placa arduinio//LISTO
+- ver de forzar el panid
+  - http://e2e.ti.com/support/low_power_rf/f/158/t/195031.aspx
+
+prueba 1: 1 router, 1 cordinador, 1 end device
+   1) todo encendido andando correctamente
+   2) apago el cordinador
+     2.1) el end device sigue enviando datos al router y sigue como si anda bien, no reporta error
+     2.2) apago tambien el router, luego enciendo el router y el end device reporta error de envio de mensaje
+     2.3) enciendo el cordinador y todo vuelve a funcionar
+
+ problemas:
+     - el router deberia saber que no hay un cordinador o configurar con la direcion del cordinador y que el end device reciba ACK de este
+     - VER: si apago cordinador, el device transmite con el router andando, luego conecto el cordinador y el end device sige mandando al router y no llega al cordinador. se tiene que reiniciar el router tambien
+
+posibles soluciones analizar:
+- http://lynndia.blogspot.com.ar/2011/07/making-your-xbee-routers-persistant.html
+  dejar fijo en PAN ID y en canal en el cordinator y setear los parametros del router JV=1 y NW=2 o mas.

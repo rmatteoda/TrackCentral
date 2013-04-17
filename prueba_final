@@ -1,0 +1,18 @@
+
+- IMP: revisar script de control y datos del sistema//LISTO
+- sincronizar deteccion de celo con carga de datos//LISTO
+- revisar firmware collares//LISTO
+- evaluar consumo
+- armar sistema de alerta con leds y puerto paralelo
+  - configurar scrips para generar alertas prender leds
+
+- armar collares con nuevos gabinete//LISTO
+- instalar sistema en PC del tambo//LISTO
+- realizar pruebas generales y datos iniciales//LISTO
+- instlar touch driver//LISTO
+- dejar 1 dia andando 10 o 20 collares -//LISTO
+- probar alcance de router en el tambo y planear instalacion//LISTO
+- agregar registro del ultimo celo//LISTO
+- correr perl como servicio (Win32::Daemon) //LISTO
+- correr rails como servicio (thin_service)//LISTO
+  VER: https://github.com/gsmedley/thin_service

@@ -22,7 +22,8 @@ namespace :track_data do
     current_vaca = nil
     last_register = nil
     initial_hr_dump = nil
-         
+    n_dumps = 0
+
     all_lines.each do |line|
       data = line.split(',')
         
@@ -35,12 +36,21 @@ namespace :track_data do
           last_register = last_activity.registrada
          end
         elsif data.length >= 4 #TODO cambiar condicion
-           if !current_vaca.nil? && !last_register.nil?
+          if !current_vaca.nil? && !last_register.nil?
             save_collected_events(current_vaca,data,last_register,initial_hr_dump)
+            n_dumps = n_dumps + 1
           end
         end
-    end  
     end
+    
+    #puts "DUMPED:::: " + n_dumps.to_s
+    if n_dumps > 1
+      #puts "start live celo detector"
+      system "bundle exec rake track_celo:detectar_celos"
+    end
+
+
+    end    
     end 
   end
   
@@ -113,25 +123,6 @@ private
         reg_actividad = reg_actividad.advance(:hours => 1).to_datetime
     end
 
-  end
-        
-
-  def save_collected_activity(vaca,accel_slow,accel_medium,accel_fast,accel_cont,registro)
-      act_total = accel_slow.to_i + accel_medium.to_i + accel_fast.to_i + accel_cont.to_i
-
-      registro_hr = DateTime.new(registro.year, registro.month, registro.day, registro.hour, 0, 0, 0)
-
-      vaca_selected = vaca
-      vaca_selected.actividades.create!(registrada: registro_hr, tipo: "recorrido_lento", 
-                                        valor: accel_slow)
-      vaca_selected.actividades.create!(registrada: registro_hr, tipo: "recorrido_medio", 
-                                        valor: accel_medium)
-      vaca_selected.actividades.create!(registrada: registro_hr, tipo: "recorrido_rapido", 
-                                        valor: accel_fast)
-      vaca_selected.actividades.create!(registrada: registro_hr, tipo: "recorrido_continuo", 
-                                        valor: accel_cont)
-      vaca_selected.actividades.create!(registrada: registro_hr, tipo: "recorrido_total", 
-                                        valor: act_total)
   end
 
 end

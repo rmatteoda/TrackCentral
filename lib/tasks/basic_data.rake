@@ -8,7 +8,7 @@
     populate_vacas(17,1)
     populate_nodos(17,101)
     align_vacas_nodos(17,1,101)
-    populate_alert_data(18)
+    #populate_alert_data(18)
     populate_celos
     Rake::Task['track_vacas:detectar_alarmas'].invoke
     Rake::Task['track_celo:simular_celos'].invoke
@@ -18,10 +18,10 @@
 
   task populate_basic: :environment do
     populate_usuarios
-    populate_vacas(17,1)
-    populate_nodos(17,101)
-    align_vacas_nodos(17,1,101)
-    populate_celos
+    populate_vacas(20,1)
+    populate_nodos(20,101)
+    align_vacas_nodos(20,1,101)
+    #populate_celos
   end
 
   task agregar_vacas: :environment do
@@ -55,7 +55,7 @@
                    raza: "Holando",
                    rodeo: 1,
                    estado: "Normal") 
-        populate_actividades(vaca,28,28)
+        populate_actividades(vaca,13,24)
         populate_sucesos(vaca)
     end
   end
@@ -78,13 +78,6 @@
                           caravana: vaca.caravana,
                           causa: "aumento de actividad")
       end
-
-      #celo_start = Time.now.to_datetime
-      #vaca = Vaca.find(5)
-      #vaca.celos.create!(comienzo: celo_start,
-      #                    probabilidad: "alta",
-      #                    caravana: vaca.caravana,
-      #                    causa: "aumento de actividad")
    end
 
 
@@ -103,7 +96,7 @@
       registro_hr = DateTime.new(registro.year, registro.month, registro.day, 
         registro.hour, 0, 0, 0)
       #registro_hr = DateTime.new(Time.now.year, Time.now.month, Time.now.day, 
-       # (Time.now.hour-1), 0, 0, 0)
+        #(Time.now.hour-1), 0, 0, 0)
       
       value = rand_int(100,120)    
       vaca.actividades.create!(registrada: registro_hr, tipo: "recorrido", valor: value)
@@ -112,24 +105,12 @@
     end 
   end
 
-  def populate_sucesos(vaca)
-    inicio = 26.months.ago
-    vaca.sucesos.create!(momento: inicio, tipo: "servicio")
-    
-    inicio = 16.months.ago
-    vaca.sucesos.create!(momento: inicio, tipo: "parto")
-    
-    inicio = 14.months.ago
-    vaca.sucesos.create!(momento: inicio, tipo: "servicio")
- 
-    inicio = 13.months.ago
-    vaca.sucesos.create!(momento: inicio, tipo: "servicio")
-        
+  def populate_sucesos(vaca)     
     inicio = 3.months.ago
     vaca.sucesos.create!(momento: inicio, tipo: "parto")
   
     inicio = 20.days.ago
-    vaca.sucesos.create!(momento: inicio, tipo: "servicio")
+    vaca.sucesos.create!(momento: inicio, tipo: "inseminada")
   end
 
   def populate_alert_data(id_vaca)

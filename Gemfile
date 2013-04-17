@@ -9,7 +9,6 @@ gem 'will_paginate', '3.0.3'
 
 #for google chart
 gem "google_visualr", "~> 2.1.0"
-
 #for highchart in rails
 gem 'lazy_high_charts'
 
@@ -28,7 +27,6 @@ end
 #bundle install --without production
 group :production do
   gem 'sqlite3'
-  #gem 'pg'
 end
 
 # Gems used only for assets and not required
@@ -46,18 +44,17 @@ group :assets do
 end
 
 gem 'jquery-rails'
-
 gem 'jquery_datepicker'
 
 #gem 'passenger'
 gem "thin"
+#para windows
+#gem "thin_service"
 
-#gem to schedule task
+
+#--gem to schedule task
 gem 'clockwork'
 gem 'stalker'
-#gem 'mongrel'
-
-#mongrel_rails start -p 3001 -e production -d
 
 # Use unicorn as the app server
 # gem 'unicorn'

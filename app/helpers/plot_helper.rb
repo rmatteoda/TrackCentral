@@ -164,9 +164,15 @@ def estadistica_celo_chart_high
      mydate = Date.new(2013, 3, 1)
      @celos_marz = Celo.where("comienzo between ? and ?" , mydate,mydate.at_end_of_month)
     
-     f.options[:xAxis][:categories] = ['Enero','Febrero','Marzo']
+     mydate = Date.new(2013, 4, 1)
+     @celos_apr = Celo.where("comienzo between ? and ?" , mydate,mydate.at_end_of_month)
+    
+     mydate = Date.new(2013, 5, 1)
+     @celos_may = Celo.where("comienzo between ? and ?" , mydate,mydate.at_end_of_month)
+    
+     f.options[:xAxis][:categories] = ['Enero','Febrero','Marzo', 'Abril', 'Mayo']
 
-     f.series(:name=>'Celos Detectados', :data => [@celos_enero.size,@celos_feb.size,@celos_marz.size])
+     f.series(:name=>'Celos Detectados', :data => [@celos_enero.size,@celos_feb.size,@celos_marz.size,@celos_apr.size,@celos_may.size])
      #f.series(:name=>'Servicios', :data => [21,18,23,26,29])
      
     end

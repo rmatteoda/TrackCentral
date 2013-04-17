@@ -1,31 +1,20 @@
 
-- ver de encender una luz cuando se detecta una vaca en celo que debe ser inseminada
-- hacer GUI java Windows
-- mejorar colar: fijacion electronica
+- IMP: ver de encender una luz cuando se detecta una vaca en celo
+- revisar https://github.com/eventmachine/eventmachine
 - revisar opciones financiamiento
+  - convocatoria fonsoft
+  - capital semilla para mayo
+- pedir presupuesto de 50 palcas. Juan. DAI ICHI
 - menu simple para cambio de collar y agregar nueva vaca al sistema
-- hacer historial de registro por vaca//LISTO
+- agregar estadisticas:
+  - ej: horas de mayor manifestacion de celo
 
-- mejorar cobertura en la sala de ordeñe 
-  - buscar nodos de otras marcas o ti con antena externa
-    - http://www.lsr.com/wireless-products/proflex01-r2
-    - ATMEL zigbee, XBee de Digi, http://www.radiocrafts.com/
-     linetec - cica
-     electrocomponentes tiene  xb24 cz7pis-004: http://datasheet.octopart.com/XB24CZ7PIS-004-Digi-International-datasheet-10410418.pdf
-    - http://www.taiwantrade.com.tw/resources/member/276716/productcatalog/69929907-0535-4da2-bbc5-d6e4d4257381_DS-MS2530-M03_v1_0.pdf
-    - http://www.fasttech.com/category/1010/texas-instruments-zigbee
-     
-- buscar alguien para diseño de placa alimentacion con chip control
-   - juan flores, rivera indarte 1268
-- correr rails server y serial reader como windows service
 - obtener dominio TrackCelo.com y mejorar web y logo
+- encargar presupuesto 10 placas en assembli//LISTO
+- ver si me sirve comprar algo en http://www.openhacks.com/
+- generar README para windows
 
-- mejorar colar: gabinete y fijacion electronica//LISTO
-  - serpac: modelo RB22-1TG1BG
-  - hammond: RP1025 modelo que compre
-    - fijar nodo con chapa adaptada y atornillada
-  - polycase: ver modelo WP20F
-  - rose bopla: hay varios modelos, ver pagina
+- correr rails server y serial reader como windows service//LISTO
 - medir consumo en nodo //LISTO
  * Osciloscopio. CH1=100mV, M=10.0ms.
   - en reposo Vp-p = 8mv
@@ -34,10 +23,6 @@
   - cuando transmite la info Vp-p = max 28-32mv
   - cuando intenta transmitir Vp-p = 25-32mv  
   - nodo 102, baterias en 2.62 
-- averiguar modular para guardar pc o gabinete industrial//LISTO
-  - tecno industrial americada: muy caro
-  - gringo: 950
-  - gabinetes genrod estanco 45x60x30: 850
 
 - averiguar precio de thin client  //Listo
    - http://thinclientsolutions.com.ar/productos cod 002. Diego Pico.
@@ -45,4 +30,21 @@
    - http://www.arm.com.ar/TC/#
    - http://microtec.com.ar/productos/computadoras-industriales
      - me comunique con Daniel Kolodzinski, armar una solucion serian del orden de los 2500 dolares
+   - ver aca pc industriales http://www.controlcomp.com/productos/msi_windbox.php
    - http://www.panarmia.com.ar/
+
+nodos otro:
+- http://www.lsr.com/wireless-products/proflex01-r2
+    - ATMEL zigbee, XBee de Digi, http://www.radiocrafts.com/, netvox
+     linetec - cica
+     electrocomponentes tiene  xb24 cz7pis-004: http://datasheet.octopart.com/XB24CZ7PIS-004-Digi-International-datasheet-10410418.pdf
+    - http://www.taiwantrade.com.tw/resources/member/276716/productcatalog/69929907-0535-4da2-bbc5-d6e4d4257381_DS-MS2530-M03_v1_0.pdf
+    - http://www.fasttech.com/category/1010/texas-instruments-zigbee
+    - http://factory.dhgate.com/wireless-networking-equipment/2.4g-cc2530-h-external-antenna-zigbee-rf-module-p48357388.html
+    - http://www.fasttech.com/product/1012702-compact-texas-instruments-cc2530-zigbee-developmen
+    -http://www.aliexpress.com/store/product/cc2530-Zigbee-module-w-cc2591-2KM-zigbee-to-serial-RS232/813037_615073313.html
+- mejorar colar: gabinete y fijacion electronica//LISTO
+  - serpac: modelo RB22-1TG1BG
+  - polycase: modelo WP20F- el mejor hasta ahora. digikey comprado otra empresa idem
+  - rose bopla: hay varios modelos, ver pagina
+

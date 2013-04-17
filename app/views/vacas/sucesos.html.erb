@@ -15,7 +15,7 @@
     <tbody>
       <% @sucesos.each do |suceso| %>
         <tr>
-          <td><%= suceso.momento.strftime("%d/%m") %> </td>
+          <td><%= suceso.momento.strftime("%d/%m %Y") %> </td>
           <td><%= suceso.tipo %></td>
         </tr>
       <% end%>

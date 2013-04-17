@@ -15,7 +15,7 @@ class VacasController < ApplicationController
 
     @time_line_chart = vaca_time_line(@vaca)
 
-    @ultimo_parto = ultimo_parto(@vaca)
+    @ultimo_parto_reg = ultimo_parto(@vaca)
     @ultimo_servicio = ultimo_servicio(@vaca)
     @ultimo_celo = ultimo_celo(@vaca)
     @servicios_pp = servicios_post_parto(@vaca)

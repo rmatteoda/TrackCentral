@@ -3,7 +3,7 @@ class Vaca < ActiveRecord::Base
   
   has_one :nodo, :autosave => true
   has_many :actividades, dependent: :destroy, :class_name => "Actividad", :order => "registrada ASC"
-  has_many :sucesos, dependent: :destroy, :class_name => "Suceso"
+  has_many :sucesos, dependent: :destroy, :class_name => "Suceso", :order => "momento DESC"
   has_many :celos, dependent: :destroy, :order => "comienzo DESC"#?? ASC
   
   validates :caravana, presence: true, uniqueness: true

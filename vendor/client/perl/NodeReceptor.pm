@@ -31,10 +31,10 @@ use strict; #obliga a declarar las variables antes de usarlas
         $self ->{NODES} = {}; #inicializo como hash vacio
         $self ->{NODES_HOUR} = {}; #inicializo como hash vacio
                
-        $app_dir = "/home/tracktambo/TrackCentral/";
-        $fileName = $app_dir . "public/data_from_collector.txt";
-        #$app_dir = "C:/TrackTambo/TrackCentral/";
+        #$app_dir = "/home/tracktambo/TrackCentral/";
         #$fileName = $app_dir . "public/data_from_collector.txt";
+        $app_dir = "C:/TrackTambo/TrackCentral/";
+        $fileName = $app_dir . "public/data_from_collector.txt";
         
         bless $self , $class; #Perl asocia la referencia $self con la clase que corresponde
         return $self; #retornamos la instancia de la clase                                 
@@ -67,6 +67,8 @@ use strict; #obliga a declarar las variables antes de usarlas
                 &causeDump;
             }elsif(($msgRecv =~ m/Init_Connect/)){
                 &logInitMsg;
+            }elsif(($msgRecv =~ m/Test_Connect/)){
+                &logTestMsg;
             }else{
                 &logBadMsg;
             }
@@ -111,18 +113,14 @@ use strict; #obliga a declarar las variables antes de usarlas
         @data_aux = split(/:/,$data_tmp[3]);
         
         if(@data_aux > 1){
-             
-            #$accelSlow =  $data_aux[1];
-            #$accelMedium =  $data_aux[2];
-            #$accelFast =  $data_aux[3];
-            #$accelContn =  $data_aux[4];
-            #my $accel_data = $accelSlow.",".$accelMedium.",".$accelFast.",".$accelContn;
-            
+              
             #*** NUEVO MODELO ****
-            my $accel_data = ""
-            for($ind = 1 ; $ind < @data_aux; $ind = $ind +1){
-                $accel_data = $data_aux[$ind].",";
+            my $accel_data = "";
+            my $ind = 1;
+            for($ind = 1 ; $ind < $#data_aux; $ind = $ind +1){
+                $accel_data = $accel_data. $data_aux[$ind].",";
             }
+            # print "accel data save : " . $accel_data  . " \n";
             #chop($accel_data);
             push @{$hash_nodes{$from_id}}, $accel_data;
          }#TODO: log error sino pasa esto
@@ -153,13 +151,12 @@ use strict; #obliga a declarar las variables antes de usarlas
             open(FH, ">>",$fileName);
             #flock(FH,2);
 
-            #print FH "Start,".$from_id . ",".$hash_nodes_hr{$from_id}.",\n";
-            print FH "Start,".$from_id . ",0,\n";
+            print FH "Start,". $from_id . "," . $hash_nodes_hr{$from_id} . ",\n";
+            #print FH "Start,".$from_id . ",0,\n";
             
             my $i;
             my $last = $#{$hash_nodes{$from_id}};
             for $i ( 0 .. $#{$hash_nodes{$from_id}} ) {
-                #print FH $hash_nodes{$from_id}[$last - $i];
                 print FH $hash_nodes{$from_id}[$i];#RM 11-01-2013
             }
 
@@ -190,6 +187,19 @@ use strict; #obliga a declarar las variables antes de usarlas
         
         open(FH, ">>","$logFileName");
         print FH $msgRecv . "\n";
+        close(FH);
+    }
+
+    #***********************************************************
+    # log de mensaje de test de coneccion 
+    #***********************************************************
+    sub logTestMsg {
+        my $self = shift; #el primer parametro es la clase en si
+        my $logFileName = $app_dir . "log/Test_Connect_Log.txt";
+        my($seg, $minute, $hour, $day, $month) = (localtime)[0,1,2,3,4];
+        
+        open(FH, ">>","$logFileName");
+        print FH " hour  " . $hour. ":" .$minute. ":" .$seg . " -- " . $msgRecv;
         close(FH);
     }
 
