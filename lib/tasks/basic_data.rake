@@ -55,7 +55,7 @@
                    raza: "Holando",
                    rodeo: 1,
                    estado: "Normal") 
-        populate_actividades(vaca,13,24)
+        populate_actividades(vaca,24,12)
         populate_sucesos(vaca)
     end
   end

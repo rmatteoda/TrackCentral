@@ -1,7 +1,4 @@
 
-- IMP: revisar script de control y datos del sistema//LISTO
-- sincronizar deteccion de celo con carga de datos//LISTO
-- revisar firmware collares//LISTO
 - evaluar consumo
 - armar sistema de alerta con leds y puerto paralelo
   - configurar scrips para generar alertas prender leds
@@ -16,3 +13,21 @@
 - correr perl como servicio (Win32::Daemon) //LISTO
 - correr rails como servicio (thin_service)//LISTO
   VER: https://github.com/gsmedley/thin_service
+
+vacas detectadas a controlar:
+- 7997 . detectada e inseminada el 17/04
+- 7565 . detectada el 17/04 a las 18hrs. posible falso positivi. tenia dispositivo puesto
+- 7831 . detectada el 17/04. no largaba flujo, posible falso positivo
+- 7685 detectada e inseminada el 18/04
+- 7682 detectada e inseminada el 19/04
+- 8008 detectada e inseminada el 19/04
+
+mejoras:
+- hacer alertas por luz puerto paralelo
+- mejorar algunos botones para parte touch
+- abrir browser full screen
+- sacar ultimo celo del historial?
+- ordenar sucesos por fecha de momento y no cuando fue creado
+- mejorar tooltip en el grafico de celo
+- agregar mas datos en vacas en observacion
+- ver de registrar el celo en sucesos tambien

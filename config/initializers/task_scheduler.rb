@@ -12,10 +12,9 @@ scheduler.cron '10 17 * * *' do
 end
 
 scheduler.every '15m' do
-  puts "start load collected data "
   system "bundle exec rake track_data:load_collected_data"
 end
 
-scheduler.every '24h' do
+scheduler.every '20h' do
   system "bundle exec rake  track_stats:generar_recorrido_promedio"
 end

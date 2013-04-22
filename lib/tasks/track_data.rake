@@ -4,9 +4,6 @@ namespace :track_data do
       
    task load_collected_data: :environment do
 
-    #data_file.flock(File::LOCK_UN)
-    #data_file.flock(File::LOCK_UN)
-    
     File.open('./log/data_collected_log.txt', 'a+') do |f|     
     
     if File.exist?('public/data_from_collector.txt')
@@ -43,12 +40,9 @@ namespace :track_data do
         end
     end
     
-    #puts "DUMPED:::: " + n_dumps.to_s
     if n_dumps > 1
-      #puts "start live celo detector"
       system "bundle exec rake track_celo:detectar_celos"
     end
-
 
     end    
     end 
@@ -59,20 +53,37 @@ private
   
   def save_collected_events(vaca,events,last_register,initial_hr_dump)
       num_horas = (events.length / 2)
-      reg_actividad = registro_inicio(vaca,last_register,num_horas,initial_hr_dump)
+      reg_actividad = registro_inicio2(vaca,last_register,num_horas,initial_hr_dump)
+      
+      puts "ultimo registro " + last_register.to_s
+      puts "registro inicio " + reg_actividad.to_s
       
       vaca_selected = vaca
       ev_ind = 0
       num_horas.times do
+        reg_actividad.utc.to_s        
+        from = reg_actividad.advance(:minutes => -10) 
+       
+        act_tot_reg = vaca.actividades.where("registrada >= ? and tipo = ?", from,'recorrido_total')
+        if act_tot_reg.any?
+          puts "encontro " + act_tot_reg.size.to_s
+          act_tot_reg.destroy_all
+        end
+
         vaca_selected.actividades.create!(registrada: reg_actividad, 
           tipo: "recorrido_total",valor: events[ev_ind])
-        vaca_selected.actividades.create!(registrada: reg_actividad, 
-          tipo: "recorrido_nivelado", valor: events[ev_ind+1])
-
-        reg_actividad.utc.to_s        
+  
         reg_actividad = reg_actividad.advance(:hours => 1).to_datetime
         ev_ind = ev_ind + 2
       end
+  end
+
+  def registro_inicio2(vaca,ultimo_registro,num_horas,initial_hr_dump)
+    estim_reg = Time.now.advance(:hours => -num_horas.to_i)
+    estimate_time = Time.new(estim_reg.year, estim_reg.month, estim_reg.day, 
+      estim_reg.hour, 0, 0, 0)
+    
+    return estimate_time      
   end
 
   def registro_inicio(vaca,ultimo_registro,num_horas,initial_hr_dump)
@@ -85,7 +96,7 @@ private
     diff_initial_estimate = estimate_time.hour - initial_hr_dump
     estimate_to_initial = Time.new(estimate_time.year, estimate_time.month, estimate_time.day, 
       initial_hr_dump, 0, 0, 0)
-
+  
     estimate_time.advance(:hours => -diff_initial_estimate)
     
     #TODO agregar log de errores en este metodo

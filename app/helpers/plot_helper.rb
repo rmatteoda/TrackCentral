@@ -27,13 +27,15 @@ end
 
 def activitad_total_chart(vaca)
 
-    actividades_total = vaca.actividades.where("registrada >= ? and tipo = ?", 36.hours.ago,'recorrido_total')
+    actividades_total = vaca.actividades.where("registrada >= ? and tipo = ?", 24.hours.ago,'recorrido_total')
     
     n=0
     data_total = [[]]
     data_prom = [[]]
     
     startPoint = Time.now
+
+    puts "actividad totales " + actividades_total.size.to_s
 
     actividades_total.each do |actividad|
       data_total[n] = [actividad.registrada,actividad.valor]

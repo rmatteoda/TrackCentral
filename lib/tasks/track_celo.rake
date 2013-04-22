@@ -36,7 +36,7 @@ private
   #controla si la vaca esta en celo
   def controlar_celo(vaca)
     #obtengo actividad promedio de la vaca
-    actividad_vc_prom = vaca.actividades.where("tipo = 'recorrido_promedio' AND registrada >= ?",50.hours.ago.to_datetime).first
+    actividad_vc_prom = vaca.actividades.where("tipo = 'recorrido_promedio' AND registrada >= ?",70.hours.ago.to_datetime).first
     
     celo_detectado = 0  
     actividades_vc = []    
@@ -74,13 +74,20 @@ private
       casos_prop = 0
       casos_prom = 0
       celo_start = nil
+      hora_start = 0
 
       if celo_detectado == 0
-        8.times do |k|
+        7.times do |k|
           ind = periodo + k
           if ind < 24
-            if actividades_prom[ind] > 0 && actividades_vc[ind] > (actividades_prom[ind] * 1.6)
+            if actividades_prom[ind] > 0 && 
+              actividades_vc[ind] > (actividades_prom[ind] * 1.8) 
+              && actividades_vc[ind] > 100
+              #aumento casos para posible celo
               casos_prom = casos_prom + 1
+              if hora_start == 0
+                hora_start = ind + 1
+              end
             end
 
             if actividades_vc[ind] > 0 && !actividad_vc_prom.nil? && actividades_vc[ind] > actividad_vc_prom.valor
@@ -91,15 +98,16 @@ private
       end
       #si se detectaron varios casos, la vaca esta en celo
       # regular umbral . 4?
-      if casos_prop >= 4 && casos_prom >= 4
-           #celo_start = (24-periodo).hours.ago.to_datetime
-            celo_start = Time.now.advance(:hours => (-24+periodo).to_i)
-            vaca.celos.create!(comienzo: celo_start,
+      if casos_prop >= 4 && casos_prom >= 3
+            celo_start = Time.now.advance(:hours => (-23+hora_start).to_i)
+            estimate_start = Time.new(celo_start.year, celo_start.month, celo_start.day, 
+            celo_start.hour, 0, 0, 0)
+    
+            vaca.celos.create!(comienzo: estimate_start,
                                probabilidad: "alta",
                                caravana: vaca.caravana,
                                causa: "aumento de actividad")
             celo_detectado = 1
-            #puts "celo detectado vaca "+ vaca.caravana.to_s + " start " + celo_start.to_s
       end 
     end
   end
