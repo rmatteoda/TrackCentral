@@ -1,17 +1,14 @@
 
 - IMP: ver de encender una luz cuando se detecta una vaca en celo
-- revisar https://github.com/eventmachine/eventmachine
+  - opcional: agregar otro xbee router que pueda cubrir todo
 - revisar opciones financiamiento
-  - convocatoria fonsoft
-  - capital semilla para mayo
-- pedir presupuesto de 50 palcas. Juan. DAI ICHI
-- menu simple para cambio de collar y agregar nueva vaca al sistema
-- ver de que se abra full screen el chrome o gui
-- instalar servicios serial reader y thin server
-- revisar todas las pantallas y ver la informacion presentada
-- agregar estadisticas:
-  - ej: horas de mayor manifestacion de celo
+  - convocatoria fonsoft y capital semilla para mayo
+- pedir presupuesto de 50 palcas. Juan. DAI ICHI //LISTO
+  - op: analizar presupuesto assembli
+- ver mejoras en prueba_final.txt
 
+
+- revisar https://github.com/eventmachine/eventmachine
 - obtener dominio TrackCelo.com y mejorar web y logo
 - ver si me sirve comprar algo en http://www.openhacks.com/
 - generar README para windows
