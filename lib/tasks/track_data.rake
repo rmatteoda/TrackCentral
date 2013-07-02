@@ -1,32 +1,28 @@
 namespace :track_data do
-  desc "Task para leer datos que vendran del colector"
-  #Rake::Task['morning:make_coffee'].invoke
+  desc "Task para leer datos del colector"
       
    task load_collected_data: :environment do
 
-    File.open('./log/data_collected_log.txt', 'a+') do |f|     
+    #File.open('./log/data_collected_log.txt', 'a+') do |f|     
     
     if File.exist?('public/data_from_collector.txt')
-   
-    data_file = File.open('public/data_from_collector.txt', 'r')      
-    data_file.flock(File::LOCK_EX)
-    all_lines = data_file.readlines
-    data_file.close
-    FileUtils.cp("public/data_from_collector.txt", "public/" + Time.now.strftime("%Y%m%d-%H_%M").to_s + "_data_from_collector.txt")
-    File.unlink('public/data_from_collector.txt')
-    f.puts "loaded " + all_lines.length.to_s + " " + DateTime.now.to_s+"\n "
-    
-    current_vaca = nil
-    last_register = nil
-    initial_hr_dump = nil
-    n_dumps = 0
+      #open file, save into array and move file for register
+      data_file = File.open('public/data_from_collector.txt', 'r')      
+      all_lines = data_file.readlines
+      data_file.close
+      FileUtils.cp("public/data_from_collector.txt", "public/" + Time.now.strftime("%Y%m%d-%H_%M").to_s + "_data_from_collector.txt")
+      #f.puts "loaded " + all_lines.length.to_s + " " + DateTime.now.to_s
+      
+      current_vaca = nil
+      last_register = nil
+      initial_hr_dump = nil
+      n_dumps = 0
 
-    all_lines.each do |line|
-      data = line.split(',')
-        
+      all_lines.each do |line|
+        data = line.split(',')
+          
         if data[0].to_s.eql? "Start"
          vacas = Vaca.where("nodo_id = ?",data[1].to_s)
-         initial_hr_dump = data[2].to_i
          if vacas.any?
           current_vaca = vacas.first 
           last_activity = current_vaca.actividades.last
@@ -34,106 +30,54 @@ namespace :track_data do
          end
         elsif data.length >= 4 #TODO cambiar condicion
           if !current_vaca.nil? && !last_register.nil?
-            save_collected_events(current_vaca,data,last_register,initial_hr_dump)
+            save_collected_events(current_vaca,data,last_register)
             n_dumps = n_dumps + 1
           end
         end
-    end
-    
-    if n_dumps > 1
-      system "bundle exec rake track_celo:detectar_celos"
-    end
-
+      end
+      
+      if n_dumps > 2
+        system "bundle exec rake track_celo:detectar_celos"
+      end
     end    
-    end 
+    #end 
   end
   
 ####################### PRIVATE METHODS ################
 private
   
-  def save_collected_events(vaca,events,last_register,initial_hr_dump)
-      num_horas = (events.length / 2)
-      reg_actividad = registro_inicio2(vaca,last_register,num_horas,initial_hr_dump)
-      
-      puts "ultimo registro " + last_register.to_s
-      puts "registro inicio " + reg_actividad.to_s
+  def save_collected_events(vaca,events,last_register)
+      num_horas = events.length
+      reg_actividad = registro_inicio(vaca,num_horas)
       
       vaca_selected = vaca
       ev_ind = 0
+
       num_horas.times do
-        reg_actividad.utc.to_s        
-        from = reg_actividad.advance(:minutes => -10) 
-       
-        act_tot_reg = vaca.actividades.where("registrada >= ? and tipo = ?", from,'recorrido_total')
-        if act_tot_reg.any?
-          puts "encontro " + act_tot_reg.size.to_s
-          act_tot_reg.destroy_all
-        end
+        clean_actividades(vaca,reg_actividad)
 
         vaca_selected.actividades.create!(registrada: reg_actividad, 
-          tipo: "recorrido_total",valor: events[ev_ind])
+          tipo: "recorrido",valor: events[ev_ind])
   
         reg_actividad = reg_actividad.advance(:hours => 1).to_datetime
-        ev_ind = ev_ind + 2
+        ev_ind = ev_ind + 1
       end
   end
-
-  def registro_inicio2(vaca,ultimo_registro,num_horas,initial_hr_dump)
-    estim_reg = Time.now.advance(:hours => -num_horas.to_i)
-    estimate_time = Time.new(estim_reg.year, estim_reg.month, estim_reg.day, 
-      estim_reg.hour, 0, 0, 0)
-    
+  
+  #calculo la hora de inicio de actividad de acuerdo a la cantidad descargada
+  def registro_inicio(vaca,num_horas)
+    estim_reg = Time.now.advance(:hours => -num_horas.to_i).localtime
+    estimate_time = estim_reg.change(:min => 0)
     return estimate_time      
   end
 
-  def registro_inicio(vaca,ultimo_registro,num_horas,initial_hr_dump)
-    estim_reg = Time.now.advance(:hours => -num_horas.to_i)
-    estimate_time = Time.new(estim_reg.year, estim_reg.month, estim_reg.day, 
-      estim_reg.hour, 0, 0, 0)
-    
-    diff_hr_estimate = ((estimate_time - ultimo_registro)/3600).to_i
-    diff_hr_initial = initial_hr_dump.to_i - ultimo_registro.hour.to_i
-    diff_initial_estimate = estimate_time.hour - initial_hr_dump
-    estimate_to_initial = Time.new(estimate_time.year, estimate_time.month, estimate_time.day, 
-      initial_hr_dump, 0, 0, 0)
-  
-    estimate_time.advance(:hours => -diff_initial_estimate)
-    
-    #TODO agregar log de errores en este metodo
-    if diff_hr_estimate <= 0
-      return ultimo_registro.advance(:hours => 1)
-    end
-
-    if diff_hr_estimate <= 3 
-      if diff_hr_initial == 1
-        return ultimo_registro.advance(:hours => 1)
-      else
-        completar_horas_noreg(vaca,ultimo_registro,estimate_time)
-        return estimate_time
-      end
-    else
-      if diff_initial_estimate < 0 || diff_initial_estimate > 3
-        completar_horas_noreg(vaca,ultimo_registro,estimate_time)
-        return estimate_time
-      else
-        completar_horas_noreg(vaca,ultimo_registro,estimate_to_initial)
-        return estimate_to_initial 
-      end
-    end
-  end
-
-  def completar_horas_noreg(vaca,ultimo_reg,proximo_reg)
-   diff_hr_estimate = (((proximo_reg - ultimo_reg)/3600).to_i - 1)
-   reg_actividad = ultimo_reg.advance(:hours => 1)
-  
-    diff_hr_estimate.times do
-        vaca.actividades.create!(registrada: reg_actividad, 
-          tipo: "recorrido_total",valor: -1)
-        vaca.actividades.create!(registrada: reg_actividad, 
-          tipo: "recorrido_nivelado", valor: -1)
-        reg_actividad = reg_actividad.advance(:hours => 1).to_datetime
-    end
-
+  #elimino actividades si existen con registro posterior a la hora calculada
+  def clean_actividades(vaca,reg_actividad)
+    from = reg_actividad.advance(:minutes => -10).localtime        
+    act_tot_reg = vaca.actividades.where("registrada >= ? and tipo = ?", from,'recorrido')
+    if act_tot_reg.any?
+      act_tot_reg.destroy_all
+    end     
   end
 
 end

@@ -1,6 +1,7 @@
 namespace :track_stats do
-  desc "Task para detectar vacas en celo"
+  desc "Task para generar promedios"
 
+#genero recorrido promedio de cada vaca en las ultmas 72 horas
 task generar_recorrido_promedio: :environment do    
     vacas = Vaca.all    
     
@@ -12,7 +13,7 @@ task generar_recorrido_promedio: :environment do
         hora_start = hora.change(:min => 0) 
         hora_end = hora_start.advance(:hours => 1)
         
-        actividad = vaca.actividades.where("tipo = 'recorrido_total' AND registrada >= ? and registrada < ?", hora_start,hora_end).first
+        actividad = vaca.actividades.where("tipo = 'recorrido' AND registrada >= ? and registrada < ?", hora_start,hora_end).first
         if !actividad.nil? && actividad.valor > 10  
           actividad_promedio = actividad_promedio + actividad.valor
           count = count + 1
@@ -24,5 +25,6 @@ task generar_recorrido_promedio: :environment do
         vaca.actividades.create!(registrada: Time.now.to_datetime, tipo: "recorrido_promedio", valor: actividad_promedio)
       end 
     end
-  end
+end
+
 end

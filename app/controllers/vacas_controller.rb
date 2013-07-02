@@ -13,8 +13,6 @@ class VacasController < ApplicationController
       @act_chart = activitad_total_chart(@vaca)
     end
 
-    @time_line_chart = vaca_time_line(@vaca)
-
     @ultimo_parto_reg = ultimo_parto(@vaca)
     @ultimo_servicio = ultimo_servicio(@vaca)
     @ultimo_celo = ultimo_celo(@vaca)

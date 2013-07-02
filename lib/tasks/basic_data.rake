@@ -4,13 +4,13 @@
   
   #limppiar la base rake db:purge
   task populate: :environment do
+    Rake::Task['db:reset'].invoke
     populate_usuarios
     populate_vacas(17,1)
     populate_nodos(17,101)
     align_vacas_nodos(17,1,101)
     #populate_alert_data(18)
     populate_celos
-    Rake::Task['track_vacas:detectar_alarmas'].invoke
     Rake::Task['track_celo:simular_celos'].invoke
     Rake::Task['track_stats:generar_recorrido_promedio'].invoke  
     Rake::Task['track_celo:detectar_celos'].invoke
@@ -21,14 +21,12 @@
     populate_vacas(20,1)
     populate_nodos(20,101)
     align_vacas_nodos(20,1,101)
-    #populate_celos
   end
 
   task agregar_vacas: :environment do
     populate_vacas(2,8)
     populate_nodos(2,109)
     align_vacas_nodos(2,8,109)
-    #populate_celos
   end
   
   task eliminar_vacas: :environment do
@@ -55,7 +53,7 @@
                    raza: "Holando",
                    rodeo: 1,
                    estado: "Normal") 
-        populate_actividades(vaca,24,12)
+        populate_actividades(vaca,24,24)
         populate_sucesos(vaca)
     end
   end
@@ -69,17 +67,17 @@
     end
   end
 
-   def populate_celos
+  def populate_celos
       @vacas = Vaca.all
       @vacas.each do |vaca|
       celo_start = (19+vaca.id).days.ago.to_datetime
+      celo_start = celo_start.change(:min => 0)
       vaca.celos.create!(comienzo: celo_start,
                           probabilidad: "alta",
                           caravana: vaca.caravana,
                           causa: "aumento de actividad")
       end
    end
-
 
   def populate_nodos (num_nodos,id_inicio)
     num_nodos.times do |n|
@@ -90,18 +88,12 @@
   end
 
   def populate_actividades(vaca,hr_inicio,n_act)
-    inicio = hr_inicio.hours.ago
+    inicio = hr_inicio.hours.ago.localtime
     n_act.times do |n|
       registro = inicio.advance(:hours => n)
-      registro_hr = DateTime.new(registro.year, registro.month, registro.day, 
-        registro.hour, 0, 0, 0)
-      #registro_hr = DateTime.new(Time.now.year, Time.now.month, Time.now.day, 
-        #(Time.now.hour-1), 0, 0, 0)
-      
+      registro_hr = registro.to_datetime.change(:min => 0)
       value = rand_int(100,120)    
       vaca.actividades.create!(registrada: registro_hr, tipo: "recorrido", valor: value)
-      vaca.actividades.create!(registrada: registro_hr, tipo: "recorrido_total", valor: value)
-      vaca.actividades.create!(registrada: registro_hr, tipo: "recorrido_nivelado", valor: value)
     end 
   end
 
@@ -113,36 +105,15 @@
     vaca.sucesos.create!(momento: inicio, tipo: "inseminada")
   end
 
-  def populate_alert_data(id_vaca)
-    vaca = Vaca.create!(caravana: id_vaca,
-                   raza: "Holando",
-                   estado: "Normal") 
-        
-    ultimo_parto = 125.days.ago
-    vaca.sucesos.create!(momento: ultimo_parto, tipo: "parto")
-  
-    inicio = 50.days.ago
-    vaca.sucesos.create!(momento: inicio, tipo: "servicio")
-    
-    inicio = 30.days.ago
-    vaca.sucesos.create!(momento: inicio, tipo: "servicio")
-  
-    inicio = 15.days.ago
-    vaca.sucesos.create!(momento: inicio, tipo: "servicio")
-  
-    inicio = 1.days.ago
-    vaca.sucesos.create!(momento: inicio, tipo: "servicio") 
-  end
-
-
   def align_vacas_nodos(num_elem,id_vaca_inicio,id_nodo_inicio)
     num_elem.times do |n|
-      ind = n + id_vaca_inicio.to_i
-      ind2 = n + id_nodo_inicio.to_i
-      nodo_id = ind2.to_s
-      caravana = ind.to_s
+      ind_vaca = n + id_vaca_inicio.to_i
+      ind_nodo = n + id_nodo_inicio.to_i
+      nodo_id = ind_nodo.to_s
+      caravana = ind_vaca.to_s
       nodo = Nodo.where("nodo_id = ?",nodo_id).first
       vaca = Vaca.where("caravana = ?",caravana).first
+      
       vaca.nodo_id = nodo_id
       vaca.nodo = nodo
       vaca.save
@@ -151,6 +122,20 @@
 
   def rand_int(from, to)
   (rand * (to - from) + from).to_i
+  end
+
+  def populate_alert_data(id_vaca)
+    vaca = Vaca.create!(caravana: id_vaca,
+                   raza: "Holando",
+                   estado: "Normal")        
+    ultimo_parto = 125.days.ago
+    vaca.sucesos.create!(momento: ultimo_parto, tipo: "parto")
+  
+    inicio = 50.days.ago
+    vaca.sucesos.create!(momento: inicio, tipo: "servicio")
+    
+    inicio = 30.days.ago
+    vaca.sucesos.create!(momento: inicio, tipo: "servicio")
   end
 
 end

@@ -1,27 +1,34 @@
 
-- IMP: ver de encender una luz cuando se detecta una vaca en celo
-  - opcional: agregar otro xbee router que pueda cubrir todo
-- revisar opciones financiamiento
-  - convocatoria fonsoft y capital semilla para mayo
-- pedir presupuesto de 50 palcas. Juan. DAI ICHI //LISTO
-  - op: analizar presupuesto assembli
+- IMP: Definir parte contable y legal de empresa
+- IMP: mejorar pilas y analizar duracion
+- IMP: probar placa armada 
+- contactar a dante arneodo - 0358215413170- control lechero moldes
+- averiguar costos otros sistemas de deteccion de celo
+  - almaagropecuaria (U$D 7000 + 140 por collar(promo junio))
+     - generalmente U$D 9000 + 190 por collar
+- convocatoria capital semilla para agosto
+
+- averiguar para hacer los collares, presupuesto, tiempo.//LISTO 
+- IMP:armar pedido en digikey para traer de USA //LISTO
+- pedir presupuesto electrocomponentes digikey//LISTO 13+iva
+- revisar part list (osciladores 32M tamaño placa) //LISTO 
+- ver de encender una luz cuando se detecta una vaca en celo
 - ver mejoras en prueba_final.txt
-
-
 - revisar https://github.com/eventmachine/eventmachine
 - obtener dominio TrackCelo.com y mejorar web y logo
-- ver si me sirve comprar algo en http://www.openhacks.com/
 - generar README para windows
 
-- correr rails server y serial reader como windows service//LISTO
-- medir consumo en nodo //LISTO
- * Osciloscopio. CH1=100mV, M=10.0ms.
-  - en reposo Vp-p = 8mv
-  - cuando se activa el timer Vp-p = 12mv
-  - cuando se activa el acelerometro Vp-p = 12-15mv
-  - cuando transmite la info Vp-p = max 28-32mv
-  - cuando intenta transmitir Vp-p = 25-32mv  
-  - nodo 102, baterias en 2.62 
+- pedir presupuesto de 50 palcas. Juan. DAI ICHI //LISTO
+    - costo por placa: 
+       DAI ICHI: U$S56 (100) y  U$S80 (50)  - stencil 200
+       ASSEMBLI: U$S55 (100) y  U$S159 (10) - stencil 750
+    otras empresas: CIECCA, CEM SRL, electronicaarlia, INARCI.
+
+articulo celo: ver presentacion de cutaia
+Conclusiones Erróneas
+• Duración del ciclo estral (17-24 días; no 21 días)
+• Detección de celos por signos secundarios
+• Vacas preñadas en celo (5-8%) • Ovarios quisticos
 
 - averiguar precio de thin client  //Listo
    - http://thinclientsolutions.com.ar/productos cod 002. Diego Pico.

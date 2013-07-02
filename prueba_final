@@ -1,28 +1,36 @@
 
-- evaluar consumo
-- armar sistema de alerta con leds y puerto paralelo
-  - configurar scrips para generar alertas prender leds
- 
+mejoras:
+- agregar grafico de actividad ultima semana o ultimos 25 dias
+- agregar alarmas(ej: vacas con mas de 4 servicios)
+   - mostrar una alarma de vacas con ciclos de celo irregular (<15 dias)
+- sacar ultimo celo del historial o agregarlos todos?
+- agregar mas datos en vacas en observacion
+- agregar vacas con celos posibles si tienen mucha actividad las ultimas 3 horas 
+- revisar todas las pantallas y ver la informacion presentada
+- menu simple para cambio de collar y agregar nueva vaca al sistema
+- hacer alertas por luz puerto paralelo
+- modificar script perl y firmware para descargar un solo evento
+
+- mejorar algunos botones para parte touch
+- instalar servicios: serial reader(Win32::Daemon) y thin_service
+- agregar estadisticas:
+  - ej: horas de mayor manifestacion de celo
+- evaluar y armar sistema de monitoreo de aplicaicones andando (AlwaysUp un mes)
+
+//LISTO para probar
+- revisar track_data con la pc tambo y usar .localtime
+- mejorar tooltip en el grafico de celo(formato fecha)
+- ordenar sucesos por fecha de momento y no cuando fue creado
+
+
+
 vacas detectadas a controlar:
 - 7997 . detectada e inseminada el 17/04
 - 7565 . detectada el 17/04 a las 18hrs. posible falso positivi. tenia dispositivo puesto
-- 7831 . detectada el 17/04. no largaba flujo, posible falso positivo
+- 7831 . detectada el 17/04. no largaba flujo, posible falso positivo. volvio a entrar en celo el 07/05 (sistema) y el tambero la vio e insemino el 24/04
 - 7685 detectada e inseminada el 18/04
 - 7682 detectada e inseminada el 19/04
 - 8008 detectada e inseminada el 19/04
+- 3017 detectada varios dias, controlar en tacto
+- 926 detectada el 18/05 e inseminada a horario de sistema
 
-mejoras:
-- hacer alertas por luz puerto paralelo
-- mejorar algunos botones para parte touch
-- abrir browser full screen
-- sacar ultimo celo del historial o agregarlos todos?
-- ordenar sucesos por fecha de momento y no cuando fue creado
-- mejorar tooltip en el grafico de celo
-- agregar mas datos en vacas en observacion
-- ver de registrar el celo en sucesos tambien
-- instalar servicios serial reader(Win32::Daemon) y thin_service
-- revisar todas las pantallas y ver la informacion presentada
-- agregar estadisticas:
-  - ej: horas de mayor manifestacion de celo
-- menu simple para cambio de collar y agregar nueva vaca al sistema
-- pedir datos de vacas y ver como importar al historial del sistema
