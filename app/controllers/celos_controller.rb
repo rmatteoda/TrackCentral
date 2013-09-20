@@ -1,5 +1,6 @@
 class CelosController < ApplicationController
 include PlotHelper
+include VacasHelper
 
 	def index
 		#@celos = Celo.where("comienzo >= ?", 24.hours.ago)
@@ -21,7 +22,7 @@ include PlotHelper
 
 	#historial de vacas en celo, ultimos 7 dias y grafico estadistico mensual
 	def history
-		@vacas_en_celo = Vaca.joins(:celos).where("comienzo >= ?", 7.days.ago)
+		@vacas_en_celo = Vaca.joins(:celos).where("comienzo >= ?", 10.days.ago)
 		#@celos = Celo.where("comienzo >= ?", 7.days.ago)
 		@hist_chart = estadistica_celo_chart_high
 	end
@@ -31,9 +32,11 @@ include PlotHelper
 		@vacas_sel = Vaca.joins(:celos).where("comienzo >= ? AND comienzo < ?", 25.days.ago, 18.days.ago)
 	    #mejorar query para no hacer esto
 		@vacas_en_obsrv = []
+	    @ult_serv_vacas_en_obsrv = []
 	    @vacas_sel.each do |vaca|
 	    	if vaca.celos.first.comienzo < 18.days.ago
 	    	  @vacas_en_obsrv.push(vaca)
+	    	  @ult_serv_vacas_en_obsrv.push(ultimo_servicio(vaca))
 	    	end
 	    end
 	end

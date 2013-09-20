@@ -11,15 +11,17 @@
       <th>Vaca</th>
       <th>Rodeo</th>
       <th>Ultimo Celo</th>
+      <th>Ultimo Servicio</th>
       <th>Motivo para Observar</th>
     </tr>
   </thead>
     <tbody>
-      <% @vacas_en_obsrv.each do |vaca| %>
+      <% @vacas_en_obsrv.each_with_index do |vaca, index| %>
       <tr>
         <td><%= vaca.caravana %></td>
         <td><%= vaca.rodeo %></td>
         <td>hace <%= ((Time.now - vaca.celos.first.comienzo)/(3600*24)).to_i %> dias </td>
+        <td><%= @ult_serv_vacas_en_obsrv[index].to_s %></td>
         <td>Esta en periodo para entrar en celo </td>
       </tr>
       <%end%>
@@ -29,7 +31,7 @@
 <% else %>
     <div class="alert alert-info">
       <button class="close" data-dismiss="alert">&times;</button>
-      No se han detectado vacas para observacion.
+      No se han detectado vacas para observacion que esten en periodo de entrar en celo.
     </div>
   <% end %>
 

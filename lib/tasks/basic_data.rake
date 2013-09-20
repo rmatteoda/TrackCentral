@@ -17,6 +17,7 @@
   end
 
   task populate_basic: :environment do
+    Rake::Task['db:reset'].invoke
     populate_usuarios
     populate_vacas(20,1)
     populate_nodos(20,101)
@@ -76,6 +77,7 @@
                           probabilidad: "alta",
                           caravana: vaca.caravana,
                           causa: "aumento de actividad")
+      vaca.sucesos.create!(momento: celo_start, tipo: "celo")
       end
    end
 

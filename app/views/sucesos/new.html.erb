@@ -12,7 +12,7 @@
       <%= f.collection_select :vaca_id, @vacas, :id, :caravana %>
   
       <%= f.label :tipo, 'Registro' %>
-      <%= f.select :tipo, options_for_select([["Inseminada", "inseminada"],["Ultimo Celo", "ultimo_celo"],["Parto", "parto"]]) %>
+      <%= f.select :tipo, options_for_select([["Inseminada", "inseminada"],["Celo", "celo"],["Parto", "parto"],["Tacto: Vaca Preñada", "tacto vaca preñada"],["Tacto: Vaca Vacia ", "tacto vaca vacia"]]) %>
 
       <%= f.label :momento, 'Fecha' %>
       <%= f.datepicker 'momento'%>

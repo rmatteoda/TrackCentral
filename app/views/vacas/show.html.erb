@@ -31,15 +31,20 @@
 </div><!--/row-->
 
 <% if @vaca.actividades.any? && !@act_chart.nil?%>
-<div class="row">
-  <div class="page-header">
-   <h4>Grafico de Actividad</h4>
+  <div class="row">
+    <div class="page-header">
+     <h4>Grafico de Actividad</h4>
+    </div>
+     
+    <div class="span9"> 
+      <div id='act_chart'></div>
+        <%= high_chart("act_chart",@act_chart) %>
+    </div>
   </div>
 
   <div class="span9"> 
-    <div id='act_chart'></div>
-      <%= high_chart("act_chart",@act_chart) %>
-    </div>
+    <%= link_to 'Actividad Ultima Semana',vacas_path, :class => 'btn'  %>
+    <%= link_to 'Actividad Ultimos 25 dias',vacas_path, :class => 'btn'  %>
   </div>
  <% end %>
 </div>

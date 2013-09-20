@@ -10,7 +10,7 @@ namespace :track_celo do
       
       actividades = Actividad.where("tipo = 'recorrido' AND registrada >= ? and registrada < ?", hora_start,hora_end)
       
-      if actividades.size > 8 #al menos 8 vacas regstradas para detectar. evaluar este numero??
+      if actividades.size > 8 #al menos 8 vacas registradas para detectar. evaluar este numero??
         crear_actividad_promedio
       
         vacas = Vaca.all    
@@ -18,7 +18,7 @@ namespace :track_celo do
         #controlo en celo de cada vaca que no fueron detectados en las ultimas 48 horas
         #aumentar a 15 dias cuando este el sistema equilibrado
         reciente = 48.hours.ago.to_datetime
-        celo_reciente = Celo.where("vaca_id = ? AND comienzo >= ?", vaca.id,reciente)
+        celo_reciente = Celo.where("vaca_id = ? AND comienzo >= ? AND probabilidad= 'alta'", vaca.id,reciente)
 
         if !celo_reciente.any?
           controlar_celo(vaca)
@@ -28,7 +28,7 @@ namespace :track_celo do
   end
 
   #task temporal, es para marcar algunas vacas en celo 
-  #que sean detectadas por aumento de actividad
+  #que sean detectadas por aumento de actividad: simulacion
   task simular_celos: :environment do
     celo_id = (rand * (1 - 15) + 15).to_i
     vaca = Vaca.find(celo_id)
@@ -93,15 +93,33 @@ private
       
       #regular umbral . 4? si se detectaron varios casos, la vaca esta en celo
       if casos_prop >= 4 && casos_prom >= 3
-          celo_start = Time.now.advance(:hours => (-24+hora_start).to_i).localtime
+          celo_start = Time.now.advance(:hours => (-23+hora_start).to_i).localtime
           celo_start = celo_start.change(:min => 0)
           vaca.celos.create!(comienzo: celo_start,
                               probabilidad: "alta",
                               caravana: vaca.caravana,
-                              causa: "aumento de actividad")
-          #puts "vaca en celo " + vaca.caravana.to_s + " comienzo " + celo_start.localtime.to_s
+                              causa: "alta actividad registrada")
           celo_detectado = 1
+          #puts "vaca en celo " + vaca.caravana.to_s + " comienzo " + celo_start.localtime.to_s
+          
+          #si esta en celo creo el suceso
+          vaca.sucesos.create!(momento: celo_start, tipo: "celo")
       end 
+
+      #vaca con aumento de actividad reciente, puede estar por entrar en celo
+      if casos_prop >= 3 && casos_prom >= 2 
+          celo_start = Time.now.advance(:hours => (-23+hora_start).to_i).localtime
+          dif = ((Time.now.localtime - celo_start) / 3600).round
+          if dif < 5
+            celo_start = celo_start.change(:min => 0)
+            #vaca.celos.create!(comienzo: celo_start,
+            #                  probabilidad: "media",
+            #                  caravana: vaca.caravana,
+            #                  causa: "aumento de actividad reciente")
+            #celo_detectado = 1
+            puts "vaca posible en celo " + vaca.caravana.to_s + " comienzo " + celo_start.localtime.to_s
+          end
+      end
     end              
   end
 

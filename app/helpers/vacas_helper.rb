@@ -18,7 +18,7 @@ module VacasHelper
 
 	def ultimo_servicio(vaca)
 		sucesos_serv = vaca.sucesos.where("tipo = 'inseminada'").order("momento DESC")
-   		@ultimo_servicio = ""
+   		@ultimo_servicio = "no registrado"
  	  	@ultimo_servicio = sucesos_serv.first.momento if sucesos_serv.any?
 	end
 

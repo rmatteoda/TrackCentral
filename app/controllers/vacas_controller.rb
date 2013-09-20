@@ -11,6 +11,7 @@ class VacasController < ApplicationController
 
     if @vaca.actividades.any? 
       @act_chart = activitad_total_chart(@vaca)
+      #@act_chart = grafico_activitad(@vaca,7)
     end
 
     @ultimo_parto_reg = ultimo_parto(@vaca)

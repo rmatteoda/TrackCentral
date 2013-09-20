@@ -21,7 +21,7 @@
       <tr>
         <td><%= vaca.caravana %></td>
         <td><%= vaca.celos.first.comienzo.strftime("%d/%m %H") %> hrs</td>
-        <td>desde <%= vaca.celos.first.comienzo.advance(:hours => 10).strftime("%d/%m %H") %>hrs hasta <%= vaca.celos.first.comienzo.advance(:hours => 18).strftime("%d/%m %H") %>hrs <br> optimo: <%= vaca.celos.first.comienzo.advance(:hours => 11).strftime("%d/%m %H") %>hrs</td>
+        <td>desde <%= vaca.celos.first.comienzo.advance(:hours => 10).strftime("%d/%m %H") %>hrs hasta <%= vaca.celos.first.comienzo.advance(:hours => 18).strftime("%d/%m %H") %>hrs <br> optimo: <%= vaca.celos.first.comienzo.advance(:hours => 12).strftime("%d/%m %H") %>hrs</td>
         <% if vaca.celos.count > 1 %>   
         
         <td>hace <%= ((Time.now - vaca.celos.second.comienzo)/(3600*24)).to_i %> dias</td>

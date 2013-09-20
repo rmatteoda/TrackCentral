@@ -27,7 +27,7 @@ class SucesosController < ApplicationController
     temp_time = Time.new(date_year,date_mont,date_day,12, 0, 0, 0)
     @suceso.momento = temp_time
       
-    if @suceso.tipo == "ultimo_celo"
+    if @suceso.tipo == "celo"
       @vaca.celos.create!(comienzo: @suceso.momento.to_datetime,
                           probabilidad: "alta",
                           caravana: @vaca.caravana,

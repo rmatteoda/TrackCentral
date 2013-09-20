@@ -1,28 +1,17 @@
 
-- IMP: Definir parte contable y legal de empresa
 - IMP: mejorar pilas y analizar duracion
 - IMP: probar placa armada 
 - contactar a dante arneodo - 0358215413170- control lechero moldes
 - averiguar costos otros sistemas de deteccion de celo
-  - almaagropecuaria (U$D 7000 + 140 por collar(promo junio))
-     - generalmente U$D 9000 + 190 por collar
-- convocatoria capital semilla para agosto
-
-- averiguar para hacer los collares, presupuesto, tiempo.//LISTO 
-- IMP:armar pedido en digikey para traer de USA //LISTO
-- pedir presupuesto electrocomponentes digikey//LISTO 13+iva
-- revisar part list (osciladores 32M tamaño placa) //LISTO 
-- ver de encender una luz cuando se detecta una vaca en celo
+  - almaagropecuaria U$D 9000 + 190 por collar (SCR HeatTime)
+- ver de agregar displays 8seg con las vacas en celo
 - ver mejoras en prueba_final.txt
 - revisar https://github.com/eventmachine/eventmachine
-- obtener dominio TrackCelo.com y mejorar web y logo
 - generar README para windows
+- revisar esenciales lecheras- instituto babcock
 
 - pedir presupuesto de 50 palcas. Juan. DAI ICHI //LISTO
-    - costo por placa: 
-       DAI ICHI: U$S56 (100) y  U$S80 (50)  - stencil 200
-       ASSEMBLI: U$S55 (100) y  U$S159 (10) - stencil 750
-    otras empresas: CIECCA, CEM SRL, electronicaarlia, INARCI.
+       otras empresas: ASSEMBLI, CIECCA, CEM SRL, electronicaarlia, INARCI.
 
 articulo celo: ver presentacion de cutaia
 Conclusiones Erróneas
@@ -39,6 +28,7 @@ Conclusiones Erróneas
    - ver aca pc industriales http://www.controlcomp.com/productos/msi_windbox.php
    - http://www.panarmia.com.ar/
 
+
 nodos otro:
 - http://www.lsr.com/wireless-products/proflex01-r2
     - ATMEL zigbee, XBee de Digi, http://www.radiocrafts.com/, netvox
@@ -53,4 +43,3 @@ nodos otro:
   - serpac: modelo RB22-1TG1BG
   - polycase: modelo WP20F- el mejor hasta ahora. digikey comprado otra empresa idem
   - rose bopla: hay varios modelos, ver pagina
-
