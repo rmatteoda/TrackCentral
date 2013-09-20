@@ -4,9 +4,11 @@ mejoras:
 - agregar grafico de actividad ultima semana o ultimos 25 dias
   * listo en pc tambo, sacar de ahi
 - agregar vacas con celos posibles si tienen mucha actividad las ultimas 3 horas 
+  - LISTO: evaluar si lo uso en esta prueba
 - evaluar y armar sistema de monitoreo de aplicaicones andando (AlwaysUp un mes)
-- revisar task y scripts, 
-- comparar y controlar si algo en la pc del tambo no esta en la version central
+- revisar task y scripts
+  * comparar y controlar si algo en la pc del tambo no esta en la version central
+  * controlar lectura y descarga de datos
 
 //mejoras a futuro
 - instalar servicios: serial reader(Win32::Daemon) y thin_service

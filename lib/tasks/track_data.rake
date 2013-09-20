@@ -47,7 +47,7 @@ namespace :track_data do
 private
   
   def save_collected_events(vaca,events,last_register)
-      num_horas = events.length
+      num_horas = (events.length / 2)
       reg_actividad = registro_inicio(vaca,num_horas)
       
       vaca_selected = vaca
@@ -58,9 +58,11 @@ private
 
         vaca_selected.actividades.create!(registrada: reg_actividad, 
           tipo: "recorrido",valor: events[ev_ind])
+        vaca_selected.actividades.create!(registrada: reg_actividad, 
+          tipo: "recorrido_nivelado",valor: events[ev_ind+1])
   
         reg_actividad = reg_actividad.advance(:hours => 1).to_datetime
-        ev_ind = ev_ind + 1
+        ev_ind = ev_ind + 2
       end
   end
   

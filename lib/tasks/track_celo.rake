@@ -15,10 +15,18 @@ namespace :track_celo do
       
         vacas = Vaca.all    
         vacas.each  do |vaca| 
-        #controlo en celo de cada vaca que no fueron detectados en las ultimas 48 horas
-        #aumentar a 15 dias cuando este el sistema equilibrado
-        reciente = 48.hours.ago.to_datetime
-        celo_reciente = Celo.where("vaca_id = ? AND comienzo >= ? AND probabilidad= 'alta'", vaca.id,reciente)
+        
+          #elimino celos probables detectados en el ordeñe anterior
+          reciente = 24.hours.ago.to_datetime
+          celo_probables = Celo.where("vaca_id = ? AND comienzo >= ? AND probabilidad= 'Media'", vaca.id,reciente)
+          if celo_probables.any?
+            celo_probables.destroy_all
+          end
+
+          #controlo en celo de cada vaca que no fueron detectados en las ultimas 48 horas
+          #aumentar a 15 dias cuando este el sistema equilibrado
+          reciente = 48.hours.ago.to_datetime
+          celo_reciente = Celo.where("vaca_id = ? AND comienzo >= ? AND probabilidad= 'Alta'", vaca.id,reciente)
 
         if !celo_reciente.any?
           controlar_celo(vaca)
@@ -96,9 +104,9 @@ private
           celo_start = Time.now.advance(:hours => (-23+hora_start).to_i).localtime
           celo_start = celo_start.change(:min => 0)
           vaca.celos.create!(comienzo: celo_start,
-                              probabilidad: "alta",
+                              probabilidad: "Alta",
                               caravana: vaca.caravana,
-                              causa: "alta actividad registrada")
+                              causa: "notable aumento de actividad en varias horas")
           celo_detectado = 1
           #puts "vaca en celo " + vaca.caravana.to_s + " comienzo " + celo_start.localtime.to_s
           
@@ -112,11 +120,11 @@ private
           dif = ((Time.now.localtime - celo_start) / 3600).round
           if dif < 5
             celo_start = celo_start.change(:min => 0)
-            #vaca.celos.create!(comienzo: celo_start,
-            #                  probabilidad: "media",
-            #                  caravana: vaca.caravana,
-            #                  causa: "aumento de actividad reciente")
-            #celo_detectado = 1
+            vaca.celos.create!(comienzo: celo_start,
+                              probabilidad: "Media",
+                              caravana: vaca.caravana,
+                              causa: "aumento de actividad reciente, puede estar en celo")
+            celo_detectado = 1
             puts "vaca posible en celo " + vaca.caravana.to_s + " comienzo " + celo_start.localtime.to_s
           end
       end
