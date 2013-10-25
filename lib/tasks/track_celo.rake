@@ -64,7 +64,7 @@ private
   ########################################################################## 
   def controlar_celo(vaca)
     #obtengo actividad promedio de la vaca
-    actividad_vc_prom = vaca.actividades.where("tipo = 'recorrido_promedio' AND registrada >= ?", 50.hours.ago.to_datetime).first
+    actividad_vc_prom = vaca.actividades.where("tipo = 'recorrido_promedio' AND registrada >= ?", 50.hours.ago.to_datetime).last
     
     #genero array de actividad de vaca y actividad promedio para comparar y detectar celo
     actividades_vc,actividades_prom = generate_actividad_vaca(vaca) 

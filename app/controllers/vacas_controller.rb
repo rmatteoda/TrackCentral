@@ -13,6 +13,8 @@ class VacasController < ApplicationController
       @act_chart = activitad_total_chart(@vaca)
       #@act_chart = grafico_activitad(@vaca,7)
     end
+    
+    #TrackCentralMailer.mail_report().deliver
 
     @ultimo_parto_reg = ultimo_parto(@vaca)
     @ultimo_servicio = ultimo_servicio(@vaca)

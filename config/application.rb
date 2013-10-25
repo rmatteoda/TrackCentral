@@ -58,5 +58,20 @@ module TrackCentral
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    config.action_mailer.smtp_settings = {
+    :address              => "smtp.gmail.com",
+    :port                 => 587,
+    :domain               => "tracktambo.com",
+    :user_name            => "contacto@tracktambo.com",
+    :password             => "chiva886",
+    :authentication       => :plain,
+    :enable_starttls_auto => true
+    }
+
+    config.action_mailer.default_url_options = {
+     :host => "gmail.com"
+    }
+
   end
 end
