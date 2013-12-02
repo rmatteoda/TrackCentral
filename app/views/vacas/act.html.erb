@@ -1,0 +1,24 @@
+<div class="page-header">
+  <h4>ACTIVIDAD ULTIMA SEMANA VACA <%= @vaca.caravana %></h4>
+</div>
+
+<div class="container-fluid">
+
+<% if @vaca.actividades.any? && !@act_chart.nil?%>
+<div class="row">
+
+  <div class="span9"> 
+    <div id='act_chart'></div>
+      <%= high_chart("act_chart",@act_chart) %>
+    </div>
+  </div>
+ <% end %>
+
+</div>
+
+<br>
+
+<div class="form-actions">
+  <%= link_to 'Volver',
+              vacas_path, :class => 'btn'  %>
+</div>

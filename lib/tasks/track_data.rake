@@ -3,15 +3,12 @@ namespace :track_data do
       
    task load_collected_data: :environment do
 
-    #File.open('./log/data_collected_log.txt', 'a+') do |f|     
-    
     if File.exist?('public/data_from_collector.txt')
       #open file, save into array and move file for register
       data_file = File.open('public/data_from_collector.txt', 'r')      
       all_lines = data_file.readlines
       data_file.close
       FileUtils.cp("public/data_from_collector.txt", "public/" + Time.now.strftime("%Y%m%d-%H_%M").to_s + "_data_from_collector.txt")
-      #f.puts "loaded " + all_lines.length.to_s + " " + DateTime.now.to_s
       
       current_vaca = nil
       last_register = nil
@@ -40,7 +37,6 @@ namespace :track_data do
         system "bundle exec rake track_celo:detectar_celos"
       end
     end    
-    #end 
   end
   
 ####################### PRIVATE METHODS ################

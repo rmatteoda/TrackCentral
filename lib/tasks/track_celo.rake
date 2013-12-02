@@ -10,12 +10,13 @@ namespace :track_celo do
       
       actividades = Actividad.where("tipo = 'recorrido' AND registrada >= ? and registrada < ?", hora_start,hora_end)
       
-      if actividades.size > 8 #al menos 8 vacas registradas para detectar. evaluar este numero??
+      #if actividades.size > 6 #al menos 8 vacas registradas para detectar. evaluar este numero??
         crear_actividad_promedio
       
         vacas = Vaca.all    
         vacas.each  do |vaca| 
-        
+         #vaca = Vaca.find(18)
+
           #elimino celos probables detectados en el ordeñe anterior
           reciente = 24.hours.ago.to_datetime
           celo_probables = Celo.where("vaca_id = ? AND comienzo >= ? AND probabilidad= 'Media'", vaca.id,reciente)
@@ -29,10 +30,11 @@ namespace :track_celo do
           celo_reciente = Celo.where("vaca_id = ? AND comienzo >= ? AND probabilidad= 'Alta'", vaca.id,reciente)
 
         if !celo_reciente.any?
+          #puts "busco celo " + vaca.caravana.to_s
           controlar_celo(vaca)
         end 
-      end
-    end
+       end
+    #end
   end
 
   #task temporal, es para marcar algunas vacas en celo 
@@ -40,6 +42,7 @@ namespace :track_celo do
   task simular_celos: :environment do
     celo_id = (rand * (1 - 15) + 15).to_i
     vaca = Vaca.find(celo_id)
+    puts "creo celo vaca " + vaca.id.to_s
     actividad_celo(vaca)
     
     celo_id = (rand * (1 - 15) + 15).to_i
@@ -65,7 +68,8 @@ private
   def controlar_celo(vaca)
     #obtengo actividad promedio de la vaca
     actividad_vc_prom = vaca.actividades.where("tipo = 'recorrido_promedio' AND registrada >= ?", 50.hours.ago.to_datetime).last
-    
+    #puts "vaca " + vaca.caravana.to_s + " actividad promedio " + actividad_vc_prom.valor.to_s
+
     #genero array de actividad de vaca y actividad promedio para comparar y detectar celo
     actividades_vc,actividades_prom = generate_actividad_vaca(vaca) 
     
@@ -84,7 +88,7 @@ private
         7.times do |k|
           ind = periodo + k
           if ind < 24
-            if (actividades_prom[ind] > 0) && actividades_vc[ind] > (actividades_prom[ind] * 1.8) && actividades_prom[ind] > 0
+            if (actividades_prom[ind] > 0) && actividades_vc[ind] > (actividades_prom[ind] * 1.7) 
                 #aumento casos para posible celo
                 casos_prom = casos_prom + 1
                 if hora_start == 0
@@ -92,8 +96,10 @@ private
                 end
             end
 
-            if actividades_vc[ind] > 0 && !actividad_vc_prom.nil? && actividades_vc[ind] > actividad_vc_prom.valor
-                casos_prop = casos_prop + 1
+            if actividades_vc[ind] > 0 && !actividad_vc_prom.nil? && actividades_vc[ind] > (actividad_vc_prom.valor*1.65)
+              if (actividades_prom[ind] > 0) && actividades_vc[ind] > (actividades_prom[ind] * 1.5)
+                 casos_prop = casos_prop + 1
+              end
             end
           end
         end
@@ -108,7 +114,7 @@ private
                               caravana: vaca.caravana,
                               causa: "notable aumento de actividad en varias horas")
           celo_detectado = 1
-          #puts "vaca en celo " + vaca.caravana.to_s + " comienzo " + celo_start.localtime.to_s
+          puts "vaca en celo " + vaca.caravana.to_s + " comienzo " + celo_start.localtime.to_s
           
           #si esta en celo creo el suceso
           vaca.sucesos.create!(momento: celo_start, tipo: "celo")
@@ -120,12 +126,8 @@ private
           dif = ((Time.now.localtime - celo_start) / 3600).round
           if dif < 5
             celo_start = celo_start.change(:min => 0)
-            vaca.celos.create!(comienzo: celo_start,
-                              probabilidad: "Media",
-                              caravana: vaca.caravana,
-                              causa: "aumento de actividad reciente, puede estar en celo")
-            celo_detectado = 1
-            puts "vaca posible en celo " + vaca.caravana.to_s + " comienzo " + celo_start.localtime.to_s
+            # vaca.celos.create!(comienzo: celo_start,probabilidad: "Media",caravana: vaca.caravana,
+            #                  causa: "aumento de actividad reciente, puede estar en celo")
           end
       end
     end              
@@ -179,12 +181,18 @@ def actividad_promedio(momento)
    actividades = Actividad.where("registrada between ? and ? and tipo = ?", from,to,'recorrido')
    actividad_promedio = 0
 
-   #considero vacas con actividad=0 en el promedio
-   actividades.each { |actividad| actividad_promedio = actividad_promedio + actividad.valor}
-   if actividades.count > 0
-      actividad_promedio = (actividad_promedio/actividades.count)
+   #no considero vacas con actividad=0 en el promedio
+   count = 0
+   actividades.each do |actividad| 
+   if actividad.valor > 1
+     count = count + 1
+     actividad_promedio = actividad_promedio + actividad.valor
    end
-
+   end
+   if count > 0
+     actividad_promedio = (actividad_promedio/count)
+   end
+     
    return actividad_promedio
 end
 

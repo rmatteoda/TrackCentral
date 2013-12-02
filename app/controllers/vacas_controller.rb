@@ -11,15 +11,22 @@ class VacasController < ApplicationController
 
     if @vaca.actividades.any? 
       @act_chart = activitad_total_chart(@vaca)
-      #@act_chart = grafico_activitad(@vaca,7)
+      #@act_chart = grafico_activitad(@vaca,9)
     end
     
     #TrackCentralMailer.mail_report().deliver
-
     @ultimo_parto_reg = ultimo_parto(@vaca)
     @ultimo_servicio = ultimo_servicio(@vaca)
     @ultimo_celo = ultimo_celo(@vaca)
     @servicios_pp = servicios_post_parto(@vaca)
+  end
+
+  def act
+    @vaca = Vaca.find(params[:id])
+
+    if @vaca.actividades.any? 
+       @act_chart = grafico_activitad(@vaca,7)
+    end
   end
 
   def new

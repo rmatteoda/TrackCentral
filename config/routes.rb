@@ -17,7 +17,7 @@ TrackCentral::Application.routes.draw do
  
   resources :vacas do
     member do
-      get :sucesos
+      get :sucesos, :act
     end
   end
 

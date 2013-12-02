@@ -1,0 +1,139 @@
+vaca 1535 actividad promedio 16
+  - actividad rango desde 0 hasta 8 : 12
+  - actividad rango desde 4 hasta 8 : 10
+  - actividad rango desde 8 hasta 12 : 13
+  - actividad rango desde 12 hasta 16 : 12
+  - actividad rango desde 16 hasta 20 : 33
+  - actividad rango desde 20 hasta 24 : 26
+vaca 834 actividad promedio 58
+  - actividad rango desde 0 hasta 8 : 44
+  - actividad rango desde 4 hasta 8 : 34
+  - actividad rango desde 8 hasta 12 : 55
+  - actividad rango desde 12 hasta 16 : 57
+  - actividad rango desde 16 hasta 20 : 22
+  - actividad rango desde 20 hasta 24 : 71
+vaca 1824 actividad promedio 139
+  - actividad rango desde 0 hasta 8 : 155
+  - actividad rango desde 4 hasta 8 : 226
+  - actividad rango desde 8 hasta 12 : 48
+  - actividad rango desde 12 hasta 16 : 116
+  - actividad rango desde 16 hasta 20 : 182
+  - actividad rango desde 20 hasta 24 : 115
+vaca 1461 actividad promedio 34
+  - actividad rango desde 0 hasta 8 : 35
+  - actividad rango desde 4 hasta 8 : 43
+  - actividad rango desde 8 hasta 12 : 39
+  - actividad rango desde 12 hasta 16 : 26
+  - actividad rango desde 16 hasta 20 : 28
+  - actividad rango desde 20 hasta 24 : 35
+vaca 1594 actividad promedio 14
+  - actividad rango desde 0 hasta 8 : 14
+  - actividad rango desde 4 hasta 8 : 14
+  - actividad rango desde 8 hasta 12 : 16
+  - actividad rango desde 12 hasta 16 : 16
+  - actividad rango desde 16 hasta 20 : 14
+  - actividad rango desde 20 hasta 24 : 9
+vaca 1600 actividad promedio 19
+  - actividad rango desde 0 hasta 8 : 19
+  - actividad rango desde 4 hasta 8 : 14
+  - actividad rango desde 12 hasta 16 : 18
+  - actividad rango desde 16 hasta 20 : 22
+  - actividad rango desde 20 hasta 24 : 17
+vaca 1790 actividad promedio 77
+  - actividad rango desde 0 hasta 8 : 66
+  - actividad rango desde 4 hasta 8 : 57
+  - actividad rango desde 8 hasta 12 : 29
+  - actividad rango desde 12 hasta 16 : 60
+  - actividad rango desde 16 hasta 20 : 50
+  - actividad rango desde 20 hasta 24 : 89
+vaca 1412 actividad promedio 26
+  - actividad rango desde 0 hasta 8 : 30
+  - actividad rango desde 4 hasta 8 : 30
+  - actividad rango desde 8 hasta 12 : 23
+  - actividad rango desde 12 hasta 16 : 32
+  - actividad rango desde 16 hasta 20 : 21
+  - actividad rango desde 20 hasta 24 : 27
+vaca 1888 actividad promedio 31
+  - actividad rango desde 0 hasta 8 : 17
+  - actividad rango desde 4 hasta 8 : 21
+  - actividad rango desde 8 hasta 12 : 35
+  - actividad rango desde 12 hasta 16 : 22
+  - actividad rango desde 16 hasta 20 : 20
+  - actividad rango desde 20 hasta 24 : 32
+vaca 1463 actividad promedio 41
+  - actividad rango desde 0 hasta 8 : 54
+  - actividad rango desde 4 hasta 8 : 46
+  - actividad rango desde 8 hasta 12 : 33
+  - actividad rango desde 12 hasta 16 : 38
+  - actividad rango desde 16 hasta 20 : 28
+  - actividad rango desde 20 hasta 24 : 43
+vaca 1498 actividad promedio 15
+  - actividad rango desde 0 hasta 8 : 14
+  - actividad rango desde 4 hasta 8 : 15
+  - actividad rango desde 8 hasta 12 : 11
+  - actividad rango desde 12 hasta 16 : 18
+  - actividad rango desde 16 hasta 20 : 10
+  - actividad rango desde 20 hasta 24 : 17
+vaca 1576 actividad promedio 58
+  - actividad rango desde 0 hasta 8 : 52
+  - actividad rango desde 4 hasta 8 : 52
+  - actividad rango desde 8 hasta 12 : 42
+  - actividad rango desde 12 hasta 16 : 59
+  - actividad rango desde 16 hasta 20 : 49
+  - actividad rango desde 20 hasta 24 : 71
+vaca 1574 actividad promedio 38
+  - actividad rango desde 0 hasta 8 : 32
+  - actividad rango desde 4 hasta 8 : 25
+  - actividad rango desde 8 hasta 12 : 50
+  - actividad rango desde 12 hasta 16 : 32
+  - actividad rango desde 16 hasta 20 : 31
+  - actividad rango desde 20 hasta 24 : 37
+vaca 1350 actividad promedio 27
+  - actividad rango desde 0 hasta 8 : 31
+  - actividad rango desde 4 hasta 8 : 38
+  - actividad rango desde 8 hasta 12 : 24
+  - actividad rango desde 12 hasta 16 : 20
+  - actividad rango desde 16 hasta 20 : 26
+  - actividad rango desde 20 hasta 24 : 43
+vaca 1668 actividad promedio 54
+  - actividad rango desde 0 hasta 8 : 110
+  - actividad rango desde 4 hasta 8 : 130
+  - actividad rango desde 8 hasta 12 : 27
+  - actividad rango desde 12 hasta 16 : 44
+  - actividad rango desde 16 hasta 20 : 35
+  - actividad rango desde 20 hasta 24 : 39
+vaca 2244 actividad promedio 54
+  - actividad rango desde 0 hasta 8 : 66
+  - actividad rango desde 4 hasta 8 : 73
+  - actividad rango desde 8 hasta 12 : 47
+  - actividad rango desde 12 hasta 16 : 41
+  - actividad rango desde 16 hasta 20 : 78
+  - actividad rango desde 20 hasta 24 : 53
+vaca 2052 actividad promedio 25
+  - actividad rango desde 0 hasta 8 : 24
+  - actividad rango desde 4 hasta 8 : 25
+  - actividad rango desde 8 hasta 12 : 30
+  - actividad rango desde 12 hasta 16 : 19
+  - actividad rango desde 16 hasta 20 : 16
+  - actividad rango desde 20 hasta 24 : 27
+vaca 2187 actividad promedio 33
+  - actividad rango desde 0 hasta 8 : 25
+  - actividad rango desde 4 hasta 8 : 22
+  - actividad rango desde 8 hasta 12 : 18
+  - actividad rango desde 12 hasta 16 : 23
+  - actividad rango desde 16 hasta 20 : 29
+  - actividad rango desde 20 hasta 24 : 35
+vaca 1732 actividad promedio 52
+  - actividad rango desde 0 hasta 8 : 40
+  - actividad rango desde 4 hasta 8 : 39
+  - actividad rango desde 8 hasta 12 : 49
+  - actividad rango desde 12 hasta 16 : 49
+  - actividad rango desde 16 hasta 20 : 28
+  - actividad rango desde 20 hasta 24 : 104
+vaca 1575 actividad promedio 15
+  - actividad rango desde 0 hasta 8 : 16
+  - actividad rango desde 4 hasta 8 : 22
+  - actividad rango desde 8 hasta 12 : 12
+  - actividad rango desde 12 hasta 16 : 13
+  - actividad rango desde 16 hasta 20 : 10
+  - actividad rango desde 20 hasta 24 : 15

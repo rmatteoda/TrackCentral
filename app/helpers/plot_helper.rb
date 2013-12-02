@@ -4,7 +4,7 @@ include StatsHelper
 
 def activitad_total_chart(vaca)
 
-    date_actividad = 24.hours.ago.localtime
+    date_actividad = 36.hours.ago.localtime
     actividades_total = vaca.actividades.where("registrada >= ? and tipo = ?", date_actividad,'recorrido')    
     n=0
     data_total = [[]]
@@ -26,8 +26,10 @@ def activitad_total_chart(vaca)
       n = n+1
     end 
 
-    #startPoint = data_total[0][0].localtime
-    startPoint = 26.hours.ago.localtime
+    startPoint = 24.hours.ago.localtime
+    if !data_total[0][0].nil? && data_total.size >0 && data_total.size < 24
+        startPoint = data_total[0][0].advance(:hours => (-3).to_i).localtime
+    end
     startPoint = startPoint.change(:min => 0)
 
     @chart = LazyHighCharts::HighChart.new('graph') do |f|
@@ -84,7 +86,10 @@ def grafico_activitad(vaca,num_dias)
       n = n+1
     end 
       
-    startPoint = data_total[0][0].advance(:hours => (-3).to_i).localtime
+    startPoint = 24.hours.ago.localtime
+    if !data_total[0][0].nil? && data_total.size >0 
+        startPoint = data_total[0][0].advance(:hours => (-3).to_i).localtime
+    end
     startPoint = startPoint.change(:min => 0)
     
     @chart = LazyHighCharts::HighChart.new('graph') do |f|
@@ -110,6 +115,7 @@ def grafico_activitad(vaca,num_dias)
 
     return @chart
 end
+
 #muestra grafica de celos detectados por mes
 #agregar casos para todos los meses del año
 def estadistica_celo_chart_high   
@@ -147,10 +153,15 @@ def estadistica_celo_chart_high
      mydate = Date.new(2013, 10, 1)
      @celos_oct = Celo.where("comienzo between ? and ?" , mydate,mydate.at_end_of_month)
     
-     f.options[:xAxis][:categories] = ['Enero','Febrero','Marzo', 'Abril', 'Mayo', 'Junio','Julio','Agosto','Septiembre','Octubre']
+     mydate = Date.new(2013, 11, 1)
+     @celos_nov = Celo.where("comienzo between ? and ?" , mydate,mydate.at_end_of_month)
+    
+     mydate = Date.new(2013, 12, 1)
+     @celos_dic = Celo.where("comienzo between ? and ?" , mydate,mydate.at_end_of_month)
+    
+     f.options[:xAxis][:categories] = ['Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
 
-     f.series(:name=>'Celos Detectados', :data => [@celos_enero.size,@celos_feb.size,@celos_marz.size,
-        @celos_apr.size,@celos_may.size,@celos_jun.size,0,@celos_ags.size,@celos_sep.size,@celos_oct.size])
+     f.series(:name=>'Celos Detectados', :data => [0,@celos_ags.size,@celos_sep.size,@celos_oct.size,@celos_nov.size,@celos_dic.size])
     end
     
     return @chart

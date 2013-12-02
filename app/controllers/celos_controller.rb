@@ -8,7 +8,6 @@ include VacasHelper
 		
 		if @vacas_en_celo.any?
 			if params[:vaca_select].nil?
-				#@vaca_selected = Vaca.find(@celos.first.vaca_id)
 				@vaca_selected = @vacas_en_celo.first
 			else
 				@vaca_selected = Vaca.find(params[:vaca_select])
@@ -23,7 +22,6 @@ include VacasHelper
 	#historial de vacas en celo, ultimos 7 dias y grafico estadistico mensual
 	def history
 		@vacas_en_celo = Vaca.joins(:celos).where("comienzo >= ?", 10.days.ago)
-		#@celos = Celo.where("comienzo >= ?", 7.days.ago)
 		@hist_chart = estadistica_celo_chart_high
 	end
 

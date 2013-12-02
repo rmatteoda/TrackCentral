@@ -8,13 +8,8 @@ def actividad_promedio_en(momento)
  to   = momento.advance(:minutes => 10) 
  
  actividades = Actividad.where("registrada between ? and ? and tipo = ?", from,to,'promedio')
+ actividad_promedio = calcular_promedio_en(momento)
  
- if actividades.any? 
- 	actividad_promedio = actividades.first.valor
- else	
-    actividad_promedio = calcular_promedio_en(momento)
- end
-
  return actividad_promedio
 end
 
@@ -22,11 +17,19 @@ def calcular_promedio_en(momento)
  from = momento.advance(:minutes => -10) 
  to   = momento.advance(:minutes => 10) 
  actividades = Actividad.where("registrada between ? and ? and tipo = ?", from,to,'recorrido')
+
  actividad_promedio = 0
- actividades.each { |actividad| actividad_promedio = actividad_promedio + actividad.valor}
- 
- if actividades.count > 0
-  actividad_promedio = (actividad_promedio/actividades.count)
+ count = 0
+
+ actividades.each do |actividad| 
+  if actividad.valor > 1
+    count = count + 1
+    actividad_promedio = actividad_promedio + actividad.valor
+  end
+ end
+
+ if count > 0
+    actividad_promedio = (actividad_promedio/count)
  end
  
  return actividad_promedio
