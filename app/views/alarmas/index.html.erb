@@ -43,9 +43,9 @@
 		</div>
 		<% end %>
 		
-		<% if @alarmas_bat_collar.any? %>
+		<% if @alarmas_collar.any? %>
 		<div class="alert alert-block">
-		  <strong>Alerta:</strong> Se han detectado vacas con mas de 120 dias post-parto sin ser preñadas
+		  <strong>Alerta:</strong> Se han detectado collares sin datos
 		</div>
 		<% end %>
 
@@ -54,7 +54,6 @@
 	<strong>INFO:</strong> No se han detectado alarmas
 	</div>
 <% end %>
-
 
 		<div class="span11">
 		  <p><strong>NOTA:</strong> las valides en las alarmas generadas depende del completo uso del sistema registrando cada evento (partos, servicios)</p>

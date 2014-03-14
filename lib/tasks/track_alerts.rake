@@ -1,11 +1,11 @@
-namespace :track_vacas do
+namespace :track_alert do
   desc "Task de control de vacas"
       
   #genera las alarmas del sistema para problemas en vacas:
   task detectar_alarmas: :environment do
    #eliminar alarmas con mas de 10 dias de antiguedad
-   #Alarma.destroy_all(["registrada < ?", 9.days.ago.to_date])
-   Alarma.destroy_all()
+   Alarma.destroy_all(["registrada < ?", 9.days.ago.to_date])
+   #Alarma.destroy_all()
    
    #vacas_alerts = Vaca.joins(:sucesos).where("sucesos.tipo = 'parto'")
    vacas_alerts = Vaca.all
@@ -38,17 +38,18 @@ namespace :track_vacas do
 
   #detecta posible perdida de collares
   task detectar_perdida: :environment do
-   Alarma.destroy_all(["tipo = 'collar_perdido'"])
+   Alarma.destroy_all(["tipo = 'collar_sin_datos'"])
    
    vacas_alerts = Vaca.all
-   ultimo_registro = 36.hours.ago
+   ultimo_registro = 12.hours.ago
    
    vacas_alerts.each do |vaca| 
    		actividades = vaca.actividades.where("registrada > ?",ultimo_registro)
 
-   		if actividades.count < 5
-   			crear_alarma(vaca.id,"collar_perdido","no se detectaron datos en collar, posible perdida de collar, controle en la vaca y contacte a TrackTambo")
-		end
+   		if actividades.count < 2
+   		  #puts vaca.id.to_s + "collar_sin_datos"
+       	#crear_alarma(vaca.id,"collar_sin_datos","no se detectaron datos en collar, posible perdida de collar")
+		  end
    end
   end
 

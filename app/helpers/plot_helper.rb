@@ -4,7 +4,7 @@ include StatsHelper
 
 def activitad_total_chart(vaca)
 
-    date_actividad = 36.hours.ago.localtime
+    date_actividad = 1300.hours.ago.localtime
     actividades_total = vaca.actividades.where("registrada >= ? and tipo = ?", date_actividad,'recorrido')    
     n=0
     data_total = [[]]

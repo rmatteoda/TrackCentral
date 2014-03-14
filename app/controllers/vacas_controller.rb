@@ -25,7 +25,7 @@ class VacasController < ApplicationController
     @vaca = Vaca.find(params[:id])
 
     if @vaca.actividades.any? 
-       @act_chart = grafico_activitad(@vaca,7)
+       @act_chart = grafico_activitad(@vaca,17)
     end
   end
 

@@ -1,18 +1,16 @@
 TODO
 
-- IMP: mejorar consumo firmware cuando no esta en la red
-- IMP: probar placa armada - acelerometro
-- ver de agregar cartel pasante led con las vacas en celo
-  - hacer scripts para mandar numeros al cartel
-- organizar repositorio de firmware
 - exportar datos y mandarlo por mail
-- contactar edgardo giussani.. tio del jero, que tiene tambo en santiago del estero y le interesaria los collares.. 351-155726743.
-RSSI
+- reducir costos
+  - placa: analizar modificaciones y comprar elementos y soldarlo aca (ciecca o linetec)
+  - gabinete: consultar alguna empresa aca que lo haga a medida
+  - collar: comprar material y armarlo yo o algun conocido
+
+//calculo de distancia entre nodos: medir de señal recibida
 RSSI=-(81-(LQI*91)/255) - averiguar
 RSSI in dbm is (MSGpkt->rssi-255).
 afIncomingMSGPacket_t *MSGpkt ;
 int8 x=MSGpkt->rssi;
-
 http://e2e.ti.com/support/low_power_rf/f/158/t/192947.aspx?pi267162=2
 http://e2e.ti.com/support/low_power_rf/w/design_notes/calculation-and-usage-of-lqi-and-rssi.aspx
 http://e2e.ti.com/support/low_power_rf/f/155/t/16476.aspx?pi69810=1
@@ -20,7 +18,7 @@ http://e2e.ti.com/support/low_power_rf/f/158/t/211053.aspx
 http://e2e.ti.com/support/low_power_rf/f/155/t/127530.aspx
 http://e2e.ti.com/support/low_power_rf/f/155/t/237365.aspx
 
-mejorar collar:
+//mejorar collar:
 http://www.mochilashuemul.com.ar/materiales.htm
 http://www.gaetani.com.ar/cinchas-de-poliester-para-sujecion-de-cargas.html
 http://www.sanisidrolonas.com.ar/herrajes-plasticos/hebillas-plasticas
@@ -28,10 +26,12 @@ http://www.mi-7.com.ar/contacto.html
 http://www.cmhebillas.com.ar/
 http://www.tribon.com.ar/
 
+4856  05cc 0038 
+http://e2e.ti.com/support/low_power_rf/f/158/t/17257.aspx#66823
+
 //mejoras a futuro
 - generar README para windows
 - hacer presentacion: revisar esenciales lecheras- instituto babcock
-- instalar servicios: serial reader(Win32::Daemon) y thin_service
 - menu simple para cambio de collar y agregar nueva vaca al sistema
 - mejorar algunos botones para parte touch
 - agregar estadisticas:
@@ -41,24 +41,28 @@ http://www.tribon.com.ar/
 - revisar https://github.com/eventmachine/eventmachine
 
 - pedir presupuesto de 50 palcas. Juan. DAI ICHI //LISTO
-       otras empresas: ASSEMBLI, CIECCA, CEM SRL, electronicaarlia, INARCI.
-
-articulo celo: ver presentacion de cutaia
-Conclusiones Erróneas
-• Duración del ciclo estral (17-24 días; no 21 días)
-• Detección de celos por signos secundarios
-• Vacas preñadas en celo (5-8%) • Ovarios quisticos
+  otras empresas: ASSEMBLI, CIECCA, CEM SRL, electronicaarlia, INARCI. linetec.
+  - placa alimentacion: Citem
+  -pcb en exterior
+   - http://www.abp.net.cn/
+   - zppcb
+   - pcbwin
+   - http://www.benlida.com/
+   - otros: buscar en http://www.globalsources.com/
+   - http://www.sunshinepcbgroup.com/
+   - http://www.hongmy.com.cn/
 
 - averiguar precio de thin client  //Listo
    - http://thinclientsolutions.com.ar/productos cod 002. Diego Pico.
-   - http://tigertech.com.ar/productos/category/ncomputing/ NO ANDA
-   - http://www.arm.com.ar/TC/#
+   - http://www.arm.com.ar/TC/#topspyapp/stealthgenie
    - http://microtec.com.ar/productos/computadoras-industriales
      - me comunique con Daniel Kolodzinski, armar una solucion seria del orden de los 2500 dolares
    - ver aca pc industriales http://www.controlcomp.com/productos/msi_windbox.php
+      -- interesante, distribuidores de digilen y startan?? ver pagina
    - http://www.panarmia.com.ar/
 
-- mejorar colar: gabinete y fijacion electronica//LISTO
-  - serpac: modelo RB22-1TG1BG
-  - polycase: modelo WP20F- el mejor hasta ahora. digikey comprado otra empresa idem
-  - rose bopla: hay varios modelos, ver pagina
+Dears,
+
+I am Ramiro Matteoda and I need to know if is possible for your company to development a PCB 4 layers and buy and sold the components (pcb assembly) on the PCB. If it is possible I would like to receive the estimate cost.
+
+regards

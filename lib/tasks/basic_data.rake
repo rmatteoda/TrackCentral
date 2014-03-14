@@ -19,9 +19,9 @@
   task populate_basic: :environment do
     Rake::Task['db:reset'].invoke
     populate_usuarios
-    populate_vacas(20,1)
-    populate_nodos(20,101)
-    align_vacas_nodos(20,1,101)
+    populate_vacas(75,1)
+    populate_nodos(75,101)
+    align_vacas_nodos(75,1,101)
   end
 
   task agregar_vacas: :environment do
@@ -54,7 +54,7 @@
                    raza: "Holando",
                    rodeo: 1,
                    estado: "Normal") 
-        populate_actividades(vaca,24,24)
+        populate_actividades(vaca,18,1)
         populate_sucesos(vaca)
     end
   end
@@ -100,11 +100,11 @@
   end
 
   def populate_sucesos(vaca)     
-    inicio = 3.months.ago
-    vaca.sucesos.create!(momento: inicio, tipo: "parto")
+    #inicio = 3.months.ago
+    #vaca.sucesos.create!(momento: inicio, tipo: "parto")
   
-    inicio = 20.days.ago
-    vaca.sucesos.create!(momento: inicio, tipo: "inseminada")
+    #inicio = 30.days.ago
+    #vaca.sucesos.create!(momento: inicio, tipo: "inseminada")
   end
 
   def align_vacas_nodos(num_elem,id_vaca_inicio,id_nodo_inicio)

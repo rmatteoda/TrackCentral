@@ -8,7 +8,8 @@ namespace :track_data do
       data_file = File.open('public/data_from_collector.txt', 'r')      
       all_lines = data_file.readlines
       data_file.close
-      FileUtils.cp("public/data_from_collector.txt", "public/" + Time.now.strftime("%Y%m%d-%H_%M").to_s + "_data_from_collector.txt")
+      #FileUtils.cp("public/data_from_collector.txt", "public/" + Time.now.strftime("%Y%m%d-%H_%M").to_s + "_data_from_collector.txt")
+      File.unlink('public/data_from_collector.txt')
       
       current_vaca = nil
       last_register = nil
@@ -33,10 +34,11 @@ namespace :track_data do
         end
       end
       
-      if n_dumps > 2
-        system "bundle exec rake track_celo:detectar_celos"
-      end
-    end    
+      #if n_dumps > 5
+      #  system "bundle exec rake track_celo:detectar_celos"
+      #end
+      log_input
+    end 
   end
   
 ####################### PRIVATE METHODS ################
@@ -54,8 +56,8 @@ private
 
         vaca_selected.actividades.create!(registrada: reg_actividad, 
           tipo: "recorrido",valor: events[ev_ind])
-        vaca_selected.actividades.create!(registrada: reg_actividad, 
-          tipo: "recorrido_nivelado",valor: events[ev_ind+1])
+        #vaca_selected.actividades.create!(registrada: reg_actividad, 
+          #tipo: "recorrido_nivelado",valor: events[ev_ind+1])
   
         reg_actividad = reg_actividad.advance(:hours => 1).to_datetime
         ev_ind = ev_ind + 2
@@ -71,11 +73,17 @@ private
 
   #elimino actividades si existen con registro posterior a la hora calculada
   def clean_actividades(vaca,reg_actividad)
-    from = reg_actividad.advance(:minutes => -10).localtime        
-    act_tot_reg = vaca.actividades.where("registrada >= ? and tipo = ?", from,'recorrido')
+    act_tot_reg = vaca.actividades.where("registrada > ? and tipo = ?", reg_actividad,'recorrido')
     if act_tot_reg.any?
       act_tot_reg.destroy_all
     end     
+  end
+
+  #guardo ultimo registro de datos obtenidos desde el colector
+  def log_input
+    File.open('./log/ultimo_registro.txt', 'w+') do |f|     
+        f.puts Time.now.strftime("%Y%m%d-%H:%M").to_s
+    end 
   end
 
 end

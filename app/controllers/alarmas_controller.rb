@@ -7,6 +7,8 @@ class AlarmasController < ApplicationController
   	
 	@alarmas_bat_collar = Alarma.where("tipo = 'bateria_collar'")
 
+	@alarmas_collar = Alarma.where("tipo = 'collar_sin_datos'")
+
 	@alarmas = Alarma.paginate(:page => params[:page], :per_page => 10)	
   end
 end

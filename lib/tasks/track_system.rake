@@ -13,81 +13,22 @@ task :start_system do
    sleep 10
    Rake::Task['track_system:delete_app_files'].invoke
    sleep 20
-   Rake::Task['track_system:start_server'].invoke
-   sleep 15
-   Rake::Task['track_system:open_gui'].invoke
-   sleep 5
-   Rake::Task['track_system:start_clockwork'].invoke
-  #sleep 15
-   #Rake::Task['track_system:open_serial_reader'].invoke
-   #sleep 2   
 end
 
-task :stop_system do
-  Rake::Task['track_system:stop_server'].invoke
-  sleep 5
-  Rake::Task['track_system:close_gui'].invoke
-  sleep 5 
-  Rake::Task['track_system:stop_clockwork'].invoke
- #Rake::Task['track_system:stop_serial_reader'].invoke
-  #sleep 5  
-end
-
-task :stop_server do
-  pid_file = 'tmp/pids/server.pid'
-  #pid_file = 'tmp/pids/passenger.3000.pid'
-  if File.file?(pid_file)
-    print "Shutting down server\n"
-    pid = File.read(pid_file).to_i
-    Process.kill "INT", pid
-  end  
-  #File.file?(pid_file) && File.delete(pid_file)
-end
-
-task :start_server do
-  Dir.chdir(APP_DIR) do
-    #ruby "./script/rails s -p 3000 -P /home/tracktambo/TrackCentral/tmp/pids/server.pid &" 
-    system "passenger start -d -p 3010 --pid-file /home/tracktambo/TrackCentral/tmp/pids/server.pid --log-file /home/tracktambo/TrackCentral/log/server.log &" 
-    #system "passenger start &" 
+#controla que el coordinador este funcioando y recibiendo datos, de lo contrario reinicia la pc
+task :check_coordinator do
+  if File.exist?('log/ultimo_registro.txt')
+    #open file
+    reg_input = File.open('log/ultimo_registro.txt', 'r').first 
+    last_reg_input = DateTime::strptime(reg_input,"%Y%m%d-%H:%M")
+    hr_from_last = ((Time.now - last_reg_input.to_time)/1.hour).round  
+    puts "ultimo registro dif " +   hr_from_last.to_s
   end
 end
 
-task :open_gui do
-  Dir.chdir(APP_DIR) do
-   #system "java -jar -d32 -XstartOnFirstThread ./vendor/client/TrackClientUI.jar http:\\localhost:3020 &"
-   system "java -jar -d32 ./vendor/client/TrackClientUI_Linux.jar http:\\localhost:3010 -vmargs -Dorg.eclipse.swt.browser.UseWebKitGTK=true &"
-  end
-end
-
-task :close_gui do
-  pid_file = 'tmp/pids/clientgui.pid'  
-  if File.file?(pid_file)
-    print "Shutting down Client GUI\n"
-    pid = File.read(pid_file).to_i
-    system "kill -9 " + pid.to_s
-    #Process.kill "INT", pid
-  end
-  
-  File.file?(pid_file) && File.delete(pid_file)
-end
-
-task :start_clockwork do
-  Dir.chdir(APP_DIR) do
-   #system "java -jar -d32 -XstartOnFirstThread ./vendor/client/TrackClientUI.jar http:\\localhost:3020 &"
-   system "clockwork config/clock.rb &"
-  end
-end
-
-task :stop_clockwork do
-  pid_file = 'tmp/pids/clockwork.pid'
-  
-  if File.file?(pid_file)
-    print "Shutting down ClockWork\n"
-    pid = File.read(pid_file).to_i
-    system "kill -9 " + pid.to_s
-  end
-  
-  File.file?(pid_file) && File.delete(pid_file)
+#permite cerrar todas las aplicaciones y reiniciar la pc
+task :restart_pc do
+system "shutdown /r /f"
 end
 
 task :open_serial_reader do
@@ -114,11 +55,6 @@ task :delete_app_files do
   file_to_delete = 'tmp/pids/serialreader.pid'
   File.file?(file_to_delete) && File.delete(file_to_delete)
   file_to_delete = 'tmp/pids/clientgui.pid'
-  File.file?(file_to_delete) && File.delete(file_to_delete)
-  file_to_delete = 'tmp/pids/server.pid'
-  File.file?(file_to_delete) && File.delete(file_to_delete)
-  file_to_delete = 'tmp/pids/clockwork.pid'
-  File.file?(file_to_delete) && File.delete(file_to_delete)
 end
 
 
