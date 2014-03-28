@@ -50,11 +50,11 @@ if(@celos >= 1){
 		@carv = $_ =~ /\d{1}/g;
 		$output = pack('C*', $esp);
 		$port_obj->write($output);
-		if(@carv >=3){
-			if(@carv==4){
-		    	$output = pack('C*', $numbers[$carv[0]],$numbers[$carv[1]],$numbers[$carv[2]],$numbers[$carv[3]]);
+		if(@carv >=2){
+			if(@carv==3){
+		    	$output = pack('C*', $numbers[$carv[0]],$numbers[$carv[1]],$numbers[$carv[2]]);
 			}else{
-				$output = pack('C*', $numbers[$carv[0]],$numbers[$carv[1]],$numbers[$carv[2]]);
+				$output = pack('C*', $numbers[$carv[0]],$numbers[$carv[1]]);
 			}
 			$port_obj->write($output);
 			$output = pack('C*', $esp,$guion);

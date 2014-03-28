@@ -41,13 +41,13 @@ namespace :track_alert do
    Alarma.destroy_all(["tipo = 'collar_sin_datos'"])
    
    vacas_alerts = Vaca.all
-   ultimo_registro = 12.hours.ago
+   ultimo_registro = 26.hours.ago
    
    vacas_alerts.each do |vaca| 
    		actividades = vaca.actividades.where("registrada > ?",ultimo_registro)
 
-   		if actividades.count < 2
-   		  #puts vaca.id.to_s + "collar_sin_datos"
+   		if actividades.count < 4
+   		  puts vaca.id.to_s + " - collar_sin_datos"
        	#crear_alarma(vaca.id,"collar_sin_datos","no se detectaron datos en collar, posible perdida de collar")
 		  end
    end

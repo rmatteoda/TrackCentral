@@ -10,7 +10,7 @@ namespace :track_celo do
       
       actividades = Actividad.where("tipo = 'recorrido' AND registrada >= ? and registrada < ?", hora_start,hora_end)
       
-      if actividades.size > 8 #al menos 8 vacas registradas para detectar. evaluar este numero??
+      #if actividades.size > 8 #al menos 8 vacas registradas para detectar. evaluar este numero??
         crear_actividad_promedio
       
         vacas = Vaca.all    
@@ -29,7 +29,7 @@ namespace :track_celo do
 
       #escribo celos para ser mostrados en cartel
       write_celos
-    end
+    #end
   end
 
   #guardar en archivo los celos detectados en los ultimos dias, para control
@@ -69,7 +69,7 @@ private
         7.times do |k|
           ind = periodo + k
           if ind < 24
-            if (actividades_prom[ind] > 0) && actividades_vc[ind] > (actividades_prom[ind] * 1.7)
+            if (actividades_prom[ind] > 0) && actividades_vc[ind] > (actividades_prom[ind] * 1.65)
                 #aumento casos para posible celo
                 casos_prom = casos_prom + 1
                 if hora_start == 0
@@ -77,8 +77,8 @@ private
                 end
             end
 
-            if actividades_vc[ind] > 0 && !actividad_vc_prom.nil? && actividades_vc[ind] > (actividad_vc_prom.valor*1.65)
-              if (actividades_prom[ind] > 0) && actividades_vc[ind] > (actividades_prom[ind] * 1.5)
+            if actividades_vc[ind] > 0 && !actividad_vc_prom.nil? && actividades_vc[ind] > (actividad_vc_prom.valor*1.55)
+              if (actividades_prom[ind] > 0) && actividades_vc[ind] > (actividades_prom[ind] * 1.35)
                  casos_prop = casos_prop + 1
               end
             end
@@ -95,7 +95,7 @@ private
           #                    caravana: vaca.caravana,
           #                    causa: "notable aumento de actividad en varias horas")
           celo_detectado = 1
-          puts "vaca en celo " + vaca.caravana.to_s + " comienzo " + celo_start.localtime.to_s
+          puts "vaca en celo " + vaca.caravana.to_s + " comienzo " + celo_start.localtime.to_s+ " prop: " + casos_prop.to_s + " prom: " + casos_prom.to_s
           
           #si esta en celo creo el suceso
           #vaca.sucesos.create!(momento: celo_start, tipo: "celo")
@@ -177,7 +177,7 @@ def write_celos
     end
     #puts "call celos  "  + celos.to_s
     #call perl script to write cartel
-    system "perl ./vendor/client/perl/CartelWriter.pl " + celos.to_s  
+    #system "perl ./vendor/client/perl/CartelWriter.pl " + celos.to_s  
 end
 
 end

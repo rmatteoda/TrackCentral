@@ -9,6 +9,7 @@ TODO
 //calculo de distancia entre nodos: medir de señal recibida
 RSSI=-(81-(LQI*91)/255) - averiguar
 RSSI in dbm is (MSGpkt->rssi-255).
+RSSI: indicador de potencia de señal recibida
 afIncomingMSGPacket_t *MSGpkt ;
 int8 x=MSGpkt->rssi;
 http://e2e.ti.com/support/low_power_rf/f/158/t/192947.aspx?pi267162=2

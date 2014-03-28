@@ -51,6 +51,17 @@
 <div class="digg_pagination">
 <%= will_paginate @vacas %>
 </div> 
+
+
+<div class="span9">    
+   <%= collection_select :vaca,:caravana, @vacas, :id, :caravana %>
+   
+<!--     <%= form_for @vacas do |f| %>
+      <%= f.collection_select :caravana, Vaca.all, :id, :caravana %>
+    <% end %>
+ --></div>
+
+
   <% if signed_in? && current_user.admin?%>  
     <%= link_to 'Agregar Vaca', new_vaca_path,:class => 'btn btn-primary' %>
   <% end %>

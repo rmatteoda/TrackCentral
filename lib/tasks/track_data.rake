@@ -1,7 +1,7 @@
 namespace :track_data do
   desc "Task para leer datos del colector"
       
-   task load_collected_data: :environment do
+  task load_collected_data: :environment do
 
     if File.exist?('public/data_from_collector.txt')
       #open file, save into array and move file for register
@@ -40,6 +40,19 @@ namespace :track_data do
       log_input
     end 
   end
+
+  task load_caravanas: :environment do
+    if File.exist?('public/collares_caravanas.csv')
+      #open file, save into array and move file for register
+      data_file = File.open('public/collares_caravanas.csv', 'r')      
+      all_lines = data_file.readlines
+      data_file.close
+      all_lines.each do |line|
+        data = line.split(';')
+        cargar_caravana_evento(data[0],data[1],data[2],data[3])
+      end         
+    end 
+  end
   
 ####################### PRIVATE METHODS ################
 private
@@ -71,6 +84,31 @@ private
     return estimate_time      
   end
 
+  #cargo caravanas en vacas y registro de partos y servicios
+  def cargar_caravana_evento(caravana,collar,ev_parto,ev_serv)   
+    vaca = Vaca.where("nodo_id = ?",collar).first 
+    vaca.caravana = caravana
+
+    cargar_evento(vaca,ev_parto,"parto")
+    
+    cargar_evento(vaca,ev_serv,"inseminada")
+
+    if !ev_serv.nil? && ev_serv.length>6
+      serv = DateTime::strptime(ev_serv,"%d%m%Y")  
+      vaca.celos.create!(comienzo: serv,probabilidad: "alta",caravana:caravana, causa: "aumento de actividad")
+    end
+
+    vaca.save     
+  end
+
+  def cargar_evento(vaca, evento, tipo) 
+    if !evento.nil? && evento.length>6
+      momento = DateTime::strptime(evento,"%d%m%Y")    
+      vaca.sucesos.create!(momento: momento, tipo: tipo)
+    end
+  end
+
+  
   #elimino actividades si existen con registro posterior a la hora calculada
   def clean_actividades(vaca,reg_actividad)
     act_tot_reg = vaca.actividades.where("registrada > ? and tipo = ?", reg_actividad,'recorrido')

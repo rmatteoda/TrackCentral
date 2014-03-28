@@ -126,42 +126,43 @@ def estadistica_celo_chart_high
      f.title(text: 'Estadistica Mensual') 
      f.options[:plotOptions][:column] = {dataLabels: {enabled: true}}
           
-     mydate = Date.new(2013, 1, 1)
+     mydate = Date.new(2014, 1, 1)
      @celos_enero = Celo.where("comienzo between ? and ?" , mydate,mydate.at_end_of_month)
     
-     mydate = Date.new(2013, 2, 1)
+     mydate = Date.new(2014, 2, 1)
      @celos_feb = Celo.where("comienzo between ? and ?" , mydate,mydate.at_end_of_month)
     
-     mydate = Date.new(2013, 3, 1)
+     mydate = Date.new(2014, 3, 1)
      @celos_marz = Celo.where("comienzo between ? and ?" , mydate,mydate.at_end_of_month)
     
-     mydate = Date.new(2013, 4, 1)
+     mydate = Date.new(2014, 4, 1)
      @celos_apr = Celo.where("comienzo between ? and ?" , mydate,mydate.at_end_of_month)
     
-     mydate = Date.new(2013, 5, 1)
+     mydate = Date.new(2014, 5, 1)
      @celos_may = Celo.where("comienzo between ? and ?" , mydate,mydate.at_end_of_month)
      
-     mydate = Date.new(2013, 6, 1)
+     mydate = Date.new(2014, 6, 1)
      @celos_jun = Celo.where("comienzo between ? and ?" , mydate,mydate.at_end_of_month)
     
-     mydate = Date.new(2013, 8, 1)
+     mydate = Date.new(2014, 8, 1)
      @celos_ags = Celo.where("comienzo between ? and ?" , mydate,mydate.at_end_of_month)
     
-     mydate = Date.new(2013, 9, 1)
+     mydate = Date.new(2014, 9, 1)
      @celos_sep = Celo.where("comienzo between ? and ?" , mydate,mydate.at_end_of_month)
     
-     mydate = Date.new(2013, 10, 1)
+     mydate = Date.new(2014, 10, 1)
      @celos_oct = Celo.where("comienzo between ? and ?" , mydate,mydate.at_end_of_month)
     
-     mydate = Date.new(2013, 11, 1)
+     mydate = Date.new(2014, 11, 1)
      @celos_nov = Celo.where("comienzo between ? and ?" , mydate,mydate.at_end_of_month)
     
-     mydate = Date.new(2013, 12, 1)
+     mydate = Date.new(2014, 12, 1)
      @celos_dic = Celo.where("comienzo between ? and ?" , mydate,mydate.at_end_of_month)
     
-     f.options[:xAxis][:categories] = ['Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
+     f.options[:xAxis][:categories] = ['Enero','Febrero','Marzo','Abril','Mayo','Junio']
 
-     f.series(:name=>'Celos Detectados', :data => [0,@celos_ags.size,@celos_sep.size,@celos_oct.size,@celos_nov.size,@celos_dic.size])
+     f.series(:name=>'Celos Detectados', :data => [@celos_enero.size,@celos_feb.size,@celos_marz.size,
+        @celos_apr.size,@celos_may.size,@celos_jun.size])
     end
     
     return @chart
