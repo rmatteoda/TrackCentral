@@ -21,7 +21,7 @@ TrackCentral::Application.routes.draw do
     end
   end
 
-  resources :nodos, only: [:new, :create, :destroy, :index]
+  resources :nodos 
  
   resources :alarmas, only: [:index]
   

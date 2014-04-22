@@ -21,7 +21,7 @@ include VacasHelper
 
 	#historial de vacas en celo, ultimos 7 dias y grafico estadistico mensual
 	def history
-		@vacas_en_celo = Vaca.joins(:celos).where("comienzo >= ?", 10.days.ago)
+		@vacas_en_celo = Vaca.joins(:celos).where("comienzo >= ?", 30.days.ago)
 		@hist_chart = estadistica_celo_chart_high
 	end
 

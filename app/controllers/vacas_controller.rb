@@ -3,7 +3,8 @@ class VacasController < ApplicationController
   include VacasHelper
 
   def index
-    @vacas = Vaca.paginate(:page => params[:page], :per_page => 10)
+    #@vacas = Vaca.paginate(:page => params[:page], :per_page => 10)
+    @vacas = Vaca.paginate(:page => params[:page], :per_page => 10).order("caravana ASC")
   end
 
   def show

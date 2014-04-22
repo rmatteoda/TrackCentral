@@ -1,0 +1,26 @@
+<%- model_class = Nodo -%>
+<div class="page-header">
+  <h3>Cambiar Collar</h3>
+</div>
+    <div>        
+        <% flash.each do |key, value| %>
+          <div class="alert alert-<%= key %>"><%= value %></div>
+        <% end %>
+    </div> 
+
+  <div class="span9">
+    <%= form_for(@nodo) do |f| %>
+    <%= render 'shared/error_messages', object: f.object %>
+  
+    <%= f.label 'Collar', :class => 'control-label' %>
+    <%= f.collection_select :nodo_id, @nodos, :nodo_id, :nodo_id%>
+  
+    <%= f.label 'Nueva Vaca (caravana)', :class => 'control-label' %>
+    <%= f.number_field :vaca_id, :class => 'number_field' %>
+
+   <div class="actions">
+    <%= f.submit 'Cambiar', :class => 'btn' %>
+    <%= link_to 'Cancelar',vacas_path, :class => 'btn' %>
+   </div>
+  <% end %>
+  </div>

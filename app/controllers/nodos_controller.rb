@@ -14,7 +14,8 @@ class NodosController < ApplicationController
   end
 
   def edit
-    @nodo = Nodo.find(params[:id])
+    @nodo = Nodo.first
+    @nodos = Nodo.all
   end
 
   def create
@@ -29,15 +30,35 @@ class NodosController < ApplicationController
     end
   end
 
+  #usada para cambio de collar
   def update
-    @nodo = Nodo.find(params[:id])
+    nueva_carv = params[:nodo][:vaca_id]
+    nodo_id = params[:nodo][:nodo_id]
+    
+    nodo = Nodo.where("nodo_id = ?",nodo_id).first
+    vaca_ant = Vaca.where("nodo_id = ?",nodo_id).first        
+    
+    vaca_check = Vaca.where("caravana = ?",nueva_carv)        
+    if !vaca_check.blank?
+      flash[:error] = "ERROR: La Caravana " + nueva_carv.to_s + " ya asignada esta en el sistema"
+      redirect_to edit_nodo_path(:id => 1)
+    else
+      vaca = Vaca.create!(caravana: nueva_carv,
+                     raza: "Holando",
+                     rodeo: 1,
+                     estado: "Normal") 
 
-      if @nodo.update_attributes(params[:nodo])
-        flash[:success] = "Informacion actualizada"
-        redirect_to @user
-      else
-        render 'edit'
+      vaca.nodo_id = nodo_id
+      vaca.nodo = nodo
+      vaca_ant.nodo_id = 0
+      vaca_ant.nodo = nil
+    
+      if vaca.save  &&  vaca_ant.save
+        flash[:success] = "Collar cambiado"
       end
+      redirect_to vacas_path
+    end    
+   
   end
 
   def destroy
