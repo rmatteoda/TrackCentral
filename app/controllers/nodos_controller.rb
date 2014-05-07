@@ -40,13 +40,15 @@ class NodosController < ApplicationController
     
     vaca_check = Vaca.where("caravana = ?",nueva_carv)        
     if !vaca_check.blank?
-      flash[:error] = "ERROR: La Caravana " + nueva_carv.to_s + " ya asignada esta en el sistema"
-      redirect_to edit_nodo_path(:id => 1)
+      #flash[:error] = "ERROR: La Caravana " + nueva_carv.to_s + " ya asignada esta en el sistema"
+      #redirect_to edit_nodo_path(:id => 1)
+      vaca = vaca_check.first
     else
       vaca = Vaca.create!(caravana: nueva_carv,
                      raza: "Holando",
                      rodeo: 1,
                      estado: "Normal") 
+    end
 
       vaca.nodo_id = nodo_id
       vaca.nodo = nodo
@@ -56,9 +58,7 @@ class NodosController < ApplicationController
       if vaca.save  &&  vaca_ant.save
         flash[:success] = "Collar cambiado"
       end
-      redirect_to vacas_path
-    end    
-   
+      redirect_to vacas_path   
   end
 
   def destroy
