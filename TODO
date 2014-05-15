@@ -1,15 +1,7 @@
 TODO
 
-- IMP: menu simple para cambio de collar // LISTO
-  - se debe crear una nueva vaca con la nueva caravana 
-    - agrego arch edit.html.erb en view/nodos 
-    - cambio nodos_controller
-    - cambio routes.rb
-    - cambio _left_menu
-- organizar tabla de vacas por numero de caravana
-  -LISTO, cambio en vacas_controller
-
-
+- mejorar collares,
+  - averiguar en blondi: Barrio Alta Cordoba, calle santa fe 2436… Gabriel. tel: 4717632
 - exportar datos y mandarlo por mail
 - reducir costos
   - placa: analizar modificaciones y comprar elementos y soldarlo aca (ciecca o linetec)
