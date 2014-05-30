@@ -52,6 +52,9 @@ class NodosController < ApplicationController
 
       vaca.nodo_id = nodo_id
       vaca.nodo = nodo
+      
+      puts "agrego nodo en vaca " + nodo_id.to_s
+
       vaca_ant.nodo_id = 0
       vaca_ant.nodo = nil
     
