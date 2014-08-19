@@ -39,7 +39,7 @@ group :assets do
   gem 'twitter-bootstrap-rails'
   #para windows
   #gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git' 
-  #tambien gem install libv8 --v 3.11.8.0
+  #tambien correr gem install libv8 -v 3.11.8.0, eventmachine, thin, thin-service, sqlite3
   #antes instalar Active Python
 end
 

@@ -1,0 +1,21 @@
+
+WINDOWS INSTALLER
+
+- Instalar:
+  - Active Perl
+  - Active Python
+  - Ruby
+  - Rails
+  - Ruby gems
+  - copy sqlyte3 dll
+  - UPSMon
+  - Sublime Text
+  - Driver MSP430 (instalar mini kit software, conectar algun device y configurar el driver)
+  - AlwaysUp
+  - Chrome
+  - appmonitor
+  - Perl: modulos Win32::SerialPort y File::NFSLock 
+  - instalar gem adicionales segun comentairo en gem file
+  - desabilitar mensajes de actualizacions
+  - configurar Chrome para que arranque desde localhost:3000 y agregarlo como tarea programada de inicio
+  - 
