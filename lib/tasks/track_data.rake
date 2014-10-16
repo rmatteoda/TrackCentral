@@ -54,6 +54,16 @@ namespace :track_data do
     end 
   end
   
+  #guardar en archivo las vacas con sus collares
+  task dump_vacas: :environment do
+    vacas = Vaca.all
+    File.open('./log/vacas_nodos_log.txt', 'a+') do |f|     
+      vacas.each  do |celo| 
+        f.puts vaca.caravana.to_s + "," + vaca.nodo_id.to_s
+      end
+    end
+  end
+
 ####################### PRIVATE METHODS ################
 private
   

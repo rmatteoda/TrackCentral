@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'rufus-scheduler'
 
-scheduler = Rufus::Scheduler.start_new
+scheduler = Rufus::Scheduler.new
 
 scheduler.cron '10 06 * * *' do
     system "bundle exec rake track_celo:detectar_celos"
