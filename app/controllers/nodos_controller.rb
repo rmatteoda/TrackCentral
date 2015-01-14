@@ -38,7 +38,8 @@ class NodosController < ApplicationController
     nodo = Nodo.where("nodo_id = ?",nodo_id).first
     vaca_ant = Vaca.where("nodo_id = ?",nodo_id).first        
     
-    vaca_check = Vaca.where("caravana = ?",nueva_carv)        
+    vaca_check = Vaca.where("caravana = ?",nueva_carv) 
+
     if !vaca_check.blank?
       #flash[:error] = "ERROR: La Caravana " + nueva_carv.to_s + " ya asignada esta en el sistema"
       #redirect_to edit_nodo_path(:id => 1)
@@ -50,15 +51,16 @@ class NodosController < ApplicationController
                      estado: "Normal") 
     end
 
+      if !vaca_ant.nil? && vaca_ant.caravana.to_i != nueva_carv.to_i
+        vaca_ant.nodo_id = 0
+        vaca_ant.nodo = nil
+        vaca_ant.save
+      end
+      
       vaca.nodo_id = nodo_id
       vaca.nodo = nodo
       
-      puts "agrego nodo en vaca " + nodo_id.to_s
-
-      vaca_ant.nodo_id = 0
-      vaca_ant.nodo = nil
-    
-      if vaca.save  &&  vaca_ant.save
+      if vaca.save 
         flash[:success] = "Collar cambiado"
       end
       redirect_to vacas_path   

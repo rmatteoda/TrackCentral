@@ -45,11 +45,6 @@ http://www.tribon.com.ar/
     - estan en villa allende : veracruz 1050
     - interesante, distribuidores de digilen y startan?? ver pagina
 
-Dears,
-
-I am Ramiro Matteoda and I need to know if is possible for your company to development a PCB 4 layers and buy and sold the components (pcb assembly) on the PCB. If it is possible I would like to receive the estimate cost.
-
-regards
 //calculo de distancia entre nodos: medir de señal recibida
 RSSI=-(81-(LQI*91)/255) - averiguar
 RSSI in dbm is (MSGpkt->rssi-255).
