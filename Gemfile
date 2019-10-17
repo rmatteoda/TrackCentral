@@ -7,7 +7,7 @@ gem 'rake', '0.9.2'
 # To use ActiveModel has_secure_password
 gem 'bcrypt-ruby', '~>3.0.1'
 
-gem 'will_paginate', '3.0.3'
+gem 'will_paginate', '3.0.5'
 
 #for google chart
 gem "google_visualr", "~> 2.1.0"
