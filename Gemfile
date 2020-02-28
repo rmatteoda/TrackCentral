@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.3'
 
-gem 'rake', '0.9.2'
+gem 'rake', '12.3.3'
 
 # To use ActiveModel has_secure_password
 gem 'bcrypt-ruby', '~>3.0.1'
